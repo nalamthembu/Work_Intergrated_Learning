@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e979457bf4c9479d6c4bb7de3580a, type: 3}
+  m_Name: VehiclePartList
+  m_EditorClassIdentifier: 
+  partLists:
+  - VehicleName: Sports [Nissan Skyline]
+    Chassis: {fileID: 1897282149788786, guid: 62aeada8189f449448179f716f651052, type: 3}
+    Bonnets:
+    - {fileID: 1429872399762236, guid: d60e1159b848d5442961ab951aca073e, type: 3}
+    - {fileID: 1869735568665666, guid: 1e49b18369d0b2b40ba94b7e8d6fdd06, type: 3}
+    - {fileID: 1357879928422364, guid: b7d2643e083fb614fa26c59c1a9caead, type: 3}
+    - {fileID: 1382870912825058, guid: 6ee160125aaae664dac42d47cbaf8394, type: 3}
+    Fenders:
+    - {fileID: 1798600576029030, guid: 99fbe7eb8c18bb44e93eadac09f7902d, type: 3}
+    - {fileID: 1154991917234800, guid: f1e8e182acf64d8479f3864d12293cdd, type: 3}
+    - {fileID: 1545364784827808, guid: f0f7423f3139fd64c87f4704ecc67a69, type: 3}
+    FrontBumpers:
+    - {fileID: 1888969180758694, guid: 0092c77d88794774980d6893d483d27a, type: 3}
+    - {fileID: 1475554021459880, guid: 7174be01a072e3043899dd8a73c089dd, type: 3}
+    - {fileID: 1151992281229340, guid: 757ed0fbfcad11145b99ac6b569ae295, type: 3}
+    - {fileID: 1845093642249586, guid: 2f07485097b5ff34c99a57735f006261, type: 3}
+    RearBumpers:
+    - {fileID: 1573086892410196, guid: 728defce666e2474e9f391cf4f7132f0, type: 3}
+    - {fileID: 1382063161868576, guid: 0cdbcae8afa2b874d8ce72031235c41b, type: 3}
+    - {fileID: 1913504639656990, guid: a2d6538133430b4428bac1828c255ec3, type: 3}
+    - {fileID: 1813106300254688, guid: 38b469dac28a76048afa0dda9a768c4e, type: 3}
+    Rollcages:
+    - {fileID: 1570958773905052, guid: 075abb2c92e6c524bb0ac4461c418689, type: 3}
+    RoofScoops:
+    - {fileID: 1152048656638044, guid: 7e68ad381997a43499122b3d8964b956, type: 3}
+    SideSkirts:
+    - {fileID: 1513439707555586, guid: 9474069af8cfb1f41bdfaab481bf462e, type: 3}
+    - {fileID: 1398784858015196, guid: 77c01ed4543ac2b4ca9cf62c2f90177c, type: 3}
+    - {fileID: 1011122294471144, guid: 5c212821cdf196a448c2a230a9bf54c0, type: 3}
+    - {fileID: 1843742544774290, guid: 8b8442756afe2494e96a81d937330981, type: 3}
+    Spoilers:
+    - {fileID: 816463174614873936, guid: ad8827e6115c9c14189600acd4475f7e, type: 3}
+    - {fileID: 1779748309983366, guid: 846d302fbcc355c4eb0eea3a09f50533, type: 3}
+    - {fileID: 1431969345984222, guid: f7213a8f59a6519408504f565299db5c, type: 3}
+    - {fileID: 1689475727991346, guid: 1256182d06993ef44b166cc9be25eb5a, type: 3}
+    Undercarriages:
+    - {fileID: 1978186339601572693, guid: 1e34b8e577eb0be4c9b4189d565c3a5b, type: 3}
+    - {fileID: 1813610140330208, guid: ed3e2ef79c285804c95cfb44e11bf78d, type: 3}
+    - {fileID: 1084305010165156, guid: 996018c5ad37afc418d026789307a9a9, type: 3}
+    seatPositions:
+    - {x: -0.433, y: 0, z: -0.125}
+    - {x: 0.433, y: 0, z: -0.125}
+    wheelPositionsLR:
+    - {x: -0.71394986, y: 0.34913313, z: 1.4683017}
+    - {x: -0.73149997, y: 0.34913313, z: -1.4066818}
+    - {x: 0.71394986, y: 0.34913313, z: 1.4683017}
+    - {x: 0.73149997, y: 0.34913313, z: -1.4066818}
+    engine: {fileID: 11400000, guid: 8e2125cb552a0764189fd31d187f4dae, type: 2}
+    transmission: {fileID: 11400000, guid: d2d7d0695d98ab54cbf2ae9ed45f1c32, type: 2}
+    mass: 1300
+  tyres:
+  - {fileID: 1595893899617904, guid: 657002bbc1179d648946023177f843e1, type: 3}
+  - {fileID: 1084753164000056, guid: c30c181637b26fc4eaa6f8861ea50613, type: 3}
+  - {fileID: 1016267735872072, guid: 76c63af5077f2244c872452959f3a837, type: 3}
+  - {fileID: 1242934513081254, guid: cac971920b0fec7449e397a2f8a939c0, type: 3}
+  - {fileID: 1888367132430964, guid: d6fd15eceb43a1e42b5b1247e8035966, type: 3}
+  - {fileID: 1393355675000742, guid: 03a31eec3195e074cb9a1e0a659922e7, type: 3}
+  - {fileID: 1507705536879652, guid: e65168d6423aace4a91e92033a803fe6, type: 3}
+  rims:
+  - {fileID: 1689006219567136, guid: da26fdf81de740749917aa3adb3f590c, type: 3}
+  - {fileID: 1760184088813994, guid: 6c860e1903905d745b8f8922e72b3bfb, type: 3}
+  - {fileID: 1654511572000000, guid: 68d9ac032868a1c4bb5df924c4acb6ea, type: 3}
+  - {fileID: 1816939454415318, guid: 9ea4f84d54b9eba42a5313f3ef3d90bd, type: 3}
+  - {fileID: 1689687138101844, guid: a238f11e7c7facd48afd01b0523bb94c, type: 3}
+  - {fileID: 1375679676279674, guid: 396019c6d86050545a40d007cde31207, type: 3}
+  - {fileID: 1445837130496026, guid: 94c474fd85ace4f4c8a220f926589c9a, type: 3}
+  - {fileID: 1767404150757542, guid: 88ce971dd2f013440b4cba7425362937, type: 3}
+  - {fileID: 1964451002586294, guid: efc5f78d536ae2242bc02da633ba4bef, type: 3}
+  - {fileID: 1285519330696880, guid: b601e0058dc51a44fb1d717586b42e09, type: 3}
+  - {fileID: 1176541599902996, guid: 91316fc61f7d3ed4c80eba36d3b4a9ba, type: 3}
+  - {fileID: 1771272114057482, guid: 98a60cca71767e040871add5f58c9629, type: 3}
+  - {fileID: 1631008089580486, guid: b6f0b015eec52d347be907705eb8cef5, type: 3}
+  - {fileID: 1745985381151184, guid: e78903da526b210428751eb5b30bf950, type: 3}
+  - {fileID: 1656756292258112, guid: e9c41220b3b5b0b4f8fbeb1de872cf97, type: 3}
+  - {fileID: 1678890021084080, guid: 369c415d52d85124da8f2891c1c5156c, type: 3}
+  - {fileID: 1611309189341772, guid: 5d61d2a4e17ff2941b764a0c90bd53cc, type: 3}
+  - {fileID: 1810156930214524, guid: 76996cea4a7908345a11b7af0b68988d, type: 3}
+  - {fileID: 1287014040875918, guid: cc007a2d5d4ce564ab7ebb809dfe66de, type: 3}
+  - {fileID: 1882878971735690, guid: 0bb3ecf7727723040adb8c48d8c5e6ad, type: 3}
+  - {fileID: 1886965794066474, guid: 699fb7f45bd9a9d4f820a7907a4d1b1c, type: 3}
+  - {fileID: 1621467952567092, guid: 8921ab8ad4c2a494989eb41e5fccd0f2, type: 3}
+  - {fileID: 1269377943555648, guid: 5a9f822462a646e4eaeb662c93cdd259, type: 3}
+  - {fileID: 1047963184498016, guid: 41c0356d5b8db3a4584746ef7acad630, type: 3}
+  - {fileID: 1688294069528898, guid: 82b889694f935d84899f496d63f61502, type: 3}
+  - {fileID: 1076064810199812, guid: cc90b6250c16dd64faf19325f308cd29, type: 3}
+  - {fileID: 1548662106975064, guid: c26a1f26d6b3d964fb919686661f267f, type: 3}
+  - {fileID: 1524723219524570, guid: fd65dfa0beb9ea545a38e2df6ed94d82, type: 3}
+  - {fileID: 1855219387665800, guid: 086de37e279a769428e883df03655521, type: 3}
+  - {fileID: 1948100218087150, guid: 53023ce315e43294e97c6a1a06a1fb44, type: 3}
+  tyreRadius: 0.25
