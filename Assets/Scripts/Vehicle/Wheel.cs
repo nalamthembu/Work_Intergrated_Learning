@@ -5,7 +5,6 @@ public class Wheel : MonoBehaviour
 {
     public WheelCollider WheelCollider { get; private set; }
     [SerializeField] private Transform WheelMeshTransform;
-    [SerializeField] private Transform SuspensionTransform = null;
     private float WheelSlip;
     public bool IsGettingPower { get; set; }
     public float MaxSteerAngle { get; set; }
@@ -28,13 +27,6 @@ public class Wheel : MonoBehaviour
         WheelMeshTransform.SetPositionAndRotation(pos, rot);
         WheelCollider.GetGroundHit(out WheelHit hit);
         WheelSlip = Mathf.Abs(hit.forwardSlip + hit.sidewaysSlip);
-
-        if (SuspensionTransform != null)
-        {
-            Vector3 suspensionPosition = SuspensionTransform.position;
-            suspensionPosition.y = pos.y;
-            SuspensionTransform.position = suspensionPosition;
-        }
     }
 
     private void AdjustSkid()

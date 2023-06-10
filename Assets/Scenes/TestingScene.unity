@@ -199,7 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WheelMeshTransform: {fileID: 1207678666}
-  SuspensionTransform: {fileID: 0}
 --- !u!1 &153403086
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,12 +223,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153403086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.71241474, y: 0.44308716, z: -0.8158903}
+  m_LocalPosition: {x: -0.7145531, y: -0.016337216, z: -0.0017567873}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6017172937701356685}
-  m_Father: {fileID: 963872566}
+  m_Father: {fileID: 3660361116388107630}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &279821407
@@ -348,7 +347,7 @@ Transform:
   - {fileID: 20238054}
   - {fileID: 527188732}
   m_Father: {fileID: 750238271}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &527188731
 GameObject:
@@ -426,7 +425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WheelMeshTransform: {fileID: 1997926885}
-  SuspensionTransform: {fileID: 7738917399071878446}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +575,6 @@ Transform:
   - {fileID: 7918759297703377253}
   - {fileID: 7738917399071878446}
   - {fileID: 3660361116388107630}
-  - {fileID: 963872566}
   - {fileID: 524731954}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -599,6 +596,8 @@ MonoBehaviour:
   - wheels:
     - {fileID: 20238056}
     - {fileID: 527188734}
+    axleMeshTransform: {fileID: 7738917399071878446}
+    axleHeightOffset: 0
     powered: 0
     steered: 1
     isRearWheel: 0
@@ -606,6 +605,8 @@ MonoBehaviour:
   - wheels:
     - {fileID: 1648376603}
     - {fileID: 1941373188}
+    axleMeshTransform: {fileID: 3660361116388107630}
+    axleHeightOffset: 0
     powered: 1
     steered: 0
     isRearWheel: 1
@@ -904,41 +905,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!1 &963872565
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 963872566}
-  m_Layer: 0
-  m_Name: WHEEL_MESHES
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &963872566
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963872565}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 153403087}
-  - {fileID: 2066714462}
-  - {fileID: 1207678666}
-  - {fileID: 1997926885}
-  m_Father: {fileID: 750238271}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1141300988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,13 +1027,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207678665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.71241474, y: 0.44308716, z: 1.5880002}
+  m_LocalPosition: {x: -0.7145531, y: -0.016337216, z: -0.0029693842}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1943454151}
-  m_Father: {fileID: 963872566}
-  m_RootOrder: 2
+  m_Father: {fileID: 7738917399071878446}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1648376600
 GameObject:
@@ -1145,7 +1111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WheelMeshTransform: {fileID: 153403087}
-  SuspensionTransform: {fileID: 0}
 --- !u!1 &1941373185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1187,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WheelMeshTransform: {fileID: 2066714462}
-  SuspensionTransform: {fileID: 3660361116388107630}
 --- !u!1 &1943454150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,13 +1294,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997926884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.71241474, y: 0.44308716, z: 1.588}
+  m_LocalPosition: {x: 0.71027637, y: -0.016337216, z: -0.0029695034}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 950169819}
-  m_Father: {fileID: 963872566}
-  m_RootOrder: 3
+  m_Father: {fileID: 7738917399071878446}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2066714461
 GameObject:
@@ -1362,12 +1326,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066714461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.71241474, y: 0.44308716, z: -0.8158903}
+  m_LocalPosition: {x: 0.71027637, y: -0.016337216, z: -0.0017567873}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 279821408}
-  m_Father: {fileID: 963872566}
+  m_Father: {fileID: 3660361116388107630}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &623967536610306692
@@ -1531,7 +1495,9 @@ Transform:
   m_LocalPosition: {x: 0.0021383762, y: 0.45942438, z: -0.8141335}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 153403087}
+  - {fileID: 2066714462}
   m_Father: {fileID: 750238271}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1883,7 +1849,9 @@ Transform:
   m_LocalPosition: {x: 0.0021383762, y: 0.45942438, z: 1.5909696}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1207678666}
+  - {fileID: 1997926885}
   m_Father: {fileID: 750238271}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1956,7 +1924,7 @@ GameObject:
   - component: {fileID: 1690341332100743936}
   - component: {fileID: 6997024749379682930}
   m_Layer: 0
-  m_Name: back_diff
+  m_Name: REAR_DIFF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1974,7 +1942,7 @@ GameObject:
   - component: {fileID: 2534745326503864000}
   - component: {fileID: 2929242739881783526}
   m_Layer: 0
-  m_Name: front_diff
+  m_Name: FRONT_DIFF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

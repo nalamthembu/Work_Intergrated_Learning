@@ -83,9 +83,9 @@ public class Transmission : MonoBehaviour
 
                 if (vehicle.axes[i].powered && !currentlyChangingGears) //don't transfer power to wheels while changing gears.
                 {
-                    float input = (vehicle.input.reverse) ? -vehicle.input.throttle : vehicle.input.throttle;
+                    float input = vehicle.input.reverse ? -vehicle.input.throttle : vehicle.input.throttle;
 
-                    input = (vehicle.VehicleSpeedKMPH <= 0) ? 1 * vehicle.input.clutch : input;
+                    input = (vehicle.VehicleSpeedKMPH <= 0) ? vehicle.input.clutch : input;
 
                     float power = vehicle.engine.EngineTorque / poweredWheelCount * input;
 

@@ -118,6 +118,7 @@ public class Vehicle : MonoBehaviour
     {
         for (int i = 0; i < axes.Length; i++)
         {
+            //ABS
             Wheel[] wheels = axes[i].wheels;
 
             if (!ABSActive) //When ABS is inactive
@@ -137,6 +138,7 @@ public class Vehicle : MonoBehaviour
                 }
             }
 
+            //Steering
             if (axes[i].steered)
             {
                 if (input.steering > 0)
