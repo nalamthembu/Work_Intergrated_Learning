@@ -21,8 +21,6 @@ Material:
   - _WIND
   m_InvalidKeywords:
   - _INTERACTION_OFF
-  - _LINKMAPTILINGOFFSET_ON
-  - _OVERLAY_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -264,8 +262,8 @@ Material:
     - _OcclusionRemap: {r: 0, g: 1, b: 0, a: 0}
     - _Shiver: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 0}
-    - _TintVariation: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 0.7264151, g: 0.5012188, b: 0.14733891, a: 0}
+    - _TintVariation: {r: 0.7254902, g: 0.5019608, b: 0.14901961, a: 1}
     - _TranslucencyColor: {r: 1, g: 1, b: 1, a: 1}
     - _TranslucencyTint: {r: 0.43511656, g: 0.735849, b: 0.2880918, a: 0}
     - _TransmissionColor: {r: 1, g: 1, b: 1, a: 0}
