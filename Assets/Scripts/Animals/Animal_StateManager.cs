@@ -6,7 +6,7 @@ public class Animal_StateManager : MonoBehaviour
 {
     // initialising states and other important things
     Animals_BaseState currentState;
-    [SerializeField] public Animal animal;
+    [SerializeField] public AnimalScriptable animal;
     public Idle idle = new Idle();
     public Wandering wander = new Wandering();
     public Startled startled = new Startled();

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Animals")]
-public class Animal : ScriptableObject
+[CreateAssetMenu(fileName = "Animal", menuName = "Game/Animals")]
+public class AnimalScriptable : ScriptableObject
 {
     [Header("Stats")]
-    public string name = "Animal Name";
+    new public string name = "Animal Name";
     public int health = 10;
     public float speed = 10f;
 
