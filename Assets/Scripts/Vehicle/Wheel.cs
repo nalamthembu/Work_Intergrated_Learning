@@ -3,7 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(WheelCollider))]
 public class Wheel : MonoBehaviour
 {
-    [SerializeField] new WheelCollider collider;
+    new WheelCollider collider;
+    [Tooltip("Make sure the mesh has a parent it can rotate on")]
     [SerializeField] Transform wheelMesh;
     [SerializeField] WheelPosition wheelPosition;
     [SerializeField] WheelOutfacingDirection wheelSide;
@@ -51,6 +52,7 @@ public enum WheelOutfacingDirection
 public enum WheelPosition
 {
     BACK,
+    MID, //For lorries
     FRONT
 }
 #endregion

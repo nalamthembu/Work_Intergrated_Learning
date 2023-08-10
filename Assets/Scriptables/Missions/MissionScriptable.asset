@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee2361595ca6b142a5a12d296d71e58, type: 3}
   m_Name: MissionScriptable
   m_EditorClassIdentifier: 
-  missions: []
+  missions:
+  - name: Test Mission
+    objectives:
+    - name: Test Objective
+      instructionToPlayer: Drive over to "this specific spot".
+      type: 0
+    - name: Test Objective
+      instructionToPlayer: Drive over to "this specific spot".
+      type: 0
