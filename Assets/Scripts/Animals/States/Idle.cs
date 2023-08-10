@@ -13,7 +13,10 @@ public class Idle : Animals_BaseState
 
     public override void OnRangeEnter(Animal_StateManager animal, GameObject thing)
     {
-        throw new System.NotImplementedException();
+        if(thing.CompareTag("Player"))
+        {
+            Debug.Log("Player is in range");
+        }
     }
 
     public override void UpdateState(Animal_StateManager animal)
