@@ -18,6 +18,12 @@ public class Animal_StateManager : MonoBehaviour
     public Attacking attack = new Attacking();
     public NavMeshAgent animals;
 
+    // Animator
+    [SerializeField] public Animator animalAnimator;
+
+    // Bools for States 
+    public bool isIdle = false;
+
     // bools and such
     public bool playerInRange = false;
     public bool gotShot = false;

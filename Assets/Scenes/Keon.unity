@@ -242,7 +242,10 @@ MonoBehaviour:
   startled: {fileID: 0}
   running: {fileID: 0}
   KO: {fileID: 0}
+  attack: {fileID: 0}
   animals: {fileID: 0}
+  animalAnimator: {fileID: 323341144}
+  isIdle: 0
   playerInRange: 0
   gotShot: 0
   isTired: 0
@@ -253,6 +256,8 @@ MonoBehaviour:
   torporLevel: 1
   detectionRange: 15
   player: {fileID: 2089803880}
+  currentPos: {x: 0, y: 0, z: 0}
+  playerPos: {x: 0, y: 0, z: 0}
 --- !u!195 &323341143
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -275,6 +280,26 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &323341144
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323341137}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 746d9529e7a8bac4abdac86a96bc19ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1392864759
 GameObject:
   m_ObjectHideFlags: 0
