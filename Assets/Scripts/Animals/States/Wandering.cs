@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wandering : MonoBehaviour
+public class Wandering : Animals_BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(Animal_StateManager animal)
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnRangeEnter(Animal_StateManager animal, GameObject thing)
     {
-        
+        throw new System.NotImplementedException();
     }
+
+    public override void UpdateState(Animal_StateManager animal)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    
 }
