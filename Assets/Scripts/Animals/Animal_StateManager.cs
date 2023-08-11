@@ -23,6 +23,7 @@ public class Animal_StateManager : MonoBehaviour
 
     // Bools for States 
     public bool isIdle = false;
+    public bool isWandering = false;
 
     // bools and such
     public bool playerInRange = false;
@@ -36,6 +37,7 @@ public class Animal_StateManager : MonoBehaviour
     public float speed = 10f;
     public int torporLevel = 1;
     public float detectionRange = 15f;
+    public float wanderRadius = 20f;
 
     // important objects in game
     [SerializeField] public GameObject player;
@@ -53,6 +55,7 @@ public class Animal_StateManager : MonoBehaviour
         detectionRange = animal.detectionRange;
         // sets up important information for the nav mesh agent
         animals = gameObject.GetComponent<NavMeshAgent>();
+        animals.Warp(transform.position);
         animals.speed = speed;
         currentState = idle;
         // enters into a default state when the gam start
@@ -61,7 +64,29 @@ public class Animal_StateManager : MonoBehaviour
 
     void Update()
     {
+        currentPos = this.transform.position;
         
+        currentState.UpdateState(this);
+    }
+
+    // Wandering state switch
+    public void WanderAround()
+    {
+        SwitchState(wander);
+    }
+
+    // code for making the animal wander around an area
+    public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitSphere * dist;
+
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
     }
 
     // Will use this when something enters the range of the animal
@@ -73,7 +98,9 @@ public class Animal_StateManager : MonoBehaviour
     // will be used to switch between states
     public void SwitchState(Animals_BaseState state)
     {
+        currentState.ExitState(this);
         currentState = state;
         state.EnterState(this);
     }
+    
 }

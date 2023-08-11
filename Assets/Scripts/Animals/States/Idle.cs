@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Idle : Animals_BaseState
 {
+    float timer = 0;
+
     public override void EnterState(Animal_StateManager animal)
     {
         animal.isIdle = true;
@@ -11,17 +13,29 @@ public class Idle : Animals_BaseState
         Debug.Log("Animal is in idle");
     }
 
+    public override void ExitState(Animal_StateManager animal)
+    {
+        animal.isIdle = false;
+        animal.animalAnimator.SetBool("IsInIdle", false);
+        Debug.Log("Animal is not in idle");
+    }
+
     public override void OnRangeEnter(Animal_StateManager animal, GameObject thing)
     {
         if(thing.CompareTag("Player"))
         {
             Debug.Log("Player is in range");
+           
         }
     }
 
     public override void UpdateState(Animal_StateManager animal)
     {
-        throw new System.NotImplementedException();
+        if(timer >= 1.5f)
+        {
+            animal.SwitchState(animal.wander);
+        }
+        timer += Time.deltaTime;
     }
 
 }
