@@ -12,14 +12,14 @@ public class Animal_StateManager : MonoBehaviour
     [SerializeField] public AnimalScriptable animal;
     public Idle idle = new Idle();
     public Wandering wander = new Wandering();
-    public Startled startled = new Startled();
-    public RunningAway running = new RunningAway();
-    public KnockedOut KO = new KnockedOut();
-    public Attacking attack = new Attacking();
+    //public Startled startled = new Startled();
+    //public RunningAway running = new RunningAway();
+    //public KnockedOut KO = new KnockedOut();
+    //public Attacking attack = new Attacking();
     public NavMeshAgent animals;
 
     // Animator
-    [SerializeField] public Animator animalAnimator;
+    //[SerializeField] public Animator animalAnimator;
 
     // Bools for States 
     public bool isIdle = false;
@@ -47,6 +47,7 @@ public class Animal_StateManager : MonoBehaviour
 
     void Start()
     {
+        animals = gameObject.GetComponent<NavMeshAgent>();
         // initialise stats
         name = animal.name;
         health = animal.health;
@@ -54,8 +55,7 @@ public class Animal_StateManager : MonoBehaviour
         torporLevel = animal.torporLevel;
         detectionRange = animal.detectionRange;
         // sets up important information for the nav mesh agent
-        animals = gameObject.GetComponent<NavMeshAgent>();
-        animals.Warp(transform.position);
+        animals.Warp(new Vector3(-3, 0.6f, 0));
         animals.speed = speed;
         currentState = idle;
         // enters into a default state when the gam start

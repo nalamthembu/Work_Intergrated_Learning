@@ -9,14 +9,14 @@ public class Idle : Animals_BaseState
     public override void EnterState(Animal_StateManager animal)
     {
         animal.isIdle = true;
-        animal.animalAnimator.SetBool("IsInIdle", true);
+        //animal.animalAnimator.SetBool("IsInIdle", true);
         Debug.Log("Animal is in idle");
     }
 
     public override void ExitState(Animal_StateManager animal)
     {
         animal.isIdle = false;
-        animal.animalAnimator.SetBool("IsInIdle", false);
+        //animal.animalAnimator.SetBool("IsInIdle", false);
         Debug.Log("Animal is not in idle");
     }
 

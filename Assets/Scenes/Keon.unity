@@ -544,6 +544,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2244161382606031748, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244161382606031748, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
+      propertyPath: m_BaseOffset
+      value: 0.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244161382606031748, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
+      propertyPath: m_WalkableMask
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244161382606031748, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
+      propertyPath: m_AutoTraverseOffMeshLink
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2244161382606031749, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
       propertyPath: player
       value: 
@@ -562,7 +578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2244161382834172035, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.557
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 2244161382834172035, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -595,6 +611,10 @@ PrefabInstance:
     - target: {fileID: 2244161382834172035, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244161382834172061, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2244161382834172063, guid: 05beda61bba7b964bbfedc931774f5cc, type: 3}
       propertyPath: m_Name
