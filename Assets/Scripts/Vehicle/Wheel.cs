@@ -13,6 +13,30 @@ public class Wheel : MonoBehaviour
     private WheelSlip slip;
     private GameObject rTyre;
 
+    public bool IsGrounded
+    {
+        get
+        {
+            return collider.isGrounded;
+        }
+    }
+
+    public float SteeringAngle
+    {
+        get
+        {
+            return collider.steerAngle;
+        }
+
+        set
+        {
+            collider.steerAngle = value;
+        }
+    }
+
+    public float RPM { get { return collider.rpm; } }
+
+
     private void Awake()
     {
         collider = GetComponent<WheelCollider>();
@@ -20,7 +44,10 @@ public class Wheel : MonoBehaviour
         ResizeWheelCollider();
     }
 
-    public void FixedUpdate()
+    public void SetMotorTorque(float torque) => collider.motorTorque = torque;
+    public void SetBrakeTorque(float bTorque) => collider.brakeTorque = bTorque;
+
+    private void FixedUpdate()
     {
         collider.GetGroundHit(out WheelHit hit);
         collider.GetWorldPose(out Vector3 pos, out Quaternion rot);
