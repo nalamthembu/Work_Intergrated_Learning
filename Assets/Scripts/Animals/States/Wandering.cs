@@ -30,8 +30,8 @@ public class Wandering : Animals_BaseState
         if (timer >= wanderTimer)
         {
             Debug.Log("Animal is wandering around the area");
-            Vector3 newPos = animal.RandomNavSphere(animal.currentPos, animal.wanderRadius, -1);
-            animal.animals.SetDestination(newPos);
+            Vector3 newPos = animal.GetRandomNavSphere(animal.currentPos, animal.wanderRadius, -1);
+            animal.NavMeshAgent.SetDestination(newPos);
             timer = 0;
         }
     }

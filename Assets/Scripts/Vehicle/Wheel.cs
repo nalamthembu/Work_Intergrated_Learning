@@ -51,7 +51,7 @@ public class Wheel : MonoBehaviour
     {
         collider.GetGroundHit(out WheelHit hit);
         collider.GetWorldPose(out Vector3 pos, out Quaternion rot);
-        rTyre.transform.SetPositionAndRotation(pos, rot);
+        rTyre.transform.parent.SetPositionAndRotation(pos, rot);
         slip.forward = hit.forwardSlip;
         slip.sideways = hit.sidewaysSlip;
     }

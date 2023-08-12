@@ -16,7 +16,9 @@ public class Animal_StateManager : MonoBehaviour
     //public RunningAway running = new RunningAway();
     //public KnockedOut KO = new KnockedOut();
     //public Attacking attack = new Attacking();
-    public NavMeshAgent animals;
+    private NavMeshAgent navMeshAgent;
+
+    public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
 
     // Animator
     //[SerializeField] public Animator animalAnimator;
@@ -45,18 +47,20 @@ public class Animal_StateManager : MonoBehaviour
     public Vector3 playerPos;
 
 
+    private void Awake()
+    {
+        navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+    }
+
     void Start()
     {
-        animals = gameObject.GetComponent<NavMeshAgent>();
         // initialise stats
         name = animal.name;
         health = animal.health;
         speed = animal.speed;
         torporLevel = animal.torporLevel;
         detectionRange = animal.detectionRange;
-        // sets up important information for the nav mesh agent
-        animals.Warp(new Vector3(-3, 0.6f, 0));
-        animals.speed = speed;
+        navMeshAgent.speed = speed;
         currentState = idle;
         // enters into a default state when the gam start
         currentState.EnterState(this);
@@ -76,15 +80,13 @@ public class Animal_StateManager : MonoBehaviour
     }
 
     // code for making the animal wander around an area
-    public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    public Vector3 GetRandomNavSphere(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
+        Vector3 randVector = Random.insideUnitSphere * dist;
 
-        randDirection += origin;
+        randVector += origin;
 
-        NavMeshHit navHit;
-
-        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+        NavMesh.SamplePosition(randVector, out NavMeshHit navHit, dist, layermask);
 
         return navHit.position;
     }
