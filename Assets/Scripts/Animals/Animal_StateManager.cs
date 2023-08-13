@@ -34,7 +34,7 @@ public class Animal_StateManager : MonoBehaviour
     public bool outOfDanger = true;
 
     // animals stats 
-    public string name = "Name";
+    public string AnimalName = "Name";
     public int health = 10;
     public float speed = 10f;
     public int torporLevel = 1;
@@ -55,7 +55,7 @@ public class Animal_StateManager : MonoBehaviour
     void Start()
     {
         // initialise stats
-        name = animal.name;
+        AnimalName = animal.name;
         health = animal.health;
         speed = animal.speed;
         torporLevel = animal.torporLevel;

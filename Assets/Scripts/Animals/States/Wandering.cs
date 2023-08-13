@@ -5,17 +5,23 @@ using UnityEngine;
 public class Wandering : Animals_BaseState
 {
     private float timer = 0;
-    public float wanderTimer = 5f;
+    public float wanderTimer = 7f;
     public override void EnterState(Animal_StateManager animal)
     {
         animal.isWandering = true;
         //animal.animalAnimator.SetBool("IsInWandering", true);
-        Debug.Log("Is wandering");
+        animal.GetComponent<MeshRenderer>().material.color = Color.blue;
+
+        Debug.Log("Animal is wandering around the area");
+        Vector3 newPos = animal.GetRandomNavSphere(animal.currentPos, animal.wanderRadius, -1);
+        animal.NavMeshAgent.SetDestination(newPos);
     }
 
     public override void ExitState(Animal_StateManager animal)
     {
-        throw new System.NotImplementedException();
+        animal.isWandering = false;
+        animal.GetComponent<MeshRenderer>().material.color = Color.white;
+        timer = 0;
     }
 
     public override void OnRangeEnter(Animal_StateManager animal, GameObject thing)
@@ -29,10 +35,7 @@ public class Wandering : Animals_BaseState
 
         if (timer >= wanderTimer)
         {
-            Debug.Log("Animal is wandering around the area");
-            Vector3 newPos = animal.GetRandomNavSphere(animal.currentPos, animal.wanderRadius, -1);
-            animal.NavMeshAgent.SetDestination(newPos);
-            timer = 0;
+            animal.SwitchState(animal.idle);
         }
     }
 

@@ -11,6 +11,7 @@ public class Idle : Animals_BaseState
         animal.isIdle = true;
         //animal.animalAnimator.SetBool("IsInIdle", true);
         Debug.Log("Animal is in idle");
+        animal.GetComponent<MeshRenderer>().material.color = Color.red;
     }
 
     public override void ExitState(Animal_StateManager animal)
@@ -18,6 +19,8 @@ public class Idle : Animals_BaseState
         animal.isIdle = false;
         //animal.animalAnimator.SetBool("IsInIdle", false);
         Debug.Log("Animal is not in idle");
+        animal.GetComponent<MeshRenderer>().material.color = Color.white;
+        timer = 0;
     }
 
     public override void OnRangeEnter(Animal_StateManager animal, GameObject thing)
@@ -31,7 +34,7 @@ public class Idle : Animals_BaseState
 
     public override void UpdateState(Animal_StateManager animal)
     {
-        if(timer >= 1.5f)
+        if(timer >= 5f)
         {
             animal.SwitchState(animal.wander);
         }
