@@ -26,6 +26,7 @@ namespace AnimalLocomotionStates
         public override void EnterState(StateMachine stateMachine)
         {
             machine = (AnimalLocomotionStateMachine)stateMachine;
+            animal = machine.Animal;
         }
 
         public override void ExitState(StateMachine stateMachine)
@@ -52,6 +53,7 @@ namespace AnimalLocomotionStates
         public override void EnterState(StateMachine stateMachine)
         {
             machine = (AnimalLocomotionStateMachine)stateMachine;
+            animal = machine.Animal;
         }
 
         public override void ExitState(StateMachine stateMachine)
@@ -65,7 +67,7 @@ namespace AnimalLocomotionStates
         }
     }
 
-    public class AnimalIdleState : AnimalBaseState
+    public class AnimalIdleMovementState : AnimalBaseState
     {
         AnimalLocomotionStateMachine machine;
 
@@ -87,6 +89,7 @@ namespace AnimalLocomotionStates
         public override void UpdateState(StateMachine stateMachine)
         {
             machine.UpdateSpeed(0F);
+            CheckStateChange(machine);
         }
     }
 
@@ -124,6 +127,8 @@ namespace AnimalBehaviourStates
     {
         float wanderTimer;
 
+        float distanceFromTargetLocation;
+
         AnimalBehaviouralStateMachine machine;
 
         public override void CheckStateChange(StateMachine stateMachine)
@@ -138,7 +143,8 @@ namespace AnimalBehaviourStates
         {
             wanderTimer = Random.Range(5F, 15F);
             machine = (AnimalBehaviouralStateMachine)stateMachine;
-            machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 5F));
+            machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
+            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
         }
 
         public override void ExitState(StateMachine stateMachine)
@@ -149,6 +155,21 @@ namespace AnimalBehaviourStates
         public override void UpdateState(StateMachine stateMachine)
         {
             wanderTimer -= Time.deltaTime;
+
+            distanceFromTargetLocation = machine.LocomotionStateMachine.GetDistanceFromTargetPosition();
+
+            if (distanceFromTargetLocation < .5F)
+            {
+                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
+                if (machine.LocomotionStateMachine.CurrentState is not AnimalLocomotionStates.AnimalWalkState)
+                    machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
+            }
+            else if (distanceFromTargetLocation > 10F)
+            {
+                machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalRunState);
+            }
+
+
             CheckStateChange(stateMachine);
         }
     }
@@ -168,8 +189,10 @@ namespace AnimalBehaviourStates
 
         public override void EnterState(StateMachine stateMachine)
         {
+            Debug.Log("Entered Idle State");
             idleTimer = Random.Range(5F, 15F);
             machine = (AnimalBehaviouralStateMachine)stateMachine;
+            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
         }
 
         public override void ExitState(StateMachine stateMachine)

@@ -1,6 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(HealthComponent))]
+[
+    RequireComponent
+    (
+        typeof(HealthComponent),
+        typeof(AnimalLocomotionStateMachine),
+        typeof(AnimalBehaviouralStateMachine)
+    )
+]
+
+[
+    RequireComponent
+    (
+        typeof(NavMeshAgent)
+    )
+]
+
 public class Animal : MonoBehaviour, IStorable
 {
     public AnimalScriptable animalData;

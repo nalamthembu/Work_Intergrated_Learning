@@ -5,7 +5,7 @@ using AnimalLocomotionStates;
 public class AnimalLocomotionStateMachine : StateMachine
 {
     #region STATE_OBJECTS
-    public AnimalIdleState animalIdleState = new();
+    public AnimalIdleMovementState animalIdleState = new();
     public AnimalWalkState animalWalkState = new();
     public AnimalRunState animalRunState = new();
     public AnimalStopState animalStopState = new();
@@ -14,6 +14,8 @@ public class AnimalLocomotionStateMachine : StateMachine
     public Animal Animal { get; private set; }
 
     private NavMeshAgent navMeshAgent;
+
+    public BaseState CurrentState { get { return currentState; } }
 
     private void Awake()
     {
@@ -35,16 +37,18 @@ public class AnimalLocomotionStateMachine : StateMachine
 
     public void UpdateSpeed(float targetSpeed)
     {
-        float currentSpeed = Animal.CurrentSpeed;
-
         Animal.CurrentSpeed = Mathf.SmoothDamp
             (
-                currentSpeed,
+                Animal.CurrentSpeed,
                 targetSpeed,
                 ref Animal.SpeedSmoothVelocity,
                 Animal.SpeedSmoothTime
             );
+
+        navMeshAgent.speed = Animal.CurrentSpeed;
     }
+
+    public float GetDistanceFromTargetPosition() => navMeshAgent.remainingDistance;
 
     private void Update() => currentState.UpdateState(this);
     public void GoToPosition(Vector3 position) => navMeshAgent.SetDestination(position);
