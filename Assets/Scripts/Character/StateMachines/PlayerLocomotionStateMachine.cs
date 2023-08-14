@@ -20,17 +20,13 @@ public class PlayerLocomotionStateMachine : StateMachine
 
     private void Start()
     {
-        currentState = PlayerIdleState;
-        currentState.EnterState(this);
-    }
-
-    private void Awake()
-    { 
         PlayerCharacter = GetComponent<PlayerCharacter>();
         playerInput = GetComponent<PlayerInput>();
         animator = PlayerCharacter.Animator;
         lFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
         rFoot = animator.GetBoneTransform(HumanBodyBones.RightFoot);
+        currentState = PlayerIdleState;
+        currentState.EnterState(this);
     }
 
     private void Update()

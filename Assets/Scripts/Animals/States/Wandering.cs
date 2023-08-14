@@ -26,7 +26,7 @@ public class Wandering : Animals_BaseState
 
     public override void OnRangeEnter(Animal_StateManager animal, GameObject thing)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("OnRangeEnter was called");
     }
 
     public override void UpdateState(Animal_StateManager animal)
@@ -38,6 +38,4 @@ public class Wandering : Animals_BaseState
             animal.SwitchState(animal.idle);
         }
     }
-
-    
 }

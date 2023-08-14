@@ -57,7 +57,7 @@ public class Animal_StateManager : MonoBehaviour
         // initialise stats
         AnimalName = animal.name;
         health = animal.health;
-        speed = animal.speed;
+        speed = animal.walkSpeed;
         torporLevel = animal.torporLevel;
         detectionRange = animal.detectionRange;
         navMeshAgent.speed = speed;

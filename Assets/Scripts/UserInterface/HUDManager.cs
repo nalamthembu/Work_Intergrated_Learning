@@ -8,6 +8,7 @@ public class HUDManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text txtSubtitles;
     [SerializeField] private TMP_Text txtNotification;
+    [SerializeField] private float instructionTimer = 4F;
 
     public static HUDManager instance;
 
@@ -85,7 +86,7 @@ public class HUDManager : MonoBehaviour
 
         txtNotification.text = text;
 
-        yield return new WaitForSeconds(4F);
+        yield return new WaitForSeconds(instructionTimer);
 
         while (cg_NotificationGroup.alpha != 0)
         {
