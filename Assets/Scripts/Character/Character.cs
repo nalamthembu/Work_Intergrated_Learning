@@ -10,6 +10,10 @@ public class Character : MonoBehaviour
 
     protected bool isGrounded;
 
+    protected Animator animator;
+
+    public Animator Animator { get { return animator; } }
+
     public float TargetSpeed { get; set; }
     public float WalkSpeed { get { return walkSpeed; } }
     public float RunSpeed { get { return runSpeed; } }
@@ -24,6 +28,7 @@ public class Character : MonoBehaviour
     public virtual void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
+        animator = GetComponent<Animator>();
     }
 
     public void Teleport(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);

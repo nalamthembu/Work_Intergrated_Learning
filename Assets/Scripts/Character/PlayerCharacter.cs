@@ -1,7 +1,20 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(PlayerInput))]
+[
+    RequireComponent
+    (
+        typeof(CharacterController),
+        typeof(PlayerInput)
+    )
+]
+
+[
+    RequireComponent
+    (
+        typeof(PlayerLocomotionStateMachine)
+    )
+]
+
 public class PlayerCharacter : Character
 {
     [SerializeField][Range(-50, 0)] float gravity;

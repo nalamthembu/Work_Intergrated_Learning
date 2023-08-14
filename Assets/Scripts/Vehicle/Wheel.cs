@@ -4,15 +4,15 @@ using UnityEngine;
 public class Wheel : MonoBehaviour
 {
     new WheelCollider collider;
+    [SerializeField] GameObject wheelMeshPrefab;
     [Tooltip("Make sure the mesh has a parent it can rotate on")]
-    [SerializeField] Transform wheelMesh;
+    [SerializeField] Transform wheelMeshParent;
     [SerializeField] WheelPosition wheelPosition;
     [SerializeField] WheelOutfacingDirection wheelSide;
 
     //"r = Realtime, or Item that is spawned in during gameplay
     private WheelSlip slip;
-    private GameObject rTyre;
-
+    private GameObject rWheel;
     public bool IsGrounded
     {
         get
@@ -40,7 +40,9 @@ public class Wheel : MonoBehaviour
     private void Awake()
     {
         collider = GetComponent<WheelCollider>();
-        rTyre = wheelMesh.gameObject;
+
+        InitialiseWheelMesh();
+
         ResizeWheelCollider();
     }
 
@@ -51,15 +53,27 @@ public class Wheel : MonoBehaviour
     {
         collider.GetGroundHit(out WheelHit hit);
         collider.GetWorldPose(out Vector3 pos, out Quaternion rot);
-        rTyre.transform.parent.SetPositionAndRotation(pos, rot);
+        rWheel.transform.parent.SetPositionAndRotation(pos, rot);
         slip.forward = hit.forwardSlip;
         slip.sideways = hit.sidewaysSlip;
     }
 
     private void ResizeWheelCollider()
     {
-        Bounds b = rTyre.GetComponent<MeshRenderer>().bounds;
+        Bounds b = rWheel.GetComponent<MeshRenderer>().bounds;
         collider.radius = b.size.z / 2;
+    }
+
+    private void InitialiseWheelMesh()
+    {
+        rWheel = Instantiate(wheelMeshPrefab, wheelMeshParent.position, wheelMeshParent.rotation, wheelMeshParent);
+
+        switch (wheelSide)
+        {
+            case WheelOutfacingDirection.LEFT:
+                rWheel.transform.localEulerAngles = Vector3.up * -180;
+                break;
+        }
     }
 }
 

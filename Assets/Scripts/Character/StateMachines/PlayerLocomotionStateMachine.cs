@@ -25,12 +25,12 @@ public class PlayerLocomotionStateMachine : StateMachine
     }
 
     private void Awake()
-    {
-        animator = GetComponent<Animator>();
+    { 
         PlayerCharacter = GetComponent<PlayerCharacter>();
+        playerInput = GetComponent<PlayerInput>();
+        animator = PlayerCharacter.Animator;
         lFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
         rFoot = animator.GetBoneTransform(HumanBodyBones.RightFoot);
-        playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
