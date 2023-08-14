@@ -10,6 +10,8 @@ public class Animal : MonoBehaviour, IStorable
     public GameObject GetGameObject() => gameObject;
     public Transform GetTransform() => transform;
 
+    public float TargetSpeed { get; set; }
+
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
