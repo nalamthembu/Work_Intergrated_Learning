@@ -35,7 +35,7 @@ public class PlayerLocomotionStateMachine : StateMachine
         currentState.UpdateState(this);
     }
 
-    public void DoSwitchState(BaseState state)
+    public override void DoSwitchState(BaseState state)
     {
         currentState = state;
         state.EnterState(this);

@@ -10,7 +10,12 @@ public class Animal : MonoBehaviour, IStorable
     public GameObject GetGameObject() => gameObject;
     public Transform GetTransform() => transform;
 
+    [SerializeField] [Range(0.1F, 2F)] float speedSmoothTime = 0.25F;
+
     public float TargetSpeed { get; set; }
+    public float CurrentSpeed { get; set; }
+    [HideInInspector] public float SpeedSmoothVelocity;
+    public float SpeedSmoothTime { get { return speedSmoothTime; } }
 
     private void Awake()
     {

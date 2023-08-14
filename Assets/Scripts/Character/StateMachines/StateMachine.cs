@@ -12,4 +12,9 @@ public class StateMachine : MonoBehaviour
     {
         //Do something.
     }
+
+    public virtual void DoSwitchState(BaseState state)
+    {
+        print("no switch state implimentation!");
+    }
 }
