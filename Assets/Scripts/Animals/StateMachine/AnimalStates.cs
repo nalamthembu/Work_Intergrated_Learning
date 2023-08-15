@@ -132,6 +132,8 @@ namespace AnimalBehaviourStates
 
         AnimalBehaviouralStateMachine machine;
 
+        Animal animal;
+
         public override void CheckStateChange(StateMachine stateMachine)
         {
             if (wanderTimer <= 0)
@@ -143,8 +145,14 @@ namespace AnimalBehaviourStates
         public override void EnterState(StateMachine stateMachine)
         {
             Debug.Log("Animal is Wandering");
-            wanderTimer = 2f;
+            
             machine = (AnimalBehaviouralStateMachine)stateMachine;
+
+            animal = machine.animal;
+            
+            wanderTimer = animal.WanderTime;
+
+
             machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
         }
@@ -169,11 +177,6 @@ namespace AnimalBehaviourStates
                     machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
                 }
             }
-            else if (distanceFromTargetLocation > 10F)
-            {
-                machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalRunState);
-            }
-
 
             CheckStateChange(stateMachine);
         }
