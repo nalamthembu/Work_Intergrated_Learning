@@ -10,7 +10,7 @@ public class AnimalBehaviouralStateMachine : StateMachine
 
     public AnimalWanderingState animalWanderingState = new();
     public AnimalIdleState animalIdleState = new(); //Grazing and such.
-    public AnimalRunAwayState animalRunAway = new();
+    public AnimalRunAwayState animalRunAwayState = new();
 
     //TO-DO : ADD MORE STATES.
 
@@ -32,7 +32,11 @@ public class AnimalBehaviouralStateMachine : StateMachine
         state.EnterState(this);
     }
 
-    private void Update() => currentState.UpdateState(this);
+    private void Update() 
+    {
+        currentState.UpdateState(this);
+        //Debug.Log(currentState);
+    } 
 
     // random position in a circle
     public Vector3 GetRandomNavSphere(Vector3 origin, float dist)
@@ -49,11 +53,10 @@ public class AnimalBehaviouralStateMachine : StateMachine
     // random safe position to run away to
     public Vector3 GetRandomSafePosition(Vector3 origin, float dist)
     {
-        Vector3 randVector = Random.insideUnitSphere * dist;
 
-        randVector += origin;
+        Vector3 randVector = animal.transform.position - animal.Player.transform.position;
 
-        randVector += -animal.Player.transform.position;
+        randVector = randVector * 3;
 
         NavMesh.SamplePosition(randVector, out NavMeshHit navHit, dist, -1);
 
@@ -64,7 +67,7 @@ public class AnimalBehaviouralStateMachine : StateMachine
     {
         if(animal.PlayerInRange == true)
         {
-            DoSwitchState(animalRunAway);
+            DoSwitchState(animalRunAwayState);
         }
       
     }

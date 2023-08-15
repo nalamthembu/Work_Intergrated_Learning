@@ -49,6 +49,10 @@ public class AnimalLocomotionStateMachine : StateMachine
     }
 
     public float GetDistanceFromTargetPosition() => navMeshAgent.remainingDistance;
-    private void Update() => currentState.UpdateState(this);
+    private void Update()
+    {
+        currentState.UpdateState(this);
+        //Debug.Log(currentState);
+    } 
     public void GoToPosition(Vector3 position) => navMeshAgent.SetDestination(position);
 }
