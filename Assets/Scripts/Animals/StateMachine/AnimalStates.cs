@@ -136,6 +136,9 @@ namespace AnimalBehaviourStates
 
         public override void CheckStateChange(StateMachine stateMachine)
         {
+            
+            machine.CheckForDanger();
+
             if (wanderTimer <= 0)
             {
                 machine.DoSwitchState(machine.animalIdleState);
@@ -189,6 +192,8 @@ namespace AnimalBehaviourStates
 
         public override void CheckStateChange(StateMachine stateMachine)
         {
+            machine.CheckForDanger();
+
             if (idleTimer <= 0)
             {
                 machine.DoSwitchState(machine.animalWanderingState);
@@ -212,6 +217,48 @@ namespace AnimalBehaviourStates
         {
             idleTimer -= Time.deltaTime;
             CheckStateChange(stateMachine);
+        }
+    }
+
+    public class AnimalRunAwayState : BaseState
+    {
+        private float runningAwayTimer = 5f;
+        float timer = 0;
+        AnimalBehaviouralStateMachine machine;
+
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            machine.CheckForDanger();
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            timer = 0;
+            machine = (AnimalBehaviouralStateMachine)stateMachine;
+            Debug.Log("Animal is Running Away");
+            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalRunState);
+            machine.GetRandomSafePosition(machine.animal.transform.position, 30f);
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            Debug.Log("Animal is away from danger");
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+
+            if(timer >= runningAwayTimer && machine.animal.PlayerInRange == true)
+            {
+                timer = 0;
+                machine.GetRandomSafePosition(machine.animal.transform.position, 30f);
+            }
+            else if (timer >= runningAwayTimer && machine.animal.PlayerInRange == false)
+            {
+                machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
+            }
+
+            timer += Time.deltaTime;
         }
     }
 

@@ -36,10 +36,19 @@ public class Animal : MonoBehaviour, IStorable
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
     public float WanderTime { get { return wanderTime; } }
 
+    public PlayerCharacter Player { get; private set; }
+
+    public bool PlayerInRange = false;
+
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
         healthComponent.SetHealth(animalData.health);
+    }
+
+    private void Start()
+    {
+        Player = FindObjectOfType<PlayerCharacter>();
     }
     public void Teleport(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);
 
@@ -52,6 +61,25 @@ public class Animal : MonoBehaviour, IStorable
         {
             healthComponent.SetHealth(0);
             return;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            Debug.Log("Im In Danger");
+            PlayerInRange = true;
+        }
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Debug.Log("Player is out of range");
+            PlayerInRange = false;
         }
     }
 }
