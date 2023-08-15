@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class AnimalStates { }
+
 public abstract class AnimalBaseState : BaseState
 {
     public override abstract void EnterState(StateMachine stateMachine);
@@ -125,7 +126,7 @@ namespace AnimalBehaviourStates
     #region BehaviouralStates
     public class AnimalWanderingState : BaseState
     {
-        float wanderTimer;
+        float wanderTimer = 0;
 
         float distanceFromTargetLocation;
 
@@ -141,7 +142,8 @@ namespace AnimalBehaviourStates
 
         public override void EnterState(StateMachine stateMachine)
         {
-            wanderTimer = Random.Range(5F, 15F);
+            Debug.Log("Animal is Wandering");
+            wanderTimer = 2f;
             machine = (AnimalBehaviouralStateMachine)stateMachine;
             machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
@@ -161,8 +163,11 @@ namespace AnimalBehaviourStates
             if (distanceFromTargetLocation < .5F)
             {
                 machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
+
                 if (machine.LocomotionStateMachine.CurrentState is not AnimalLocomotionStates.AnimalWalkState)
+                {
                     machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
+                }
             }
             else if (distanceFromTargetLocation > 10F)
             {
@@ -190,7 +195,7 @@ namespace AnimalBehaviourStates
         public override void EnterState(StateMachine stateMachine)
         {
             Debug.Log("Entered Idle State");
-            idleTimer = Random.Range(5F, 15F);
+            idleTimer = 3f;
             machine = (AnimalBehaviouralStateMachine)stateMachine;
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
         }

@@ -28,10 +28,13 @@ public class Animal : MonoBehaviour, IStorable
 
     [SerializeField] [Range(0.1F, 2F)] float speedSmoothTime = 0.25F;
 
+    [SerializeField] [Range(0.1f, 10f)] float wanderTime = 0.25f;
+
     public float TargetSpeed { get; set; }
     public float CurrentSpeed { get; set; }
     [HideInInspector] public float SpeedSmoothVelocity;
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
+    public float WanderTime { get { return wanderTime; } }
 
     private void Awake()
     {

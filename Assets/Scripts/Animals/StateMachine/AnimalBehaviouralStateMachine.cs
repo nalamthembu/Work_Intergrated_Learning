@@ -21,7 +21,7 @@ public class AnimalBehaviouralStateMachine : StateMachine
 
     private void Start()
     {
-        currentState = animalWanderingState;
+        currentState = animalIdleState;
         currentState.EnterState(this);
     }
 
