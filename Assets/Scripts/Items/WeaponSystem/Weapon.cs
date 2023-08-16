@@ -5,4 +5,8 @@ public class Weapon : Item
     [SerializeField] WeaponScriptable weaponData;
 
     public WeaponScriptable WeaponData { get { return weaponData; } }
+
+    float nextTimeToFire = 0;
+
+    
 }

@@ -9,6 +9,8 @@ public class WeaponScriptable : ScriptableObject
     public float damage = 10;
     public float fireRate = 5;
 
+    public FIRE_TYPE fireType;
+
     [Header("Resting")]
     public Vector3 restingPosition;
     public Vector3 restingRotation;
@@ -16,4 +18,10 @@ public class WeaponScriptable : ScriptableObject
     [Header("Aiming")]
     public Vector3 aimingPosition;
     public Vector3 aimingRotation;
+}
+
+public enum FIRE_TYPE
+{
+    SEMIAUTO,
+    AUTO
 }
