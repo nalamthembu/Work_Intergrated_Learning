@@ -13,7 +13,7 @@ public class AnimalLocomotionStateMachine : StateMachine
 
     public Animal Animal { get; private set; }
 
-    private NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent { get; private set; }
 
     public BaseState CurrentState { get { return currentState; } }
 

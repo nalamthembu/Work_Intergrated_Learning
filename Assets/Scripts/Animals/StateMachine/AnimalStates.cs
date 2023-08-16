@@ -222,7 +222,7 @@ namespace AnimalBehaviourStates
 
     public class AnimalRunAwayState : BaseState
     {
-        private float runningAwayTimer = 5f;
+        private float runningAwayTimer = 10f;
         float timer = 0;
         AnimalBehaviouralStateMachine machine;
 
@@ -248,7 +248,7 @@ namespace AnimalBehaviourStates
         public override void UpdateState(StateMachine stateMachine)
         {
 
-            if(timer >= runningAwayTimer && machine.animal.PlayerInRange == true)
+            if(timer <= runningAwayTimer && machine.animal.PlayerInRange == true)
             {
                 machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
                 timer = 0;
@@ -256,6 +256,7 @@ namespace AnimalBehaviourStates
             else if (timer >= runningAwayTimer && machine.animal.PlayerInRange == false)
             {
                 Debug.Log("Ive ran away");
+                machine.LocomotionStateMachine.navMeshAgent.speed = machine.animal.animalData.walkSpeed;
                 machine.DoSwitchState(machine.animalIdleState);
             }
 
