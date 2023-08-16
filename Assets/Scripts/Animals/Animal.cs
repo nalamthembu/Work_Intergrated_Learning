@@ -40,6 +40,10 @@ public class Animal : MonoBehaviour, IStorable
 
     public bool PlayerInRange = false;
 
+    public bool gotShot = false;
+
+    public bool firedAt = false;
+
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
@@ -81,5 +85,10 @@ public class Animal : MonoBehaviour, IStorable
             Debug.Log("Player is out of range");
             PlayerInRange = false;
         }
+    }
+
+    public void CreatePawPrints()
+    {
+        Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);
     }
 }

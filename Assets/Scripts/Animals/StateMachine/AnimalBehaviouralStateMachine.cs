@@ -56,7 +56,7 @@ public class AnimalBehaviouralStateMachine : StateMachine
 
         Vector3 randVector = animal.transform.position - animal.Player.transform.position;
 
-        randVector = randVector * 5;
+        randVector *= 20;
 
         NavMesh.SamplePosition(randVector, out NavMeshHit navHit, dist, -1);
 

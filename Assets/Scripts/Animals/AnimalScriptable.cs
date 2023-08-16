@@ -10,6 +10,7 @@ public class AnimalScriptable : ScriptableObject
     public float walkSpeed = 10f;
     public float runSpeed = 20f;
     public AnimalType animalType;
+    public GameObject pawprint;
 
     [Header("Capturing stats")]
     public int torporLevel = 1;
