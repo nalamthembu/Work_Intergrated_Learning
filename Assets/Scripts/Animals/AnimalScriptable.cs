@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "Animal", menuName = "Game/Animals/AnimalData")]
+[CreateAssetMenu(fileName = "Animal", menuName = "Game/Animals")]
 public class AnimalScriptable : ScriptableObject
 {
     [Header("Stats")]

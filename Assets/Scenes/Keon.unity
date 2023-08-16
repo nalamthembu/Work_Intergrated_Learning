@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 2099080737}
   - component: {fileID: 2099080738}
   m_Layer: 0
-  m_Name: Animal
+  m_Name: Animal_Redux
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -609,11 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: c206e265907848445af123cbbebdceff, type: 2}
   speedSmoothTime: 0.45
-<<<<<<< Updated upstream
   wanderTime: 2.63
-=======
-  wanderTime: 5
->>>>>>> Stashed changes
   SpeedSmoothVelocity: 0
   PlayerInRange: 0
 --- !u!114 &2099080733
