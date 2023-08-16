@@ -89,6 +89,7 @@ public class Animal : MonoBehaviour, IStorable
 
     public void CreatePawPrints()
     {
-        Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);
+        GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);
+        pawprint.GetComponent<Pawprint>().SetAnimal(this);
     }
 }
