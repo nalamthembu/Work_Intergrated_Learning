@@ -5,6 +5,10 @@ using UnityEngine;
 public class Pawprint : MonoBehaviour
 {
     private Animal animal;
+    public GameObject waypoint;
+    private float timer = 0;
+
+    private bool created = false;
 
     public void SetAnimal(Animal ani)
     {
@@ -15,18 +19,18 @@ public class Pawprint : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            // do shit
+            HUDManager.instance.ShowNotification("Press \"E\" to interact");
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E) && created != true)
+        {
+            Instantiate(waypoint, new Vector3(animal.transform.position.x, animal.transform.position.y + 0.5f, animal.transform.position.z), Quaternion.identity);
+            Destroy(gameObject, 5);
+            created = true;
+        }
     }
 }

@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28967f57eebbc3d4a81483d785008fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoint: {fileID: 8616342786857884805, guid: 98f5967cb719ea3489c529b7248a2c57, type: 3}
 --- !u!65 &7322254688526889122
 BoxCollider:
   m_ObjectHideFlags: 0
