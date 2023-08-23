@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static GameStrings;
 
 #region BASE_STATE
 public class CharacterStates { }
@@ -375,6 +376,102 @@ namespace AIStateMachine
 
         public override void UpdateState(StateMachine stateMachine)
         {
+        }
+    }
+    #endregion
+}
+
+namespace CharacterSituationStateMachine
+{
+    #region SITUATION_STATES
+    public class CharacterArmedState : BaseState
+    {
+        CharacterSituationalStateMachine machine;
+        Character character;
+        PlayerInput playerInput;
+
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            machine = (CharacterSituationalStateMachine)stateMachine;
+            character = machine.Character;
+
+            if (character is PlayerCharacter player)
+                playerInput = player.PlayerInput;
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+            HandleAnimations();
+        }
+
+        private void HandleAnimations()
+        {
+            character.Animator.SetBool(IS_AIMING, character.IsAiming);
+            character.Animator.SetBool(IS_SHOOTING, character.IsShooting);
+
+            if (character is PlayerCharacter)
+            {
+                float mouseX = playerInput.GetMouseX(CameraController.instance.MouseSensitivity);
+                float mouseY = playerInput.GetMouseY(CameraController.instance.MouseSensitivity);
+                character.Animator.SetFloat(MOUSE_X, mouseX);
+                character.Animator.SetFloat(MOUSE_Y, mouseY);
+            }
+        }
+    }
+
+    public class CharacterUnArmedState : BaseState
+    {
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public class CharacterInVehicleState : BaseState
+    {
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
         }
     }
     #endregion

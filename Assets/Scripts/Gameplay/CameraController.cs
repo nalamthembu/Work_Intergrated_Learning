@@ -8,14 +8,28 @@ public class CameraController : MonoBehaviour
     [SerializeField] Vector2 cameraOffset = new(.5F, 0);
     [SerializeField] float distanceFromTarget = 2F;
 
+    public static CameraController instance;
+
     float pitch;
     float yaw;
+
+    public float MouseSensitivity { get { return mouseSensitivity; } }
 
     PlayerInput input;
     new Camera camera;
 
     private void Awake()
     {
+        if (instance is null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         input = FindObjectOfType<PlayerInput>();
         camera = GetComponentInChildren<Camera>();
 

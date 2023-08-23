@@ -8,19 +8,18 @@
 ]
 
 public class Item : MonoBehaviour, IStorable
-{
+{   
     public GameObject GetGameObject() => gameObject;
     public Transform GetTransform() => transform;
     public bool IsPickedUp { get; private set; }
 
     new private SphereCollider collider;
 
-    private Character itemOwner;
+    protected Character itemOwner;
 
     private void OnValidate()
     {
         collider = GetComponent<SphereCollider>();
-
         collider.isTrigger = true;
     }
 
@@ -40,17 +39,23 @@ public class Item : MonoBehaviour, IStorable
             if (this is Weapon weapon)
             {
                 transform.SetParent(player.Animator.GetBoneTransform(HumanBodyBones.RightHand));
-                
+
                 transform.SetPositionAndRotation
                 (
                     weapon.WeaponData.restingPosition,
                     Quaternion.Euler(weapon.WeaponData.restingRotation)
                  );
+
+                weapon.RigidBody.isKinematic = true;
+
+                player.SetWeapon(weapon);
             }
+
+            collider.enabled = false;
         }
     }
 
-    private void Drop()
+    public void Drop()
     {
         IsPickedUp = false;
         itemOwner = null;

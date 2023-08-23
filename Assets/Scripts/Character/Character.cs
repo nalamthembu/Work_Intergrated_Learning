@@ -22,8 +22,13 @@ public class Character : MonoBehaviour
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
     [HideInInspector] public float SpeedSmoothVelocity;
 
-
     private HealthComponent healthComponent;
+
+    #region SHOOTING
+    public bool IsShooting { get; private set; }
+    public bool IsAiming { get; private set; }
+    public Weapon Weapon { get; private set; }
+    #endregion
 
     public virtual void Awake()
     {
@@ -55,4 +60,12 @@ public class Character : MonoBehaviour
         }
     }
     public void Revive(float revivalRate) => healthComponent.SetHealth(healthComponent.Health + revivalRate * Time.deltaTime);
+
+    public void SetWeapon(Weapon weapon)
+    {
+        if (this.Weapon is not null)
+            this.Weapon.Drop();
+
+        this.Weapon = weapon;
+    }
 }
