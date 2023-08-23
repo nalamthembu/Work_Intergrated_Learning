@@ -40,15 +40,11 @@ public class Item : MonoBehaviour, IStorable
             {
                 transform.SetParent(player.Animator.GetBoneTransform(HumanBodyBones.RightHand));
 
-                transform.SetPositionAndRotation
-                (
-                    weapon.WeaponData.restingPosition,
-                    Quaternion.Euler(weapon.WeaponData.restingRotation)
-                 );
-
                 weapon.RigidBody.isKinematic = true;
 
                 player.SetWeapon(weapon);
+
+                weapon.gameObject.SetActive(false);
             }
 
             collider.enabled = false;

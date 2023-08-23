@@ -8,6 +8,9 @@ public class PlayerInput : MonoBehaviour
     public bool IsRunning { get; private set; }
     public bool IsCrouching { get; private set; }
     public bool IsJumping { get; private set; }
+    public bool IsArmed { get; private set; }
+    public bool IsShooting { get; private set; } //Might not work as well as I want it to.
+    public bool IsAiming { get; private set; }
 
     PlayerCharacter playerCharacter;
 
@@ -23,6 +26,12 @@ public class PlayerInput : MonoBehaviour
             IsCrouching = !IsCrouching;
 
         IsJumping = Input.GetAxis("Jump") > 0;
+
+        //toggle equipping
+        if (Input.GetKeyDown(KeyCode.Tab))
+            IsArmed = !IsArmed;
+
+        IsAiming = Input.GetMouseButton(1);
     }
 
     public float GetMouseX(float mouseSensitivity) => Input.GetAxis("Mouse X") * mouseSensitivity;

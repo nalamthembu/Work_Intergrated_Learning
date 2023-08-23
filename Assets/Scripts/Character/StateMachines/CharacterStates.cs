@@ -392,7 +392,8 @@ namespace CharacterSituationStateMachine
 
         public override void CheckStateChange(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            if (!character.IsArmed)
+                machine.DoSwitchState(machine.ChrUnArmedState);
         }
 
         public override void EnterState(StateMachine stateMachine)
@@ -406,16 +407,18 @@ namespace CharacterSituationStateMachine
 
         public override void ExitState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            return;
         }
 
         public override void UpdateState(StateMachine stateMachine)
         {
             HandleAnimations();
+            CheckStateChange(stateMachine);
         }
 
         private void HandleAnimations()
         {
+            character.Animator.SetBool(IS_ARMED, character.IsArmed);
             character.Animator.SetBool(IS_AIMING, character.IsAiming);
             character.Animator.SetBool(IS_SHOOTING, character.IsShooting);
 
@@ -431,24 +434,39 @@ namespace CharacterSituationStateMachine
 
     public class CharacterUnArmedState : BaseState
     {
+        CharacterSituationalStateMachine machine;
+        Character character;
+
         public override void CheckStateChange(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            if (character.IsArmed)
+            {
+                machine.DoSwitchState(machine.ChrArmedState);
+            }
         }
 
         public override void EnterState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            machine = (CharacterSituationalStateMachine)stateMachine;
+            character = machine.Character;
         }
 
         public override void ExitState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            return;
         }
 
         public override void UpdateState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            HandleAnimations();
+            CheckStateChange(stateMachine);
+        }
+
+        private void HandleAnimations()
+        {
+            character.Animator.SetBool(IS_ARMED, character.IsArmed);
+            character.Animator.SetBool(IS_AIMING, character.IsAiming);
+            character.Animator.SetBool(IS_SHOOTING, character.IsShooting);
         }
     }
 

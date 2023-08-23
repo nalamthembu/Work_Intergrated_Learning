@@ -1,6 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(HealthComponent))]
+[
+    RequireComponent
+    (
+        typeof(HealthComponent),
+        typeof(CharacterSituationalStateMachine)
+    )
+]
+
 public class Character : MonoBehaviour
 {
     [SerializeField][Range(1, 10)] protected float walkSpeed = 2;
@@ -28,6 +35,7 @@ public class Character : MonoBehaviour
     public bool IsShooting { get; private set; }
     public bool IsAiming { get; private set; }
     public Weapon Weapon { get; private set; }
+    public bool IsArmed { get; private set; }
     #endregion
 
     public virtual void Awake()
@@ -59,6 +67,7 @@ public class Character : MonoBehaviour
             return;
         }
     }
+
     public void Revive(float revivalRate) => healthComponent.SetHealth(healthComponent.Health + revivalRate * Time.deltaTime);
 
     public void SetWeapon(Weapon weapon)
@@ -68,4 +77,9 @@ public class Character : MonoBehaviour
 
         this.Weapon = weapon;
     }
+
+    protected void SetAiming(bool value) => IsAiming = value;
+    protected void SetShooting(bool value) => IsShooting = value;
+    protected void SetArmed(bool value) => IsArmed = value;
+
 }

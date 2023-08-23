@@ -42,4 +42,25 @@ public class PlayerCharacter : Character
     {
         isGrounded = controller.isGrounded | Physics.Raycast(transform.position, Vector3.down, 0.125f);
     }
+
+    private void Update()
+    {
+        ReadPlayerInput();
+
+        if (Weapon is not null)
+            HandleWeapon();
+    }
+
+    private void ReadPlayerInput()
+    {
+        SetArmed(PlayerInput.IsArmed);
+        SetShooting(PlayerInput.IsShooting);
+        SetAiming(PlayerInput.IsAiming);
+    }
+
+    private void HandleWeapon()
+    {
+        Weapon.gameObject.SetActive(IsArmed);
+
+    }
 }

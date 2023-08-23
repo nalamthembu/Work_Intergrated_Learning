@@ -14,5 +14,6 @@
         IS_RUNNING = "IS_RUNNING",
         TARGET_ROTATION = "TARGET_ROTATION",
         IS_AIMING = "IS_AIMING",
-        IS_SHOOTING = "IS_SHOOTING";
+        IS_SHOOTING = "IS_SHOOTING",
+        IS_ARMED = "IS_ARMED";
 }

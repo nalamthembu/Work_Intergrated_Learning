@@ -14,7 +14,15 @@ public class Weapon : Item
         RigidBody = GetComponent<Rigidbody>();
     }
 
-    private void Update() => ProcessOwnerInput();   
+    private void Update()
+    {
+        ProcessOwnerInput();
+
+        if (IsPickedUp && itemOwner is not null)
+        {
+            PositionWeapon();
+        }
+    }
     
     private void ProcessOwnerInput()
     {
@@ -39,6 +47,21 @@ public class Weapon : Item
                         break;
                 }
             }
+        }
+    }
+
+    private void PositionWeapon()
+    {
+        if (!itemOwner.IsAiming)
+        {
+            transform.localPosition = weaponData.restingPosition;
+            transform.localRotation = Quaternion.Euler(weaponData.restingRotation);
+        }
+
+        if (itemOwner.IsAiming)
+        {
+            transform.localPosition = weaponData.aimingPosition;
+            transform.localRotation = Quaternion.Euler(weaponData.aimingRotation);
         }
     }
 
