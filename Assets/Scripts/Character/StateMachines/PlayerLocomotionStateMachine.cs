@@ -18,9 +18,12 @@ public class PlayerLocomotionStateMachine : StateMachine
     private PlayerInput playerInput;
     public PlayerCharacter PlayerCharacter { get; private set; }
 
+    private CharacterSituationalStateMachine characterSituationalMachine;
+
     private void Start()
     {
         PlayerCharacter = GetComponent<PlayerCharacter>();
+        characterSituationalMachine = GetComponent<CharacterSituationalStateMachine>();
         playerInput = GetComponent<PlayerInput>();
         animator = PlayerCharacter.Animator;
         lFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
@@ -31,6 +34,9 @@ public class PlayerLocomotionStateMachine : StateMachine
 
     private void Update()
     {
+        if (characterSituationalMachine.CurrentState == characterSituationalMachine.ChrInVehState)
+            return;
+
         DoAnimation();
         currentState.UpdateState(this);
     }
@@ -76,6 +82,10 @@ public class PlayerLocomotionStateMachine : StateMachine
 
     public void HandlePosition()
     {
+        if (characterSituationalMachine.CurrentState == characterSituationalMachine.ChrInVehState)
+            return;
+        
+
         float currentSpeed = PlayerCharacter.CurrentSpeed;
         float targetSpeed = PlayerCharacter.TargetSpeed;
 
@@ -95,13 +105,17 @@ public class PlayerLocomotionStateMachine : StateMachine
 
         //Set Movement Direction
         PlayerCharacter.VelocityY += Time.deltaTime * PlayerCharacter.Gravity;
-        PlayerCharacter.Velocity = (PlayerCharacter.transform.forward * PlayerCharacter.CurrentSpeed) + 
+        PlayerCharacter.Velocity = (PlayerCharacter.transform.forward * PlayerCharacter.CurrentSpeed) +
             Vector3.up * PlayerCharacter.VelocityY;
         PlayerCharacter.Controller.Move(PlayerCharacter.Velocity * Time.deltaTime);
     }
 
     public void HandleRotation()
     {
+        if (characterSituationalMachine.CurrentState == characterSituationalMachine.ChrArmedState && PlayerCharacter.IsAiming
+            || characterSituationalMachine.CurrentState == characterSituationalMachine.ChrInVehState)
+            return;
+
         //Calculate Rotation
         PlayerCharacter.TargetRotation =
             Mathf.Atan2(playerInput.InputDir.x, playerInput.InputDir.y) *

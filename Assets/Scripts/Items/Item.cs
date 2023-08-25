@@ -44,6 +44,13 @@ public class Item : MonoBehaviour, IStorable
 
                 player.SetWeapon(weapon);
 
+                Collider[] colliders = weapon.GetComponents<Collider>();
+
+                for(int i = 0; i < colliders.Length; i++)
+                {
+                    colliders[i].enabled = false;
+                }
+
                 weapon.gameObject.SetActive(false);
             }
 

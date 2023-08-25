@@ -3,15 +3,19 @@ using UnityEngine;
 public class Weapon : Item
 {
     [SerializeField] WeaponScriptable weaponData;
-
     public WeaponScriptable WeaponData { get { return weaponData; } }
     public Rigidbody RigidBody { get; private set; }
 
+    public Transform bulletSpawn;
+
     float nextTimeToFire = 0;
+
+    Camera mainCamera;
 
     private void Awake()
     {
         RigidBody = GetComponent<Rigidbody>();
+        mainCamera = Camera.main;
     }
 
     private void Update()
@@ -23,7 +27,7 @@ public class Weapon : Item
             PositionWeapon();
         }
     }
-    
+
     private void ProcessOwnerInput()
     {
         if (IsPickedUp && itemOwner.IsAiming)
@@ -50,6 +54,12 @@ public class Weapon : Item
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(bulletSpawn.position, bulletSpawn.position + bulletSpawn.forward);
+    }
+
     private void PositionWeapon()
     {
         if (!itemOwner.IsAiming)
@@ -67,6 +77,14 @@ public class Weapon : Item
 
     private void Fire()
     {
+        Bullet bullet = Instantiate(weaponData.bulletPrefab, bulletSpawn.position, Quaternion.identity).GetComponent<Bullet>();
 
+        if (Physics.Raycast(bulletSpawn.position, mainCamera.transform.forward, out RaycastHit hit, weaponData.range))
+            bullet.transform.LookAt(hit.point);
+        else
+            bullet.transform.forward = bulletSpawn.forward;
+
+
+        bullet.Initialise(2);
     }
 }

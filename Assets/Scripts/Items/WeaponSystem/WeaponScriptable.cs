@@ -9,6 +9,8 @@ public class WeaponScriptable : ScriptableObject
     public float damage = 10;
     public float fireRate = 5;
 
+    public GameObject bulletPrefab;
+
     public FIRE_TYPE fireType;
 
     [Header("Resting")]

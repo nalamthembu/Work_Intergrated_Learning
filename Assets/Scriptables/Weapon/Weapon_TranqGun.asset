@@ -16,9 +16,10 @@ MonoBehaviour:
   range: 50
   maxClip: 30
   damage: 10
-  fireRate: 5
-  fireType: 0
-  restingPosition: {x: 0, y: 0, z: 0}
-  restingRotation: {x: 0, y: 0, z: 0}
-  aimingPosition: {x: 0, y: 0, z: 0}
-  aimingRotation: {x: 0, y: 0, z: 0}
+  fireRate: 2
+  bulletPrefab: {fileID: 7528391234211077750, guid: 64b042be55079a74da2342e1840f7b97, type: 3}
+  fireType: 1
+  restingPosition: {x: 11.66, y: 4.81, z: -2.7}
+  restingRotation: {x: -20.3, y: 83.1, z: -90}
+  aimingPosition: {x: 11.66, y: 4.81, z: -2.7}
+  aimingRotation: {x: -3.7, y: 81.59, z: -90}

@@ -31,7 +31,14 @@ public class CharacterSituationalStateMachine : StateMachine
     public override void DoSwitchState(BaseState state)
     {
         currentState = state;
-        state.EnterState(this);
+        currentState.EnterState(this);
+    }
+
+    public void SwitchToInVehicleState(Vehicle v)
+    {
+        currentState = ChrInVehState;
+        ChrInVehState.SetVehicle(v);
+        CurrentState.EnterState(this);
     }
 
     public void ResetFeet()

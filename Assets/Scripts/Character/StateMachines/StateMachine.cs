@@ -8,6 +8,8 @@ public class StateMachine : MonoBehaviour
 
     protected Transform lFoot, rFoot;
 
+    public BaseState CurrentState { get { return currentState; } }
+
     public virtual void DoStateCheck()
     {
         //Do something.

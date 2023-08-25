@@ -388,6 +388,8 @@ namespace CharacterSituationStateMachine
     {
         CharacterSituationalStateMachine machine;
         Character character;
+        PlayerCharacter playerChar;
+        Transform cameraT;
         PlayerInput playerInput;
 
         public override void CheckStateChange(StateMachine stateMachine)
@@ -401,8 +403,8 @@ namespace CharacterSituationStateMachine
             machine = (CharacterSituationalStateMachine)stateMachine;
             character = machine.Character;
 
-            if (character is PlayerCharacter player)
-                playerInput = player.PlayerInput;
+            playerChar = character.GetComponent<PlayerCharacter>();
+            cameraT = playerChar.MainCamera;
         }
 
         public override void ExitState(StateMachine stateMachine)
@@ -413,7 +415,16 @@ namespace CharacterSituationStateMachine
         public override void UpdateState(StateMachine stateMachine)
         {
             HandleAnimations();
+            HandleRotation();
             CheckStateChange(stateMachine);
+        }
+
+        private void HandleRotation()
+        {
+            if (playerChar is not null && playerChar.IsAiming)
+            {
+                playerChar.transform.eulerAngles = Vector3.up * cameraT.parent.eulerAngles.y;
+            }
         }
 
         private void HandleAnimations()
@@ -422,12 +433,9 @@ namespace CharacterSituationStateMachine
             character.Animator.SetBool(IS_AIMING, character.IsAiming);
             character.Animator.SetBool(IS_SHOOTING, character.IsShooting);
 
-            if (character is PlayerCharacter)
+            if (character is PlayerCharacter player)
             {
-                float mouseX = playerInput.GetMouseX(CameraController.instance.MouseSensitivity);
-                float mouseY = playerInput.GetMouseY(CameraController.instance.MouseSensitivity);
-                character.Animator.SetFloat(MOUSE_X, mouseX);
-                character.Animator.SetFloat(MOUSE_Y, mouseY);
+                character.Animator.SetFloat(CAMERA_X, Mathf.Clamp(-player.CameraController.PitchYaw[0], -90, 90));
             }
         }
     }
@@ -442,6 +450,22 @@ namespace CharacterSituationStateMachine
             if (character.IsArmed)
             {
                 machine.DoSwitchState(machine.ChrArmedState);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Collider[] cols = Physics.OverlapSphere(machine.Character.transform.position, 1f);
+
+                for (int i = 0; i < cols.Length; i++)
+                {
+                    Vehicle vehicle = cols[i].GetComponent<Vehicle>();
+
+                    if (vehicle is null)
+                        continue;
+
+                    Debug.Log("Found a vehicle");
+                    machine.SwitchToInVehicleState(vehicle);
+                }
             }
         }
 
@@ -472,25 +496,40 @@ namespace CharacterSituationStateMachine
 
     public class CharacterInVehicleState : BaseState
     {
+        Vehicle vehicle;
+        PlayerVehicleInput input;
+        CharacterSituationalStateMachine machine;
+
         public override void CheckStateChange(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                machine.DoSwitchState(machine.ChrUnArmedState);
+            }
         }
 
         public override void EnterState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            machine = (CharacterSituationalStateMachine)stateMachine;
+            input = vehicle.GetComponent<PlayerVehicleInput>();
+            CameraController.instance.SetTarget(input.cameraFocus, 15F, 60);
+            input.PlayerInputEnabled = true;
+            machine.Character.DisableForVehicle();
+            machine.Character.transform.parent = vehicle.transform;
         }
 
         public override void ExitState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            machine.Character.EnableOutsideVehicle();
+            input.PlayerInputEnabled = false;
         }
 
         public override void UpdateState(StateMachine stateMachine)
         {
-            throw new System.NotImplementedException();
+            CheckStateChange(stateMachine);
         }
+
+        public void SetVehicle(Vehicle vehicle) => this.vehicle = vehicle;
     }
     #endregion
 }

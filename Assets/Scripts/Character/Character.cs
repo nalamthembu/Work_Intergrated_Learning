@@ -15,6 +15,8 @@ public class Character : MonoBehaviour
     [SerializeField][Range(1, 10)] protected float jumpHeight = 2;
     [SerializeField][Range(0, 01)] protected float speedSmoothTime;
 
+    [SerializeField] Renderer meshRenderer;
+
     protected bool isGrounded;
 
     protected Animator animator;
@@ -81,5 +83,20 @@ public class Character : MonoBehaviour
     protected void SetAiming(bool value) => IsAiming = value;
     protected void SetShooting(bool value) => IsShooting = value;
     protected void SetArmed(bool value) => IsArmed = value;
+
+    public void DisableForVehicle()
+    {
+        meshRenderer.enabled = false;
+        if (this is PlayerCharacter player)
+            player.Controller.enabled = false;
+    }
+
+    public void EnableOutsideVehicle()
+    {
+        meshRenderer.enabled = true;
+        if (this is PlayerCharacter player)
+            player.Controller.enabled = true;
+
+    }
 
 }

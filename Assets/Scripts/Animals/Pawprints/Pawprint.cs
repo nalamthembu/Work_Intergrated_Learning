@@ -1,28 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pawprint : MonoBehaviour
 {
     private Animal animal;
     public GameObject waypoint;
-    private float timer = 0;
 
     private bool created = false;
 
-    public void SetAnimal(Animal ani)
+    public void SetAnimal(Animal animal)
     {
-        animal = ani;
+        this.animal = animal;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
-        {
+        if (other.CompareTag("Player"))
             HUDManager.instance.ShowNotification("Press \"E\" to interact");
-        }
     }
-    
+
 
     void Update()
     {

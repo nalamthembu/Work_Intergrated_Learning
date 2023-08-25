@@ -27,14 +27,20 @@ public class PlayerCharacter : Character
     public CharacterController Controller { get { return controller; } }
     public float TargetRotation { get; set; }
     public Transform MainCamera { get; private set; }
+    public CameraController CameraController { get; private set; }
     [HideInInspector] public float TurnSmoothTime { get { return turnSmoothTime; } }
     public PlayerInput PlayerInput { get; private set; }
+
+    #region DEBUG
+    public bool debugAiming = false;
+    #endregion
 
     public override void Awake()
     {
         base.Awake();
         controller = GetComponent<CharacterController>();
         MainCamera = Camera.main.transform;
+        CameraController = MainCamera.GetComponentInParent<CameraController>();
         PlayerInput = GetComponent<PlayerInput>();
     }
 
@@ -54,13 +60,12 @@ public class PlayerCharacter : Character
     private void ReadPlayerInput()
     {
         SetArmed(PlayerInput.IsArmed);
-        SetShooting(PlayerInput.IsShooting);
-        SetAiming(PlayerInput.IsAiming);
+        SetShooting(Input.GetMouseButton(0));
+        SetAiming(debugAiming ? debugAiming : PlayerInput.IsAiming);
     }
 
     private void HandleWeapon()
     {
         Weapon.gameObject.SetActive(IsArmed);
-
     }
 }

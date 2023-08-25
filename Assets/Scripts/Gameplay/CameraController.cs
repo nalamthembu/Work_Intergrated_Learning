@@ -12,10 +12,26 @@ public class CameraController : MonoBehaviour
 
     float pitch;
     float yaw;
+    public float PreviousDistance { get; private set; }
+    public float PreviousFOV { get; private set; }
+    float targetFOV; 
+
+    public float[] PitchYaw
+    {
+        get
+        {
+            return new float[]
+            {
+                pitch,
+                yaw
+            };
+        }
+    }
 
     public float MouseSensitivity { get { return mouseSensitivity; } }
 
     PlayerInput input;
+    CharacterSituationalStateMachine playerSitMachine;
     new Camera camera;
 
     private void Awake()
@@ -31,10 +47,15 @@ public class CameraController : MonoBehaviour
         }
 
         input = FindObjectOfType<PlayerInput>();
+        playerSitMachine = FindObjectOfType<PlayerCharacter>().GetComponent<CharacterSituationalStateMachine>();
         camera = GetComponentInChildren<Camera>();
 
         if (!camera)
             Debug.LogError("Make sure there is a camera as a child object");
+
+        PreviousDistance = distanceFromTarget;
+        PreviousFOV = camera.fieldOfView;
+        targetFOV = PreviousFOV;
     }
 
     private void Update() => HandleInput();
@@ -45,6 +66,7 @@ public class CameraController : MonoBehaviour
         transform.eulerAngles = targetRotation;
         camera.transform.localPosition = Vector3.Lerp(camera.transform.localPosition, cameraOffset, Time.deltaTime);
         transform.position = target.position - transform.forward * distanceFromTarget;
+        camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFOV, Time.deltaTime * 2F);
     }
 
     private void HandleInput()
@@ -52,5 +74,12 @@ public class CameraController : MonoBehaviour
         yaw += input.GetMouseX(mouseSensitivity);
         pitch -= input.GetMouseY(mouseSensitivity);
         pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
+    }
+
+    public void SetTarget(Transform target, float distance, float fov)
+    {
+        this.target = target;
+        distanceFromTarget = distance;
+        targetFOV = fov;
     }
 }
