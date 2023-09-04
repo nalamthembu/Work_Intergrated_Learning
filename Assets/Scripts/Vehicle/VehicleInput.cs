@@ -7,4 +7,13 @@ public class VehicleInput : MonoBehaviour
     [Range(0, 1)]   public float brake;
     [Range(0, 1)]   public float handbrake;
     [Range(-1, 1)]  public float steering;
+
+    private void Update() => FloorValues();
+
+    private void FloorValues()
+    {
+        brake = Mathf.Floor(brake);
+        throttle = Mathf.Floor(throttle);
+        handbrake = Mathf.Floor(handbrake);
+    }
 }

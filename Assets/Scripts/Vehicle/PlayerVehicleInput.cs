@@ -25,7 +25,7 @@ public class PlayerVehicleInput : MonoBehaviour
         if (PlayerInputEnabled)
         {
             vehicleInput.throttle = Input.GetAxis("Vertical") > 0 ? Input.GetAxis("Vertical") : Mathf.Lerp(vehicleInput.throttle, 0, Time.deltaTime);
-            vehicleInput.brake = Input.GetAxis("Vertical") < 0 ? -Input.GetAxis("Vertical") : Mathf.Lerp(vehicleInput.brake, 0, Time.deltaTime);
+            vehicleInput.brake =Input.GetAxis("Vertical") < 0 ? -Input.GetAxis("Vertical") : Mathf.Lerp(vehicleInput.brake, 0, Time.deltaTime);
             vehicleInput.steering = Input.GetAxis("Horizontal");
             vehicleInput.handbrake = Input.GetAxis("Jump");
         }

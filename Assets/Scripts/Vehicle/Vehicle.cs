@@ -23,6 +23,8 @@ public class Vehicle : MonoBehaviour
 
     public Axis[] axes;
 
+    public bool ABSEnabled = true;
+
     private Rigidbody rigidBody;
 
     private VehicleInput input;

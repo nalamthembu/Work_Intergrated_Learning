@@ -1,6 +1,6 @@
 using UnityEngine;
 using static GameStrings;
-using PlayerStateMachine;
+using PlayerLocomotionStateMachineSPC;
 
 public class PlayerLocomotionStateMachine : StateMachine
 {
@@ -105,8 +105,13 @@ public class PlayerLocomotionStateMachine : StateMachine
 
         //Set Movement Direction
         PlayerCharacter.VelocityY += Time.deltaTime * PlayerCharacter.Gravity;
-        PlayerCharacter.Velocity = (PlayerCharacter.transform.forward * PlayerCharacter.CurrentSpeed) +
+
+        if (!(characterSituationalMachine.CurrentState == characterSituationalMachine.ChrArmedState && PlayerCharacter.IsAiming))
+        {
+            PlayerCharacter.Velocity = (PlayerCharacter.transform.forward * PlayerCharacter.CurrentSpeed) +
             Vector3.up * PlayerCharacter.VelocityY;
+        }
+
         PlayerCharacter.Controller.Move(PlayerCharacter.Velocity * Time.deltaTime);
     }
 

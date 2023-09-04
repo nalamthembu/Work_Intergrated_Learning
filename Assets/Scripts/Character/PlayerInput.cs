@@ -36,4 +36,13 @@ public class PlayerInput : MonoBehaviour
 
     public float GetMouseX(float mouseSensitivity) => Input.GetAxis("Mouse X") * mouseSensitivity;
     public float GetMouseY(float mouseSensitivity) => Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+    public float[] GetInputXY()
+    {
+        return new float[]
+        {
+           InputDir.normalized.x,
+           InputDir.normalized.y
+        };
+    }
 }

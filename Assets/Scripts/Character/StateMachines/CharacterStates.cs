@@ -12,7 +12,7 @@ public abstract class BaseState
 }
 #endregion
 
-namespace PlayerStateMachine
+namespace PlayerLocomotionStateMachineSPC
 {
     #region PLAYER_STATES
     public class PlayerCrouchState : BaseState
@@ -404,6 +404,7 @@ namespace CharacterSituationStateMachine
             character = machine.Character;
 
             playerChar = character.GetComponent<PlayerCharacter>();
+            playerInput = playerChar.PlayerInput;
             cameraT = playerChar.MainCamera;
         }
 
@@ -416,6 +417,7 @@ namespace CharacterSituationStateMachine
         {
             HandleAnimations();
             HandleRotation();
+            HandlePosition();
             CheckStateChange(stateMachine);
         }
 
@@ -424,6 +426,17 @@ namespace CharacterSituationStateMachine
             if (playerChar is not null && playerChar.IsAiming)
             {
                 playerChar.transform.eulerAngles = Vector3.up * cameraT.parent.eulerAngles.y;
+            }
+        }
+
+        private void HandlePosition()
+        {
+            if (playerChar is not null && playerChar.IsAiming)
+            {
+                playerChar.Velocity =
+                    (playerChar.CurrentSpeed * playerInput.InputDir.y * playerChar.transform.forward) +
+                    (playerChar.CurrentSpeed * playerInput.InputDir.x * playerChar.transform.right) +
+                        Vector3.up * playerChar.VelocityY;
             }
         }
 
@@ -436,6 +449,8 @@ namespace CharacterSituationStateMachine
             if (character is PlayerCharacter player)
             {
                 character.Animator.SetFloat(CAMERA_X, Mathf.Clamp(-player.CameraController.PitchYaw[0], -90, 90));
+                character.Animator.SetFloat(INPUT_X, playerInput.InputDir.x);
+                character.Animator.SetFloat(INPUT_Y, playerInput.InputDir.y);
             }
         }
     }
@@ -518,10 +533,14 @@ namespace CharacterSituationStateMachine
             machine.Character.transform.parent = vehicle.transform;
         }
 
+        //BUG : PLAYER DOESN'T EXIT THE VEHICLE.
         public override void ExitState(StateMachine stateMachine)
         {
             machine.Character.EnableOutsideVehicle();
             input.PlayerInputEnabled = false;
+            machine.Character.transform.parent = null;
+            //TO-DO : LOOK AT PLAYER INSTEAD.
+            //CameraController.instance.SetTarget(input.cameraFocus, 15F, 60);
         }
 
         public override void UpdateState(StateMachine stateMachine)

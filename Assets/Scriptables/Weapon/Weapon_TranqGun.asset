@@ -19,7 +19,7 @@ MonoBehaviour:
   fireRate: 2
   bulletPrefab: {fileID: 7528391234211077750, guid: 64b042be55079a74da2342e1840f7b97, type: 3}
   fireType: 1
-  restingPosition: {x: 11.66, y: 4.81, z: -2.7}
-  restingRotation: {x: -20.3, y: 83.1, z: -90}
-  aimingPosition: {x: 11.66, y: 4.81, z: -2.7}
-  aimingRotation: {x: -3.7, y: 81.59, z: -90}
+  restingPosition: {x: 11.66, y: 3.13, z: -2.7}
+  restingRotation: {x: -108.03, y: 0, z: 0}
+  aimingPosition: {x: 10.29, y: 3.13, z: -5}
+  aimingRotation: {x: -89.24, y: 0.99, z: -8.8}
