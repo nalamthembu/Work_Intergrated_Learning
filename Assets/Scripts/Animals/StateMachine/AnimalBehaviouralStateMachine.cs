@@ -69,6 +69,15 @@ public class AnimalBehaviouralStateMachine : StateMachine
         {
             DoSwitchState(animalRunAwayState);
         }
+        if(animal.firedAt == true)
+        {
+            DoSwitchState(animalRunAwayState);
+        }
       
+    }
+
+    public void CheckForHeard()
+    {
+
     }
 }

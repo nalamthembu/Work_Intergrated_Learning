@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pawprint
+  - Dart
   layers:
   - Default
   - TransparentFX

@@ -28,13 +28,13 @@ public class Animal : MonoBehaviour, IStorable
 
     [SerializeField] [Range(0.1F, 2F)] float speedSmoothTime = 0.25F;
 
-    [SerializeField] [Range(0.1f, 10f)] float wanderTime = 0.25f;
+    [SerializeField] private float wanderTime = 0;
 
     public float TargetSpeed { get; set; }
     public float CurrentSpeed { get; set; }
     [HideInInspector] public float SpeedSmoothVelocity;
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
-    public float WanderTime { get { return wanderTime; } }
+    public float WanderTime { get { return wanderTime = Random.Range(1f,5f); } }
 
     public PlayerCharacter Player { get; private set; }
 
@@ -74,6 +74,11 @@ public class Animal : MonoBehaviour, IStorable
         {
             Debug.Log("Im In Danger");
             PlayerInRange = true;
+        }
+        else if(other.tag == "Dart")
+        {
+            Debug.Log("Someone tried to shoot me");
+            firedAt = true;
         }
         
     }
