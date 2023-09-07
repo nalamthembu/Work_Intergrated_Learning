@@ -203,7 +203,7 @@ namespace AnimalBehaviourStates
         public override void EnterState(StateMachine stateMachine)
         {
             Debug.Log("Entered Idle State");
-            idleTimer = 3f;
+            idleTimer = 5f;
             machine = (AnimalBehaviouralStateMachine)stateMachine;
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
         }
@@ -222,7 +222,7 @@ namespace AnimalBehaviourStates
 
     public class AnimalRunAwayState : BaseState
     {
-        private float runningAwayTimer = 12f;
+        private float runningAwayTimer = 10f;
         float timer = 0;
         AnimalBehaviouralStateMachine machine;
 
@@ -248,7 +248,7 @@ namespace AnimalBehaviourStates
 
         public override void UpdateState(StateMachine stateMachine)
         {
-
+            // for when the player is chasing the animal
             if(timer <= runningAwayTimer && machine.animal.PlayerInRange == true)
             {
                 machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
@@ -259,6 +259,18 @@ namespace AnimalBehaviourStates
                 Debug.Log("Ive ran away");
                 machine.LocomotionStateMachine.navMeshAgent.speed = machine.animal.animalData.walkSpeed;
                 machine.DoSwitchState(machine.animalIdleState);
+            }
+            // for when the player tries to shoot the animal and misses
+            if(timer >= runningAwayTimer && machine.animal.firedAt == true)
+            {
+                Debug.Log("Im away from the danger");
+                machine.animal.firedAt = false;
+                machine.LocomotionStateMachine.navMeshAgent.speed = machine.animal.animalData.walkSpeed;
+                machine.DoSwitchState(machine.animalIdleState); 
+            }
+            else if(timer <= runningAwayTimer && machine.animal.firedAt == true)
+            {
+                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
             }
 
             timer += Time.deltaTime;

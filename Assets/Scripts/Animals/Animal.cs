@@ -28,13 +28,15 @@ public class Animal : MonoBehaviour, IStorable
 
     [SerializeField] [Range(0.1F, 2F)] float speedSmoothTime = 0.25F;
 
-    [SerializeField] [Range(0.1f, 10f)] float wanderTime = 0.25f;
+    [SerializeField] private float wanderTime = 0;
 
+    public int torporLevel = 0;
+    public int timesShot = 0;
     public float TargetSpeed { get; set; }
     public float CurrentSpeed { get; set; }
     [HideInInspector] public float SpeedSmoothVelocity;
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
-    public float WanderTime { get { return wanderTime; } }
+    public float WanderTime { get { return wanderTime = Random.Range(1f,5f); } }
 
     public PlayerCharacter Player { get; private set; }
 
@@ -48,6 +50,7 @@ public class Animal : MonoBehaviour, IStorable
     {
         healthComponent = GetComponent<HealthComponent>();
         healthComponent.SetHealth(animalData.health);
+        torporLevel = animalData.torporLevel;
     }
 
     private void Start()
@@ -75,6 +78,11 @@ public class Animal : MonoBehaviour, IStorable
             Debug.Log("Im In Danger");
             PlayerInRange = true;
         }
+        else if(other.tag == "Dart")
+        {
+            Debug.Log("Someone tried to shoot me");
+            firedAt = true;
+        }
         
     }
 
@@ -87,6 +95,15 @@ public class Animal : MonoBehaviour, IStorable
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Dart")
+        {
+            Debug.Log("Got shot");
+            gotShot = true;
+            timesShot += 1;
+        }
+    }
     public void CreatePawPrints()
     {
         GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);
