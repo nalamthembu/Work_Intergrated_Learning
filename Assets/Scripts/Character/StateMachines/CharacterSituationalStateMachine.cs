@@ -30,6 +30,9 @@ public class CharacterSituationalStateMachine : StateMachine
 
     public override void DoSwitchState(BaseState state)
     {
+        if (currentState is not null)
+            currentState.ExitState(this);
+
         currentState = state;
         currentState.EnterState(this);
     }

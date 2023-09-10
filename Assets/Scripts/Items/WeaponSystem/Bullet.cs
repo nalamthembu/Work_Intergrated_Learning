@@ -19,6 +19,8 @@ public class Bullet : Item
     {
         this.bulletSpeed = bulletSpeed;
         rigidBody.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+
+        Destroy(gameObject, 10);
     }
 
     private void Awake() => rigidBody = GetComponent<Rigidbody>();

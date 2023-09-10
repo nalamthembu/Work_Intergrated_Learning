@@ -30,4 +30,6 @@ public class PlayerVehicleInput : MonoBehaviour
             vehicleInput.handbrake = Input.GetAxis("Jump");
         }
     }
+
+    public void ApplyEBrake() => vehicleInput.handbrake = 1;
 }

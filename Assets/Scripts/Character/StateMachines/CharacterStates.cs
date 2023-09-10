@@ -538,9 +538,11 @@ namespace CharacterSituationStateMachine
         {
             machine.Character.EnableOutsideVehicle();
             input.PlayerInputEnabled = false;
+            input.ApplyEBrake();
             machine.Character.transform.parent = null;
+            machine.Character.CurrentSpeed = 0;
             //TO-DO : LOOK AT PLAYER INSTEAD.
-            //CameraController.instance.SetTarget(input.cameraFocus, 15F, 60);
+            CameraController.instance.SetTarget(machine.Character.transform.Find("Camera_Focus"), 2F, 60);
         }
 
         public override void UpdateState(StateMachine stateMachine)

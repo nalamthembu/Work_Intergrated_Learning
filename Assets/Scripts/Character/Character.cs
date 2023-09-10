@@ -95,8 +95,7 @@ public class Character : MonoBehaviour
     {
         meshRenderer.enabled = true;
         if (this is PlayerCharacter player)
-            player.Controller.enabled = true;
-
+            GetComponent<CharacterController>().enabled = true;
     }
 
 }
