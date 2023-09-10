@@ -15,7 +15,7 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FindTargetsWithDelay(0.25F));
+        StartCoroutine(FindTargetsWithDelay(0.1F));
     }
 
     IEnumerator FindTargetsWithDelay(float delay)
@@ -46,6 +46,8 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, m_ObstacleMask))
                 {
                     visibleTargets.Add(t);
+
+                    print(t.name);
                 }
             }
         }

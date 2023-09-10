@@ -63,14 +63,12 @@ public class Animal : MonoBehaviour, IStorable
 
     private void Update()
     {
-        if (fieldOfView.VisibleTargets.Count > 0)
+        for (int i = 0; i < fieldOfView.VisibleTargets.Count; i++)
         {
-            for (int i = 0; i < fieldOfView.VisibleTargets.Count; i++)
-            {
-                print(fieldOfView.VisibleTargets[i].name);
+            if (fieldOfView.VisibleTargets[i] is null)
+                continue;
 
-                PlayerInRange = fieldOfView.VisibleTargets[i].CompareTag("Player");
-            }
+            PlayerInRange = fieldOfView.VisibleTargets[i].CompareTag("Player");
         }
     }
 
