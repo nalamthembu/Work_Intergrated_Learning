@@ -248,8 +248,10 @@ namespace AnimalBehaviourStates
 
         public override void UpdateState(StateMachine stateMachine)
         {
+            timer += Time.deltaTime;
+
             // for when the player is chasing the animal
-            if(timer <= runningAwayTimer && machine.animal.PlayerInRange == true)
+            if (timer <= runningAwayTimer && machine.animal.PlayerInRange == true)
             {
                 machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
                 timer = 0;
@@ -261,19 +263,17 @@ namespace AnimalBehaviourStates
                 machine.DoSwitchState(machine.animalIdleState);
             }
             // for when the player tries to shoot the animal and misses
-            if(timer >= runningAwayTimer && machine.animal.firedAt == true)
+            if (timer >= runningAwayTimer && machine.animal.firedAt == true)
             {
                 Debug.Log("Im away from the danger");
                 machine.animal.firedAt = false;
                 machine.LocomotionStateMachine.navMeshAgent.speed = machine.animal.animalData.walkSpeed;
-                machine.DoSwitchState(machine.animalIdleState); 
+                machine.DoSwitchState(machine.animalIdleState);
             }
-            else if(timer <= runningAwayTimer && machine.animal.firedAt == true)
+            else if (timer <= runningAwayTimer && machine.animal.firedAt == true)
             {
                 machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
             }
-
-            timer += Time.deltaTime;
         }
     }
 

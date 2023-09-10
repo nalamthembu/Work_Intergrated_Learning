@@ -65,15 +65,14 @@ public class AnimalBehaviouralStateMachine : StateMachine
 
     public void CheckForDanger()
     {
-        if(animal.PlayerInRange == true)
+        if (animal.PlayerInRange == true)
         {
             DoSwitchState(animalRunAwayState);
         }
-        if(animal.firedAt == true)
+        if (animal.firedAt == true)
         {
             DoSwitchState(animalRunAwayState);
         }
-      
     }
 
     public void CheckForHeard()
