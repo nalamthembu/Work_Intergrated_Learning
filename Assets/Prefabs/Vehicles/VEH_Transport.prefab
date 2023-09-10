@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1499296998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499296999}
+  m_Layer: 0
+  m_Name: Camera_Focus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499296999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499296998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1083230445022332601}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &307292562664823811
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,6 +45,8 @@ GameObject:
   - component: {fileID: 6029127311971202525}
   - component: {fileID: 2203879526482712397}
   - component: {fileID: 2485618581223535009}
+  - component: {fileID: 2115314768}
+  - component: {fileID: 2115314767}
   m_Layer: 0
   m_Name: VEH_Transport
   m_TagString: Untagged
@@ -40,6 +73,7 @@ Transform:
   - {fileID: 1107404491947980263}
   - {fileID: 7011489038962336239}
   - {fileID: 7011489039070823208}
+  - {fileID: 1499296999}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,6 +167,33 @@ MonoBehaviour:
     steerRadius: 0
     isPowered: 1
     isSteering: 0
+  ABSEnabled: 1
+--- !u!65 &2115314768
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307292562664823811}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 10.5}
+  m_Center: {x: 0, y: 2.5, z: -0.81}
+--- !u!114 &2115314767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307292562664823811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c89ca9d2b475134fac3f0c148afcde7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraFocus: {fileID: 1499296999}
 --- !u!1 &1308545340530734462
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +665,7 @@ MonoBehaviour:
   wheelMeshPrefab: {fileID: 5957974923404513378, guid: b05300cbb0473b54899e76815d6ec23b, type: 3}
   wheelMeshParent: {fileID: 7011489038344809847}
   wheelPosition: 1
-  wheelSide: 0
+  wheelSide: 1
 --- !u!1 &7011489037562363481
 GameObject:
   m_ObjectHideFlags: 0
