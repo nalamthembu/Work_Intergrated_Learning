@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2332822550601403199}
   - component: {fileID: 6400901415521342273}
   m_Layer: 0
-  m_Name: Wheel_Transport
+  m_Name: WHEEL_TRANSPORT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,11 +13,14 @@ public class PlayerVehicleInput : MonoBehaviour
     private VehicleInput vehicleInput;
     public bool PlayerInputEnabled { get; set; }
 
-    public Transform cameraFocus;
+    private Rigidbody rb;
+
+    public CameraSettings cameraSettings;
 
     private void Awake()
     {
         vehicleInput = GetComponent<VehicleInput>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -31,5 +34,16 @@ public class PlayerVehicleInput : MonoBehaviour
         }
     }
 
-    public void ApplyEBrake() => vehicleInput.handbrake = 1;
+    public void ApplyEBrake()
+    {
+        vehicleInput.handbrake = 1;
+    }
+}
+
+[System.Serializable]
+public struct CameraSettings
+{
+    public float distance;
+    public float FOV;
+    public Transform target;
 }

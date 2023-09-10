@@ -527,7 +527,14 @@ namespace CharacterSituationStateMachine
         {
             machine = (CharacterSituationalStateMachine)stateMachine;
             input = vehicle.GetComponent<PlayerVehicleInput>();
-            CameraController.instance.SetTarget(input.cameraFocus, 15F, 60);
+            
+            CameraController.instance.SetTarget
+                (
+                    input.cameraSettings.target,
+                    input.cameraSettings.distance,
+                    input.cameraSettings.FOV
+                 );
+
             input.PlayerInputEnabled = true;
             machine.Character.DisableForVehicle();
             machine.Character.transform.parent = vehicle.transform;

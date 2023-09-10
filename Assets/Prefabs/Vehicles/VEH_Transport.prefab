@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 2115314768}
   - component: {fileID: 2115314767}
   m_Layer: 0
-  m_Name: VEH_Transport
+  m_Name: VEH_TRANSPORT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +129,7 @@ Rigidbody:
   m_GameObject: {fileID: 307292562664823811}
   serializedVersion: 2
   m_Mass: 15000
-  m_Drag: 0
+  m_Drag: 0.005
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -168,6 +168,7 @@ MonoBehaviour:
     isPowered: 1
     isSteering: 0
   ABSEnabled: 1
+  downForce: 100
 --- !u!65 &2115314768
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -193,7 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c89ca9d2b475134fac3f0c148afcde7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraFocus: {fileID: 1499296999}
+  cameraSettings:
+    distance: 15
+    FOV: 60
+    target: {fileID: 1499296999}
 --- !u!1 &1308545340530734462
 GameObject:
   m_ObjectHideFlags: 0

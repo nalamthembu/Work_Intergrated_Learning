@@ -29,6 +29,8 @@ public class Vehicle : MonoBehaviour
 
     private VehicleInput input;
 
+    [SerializeField] float downForce = 500;
+
     readonly private List<Axis> poweredAxis = new();
     readonly private List<Wheel> allWheels = new();
     public List<Axis> PoweredAxis { get { return poweredAxis; } }
@@ -60,6 +62,11 @@ public class Vehicle : MonoBehaviour
     private void LateUpdate()
     {
         ControlSteering();
+    }
+
+    private void FixedUpdate()
+    {
+        rigidBody.AddForce(Vector3.down * downForce * 100);
     }
 
     public bool IsGrounded()
@@ -113,6 +120,18 @@ public class Vehicle : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawCube(transform.position + rigidBody.centerOfMass, Vector3.one * 0.15F);
+    }
+
+    private void OnValidate()
+    {
+        if (rigidBody is null)
+        rigidBody = GetComponent<Rigidbody>();
     }
 }
 
