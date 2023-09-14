@@ -22,7 +22,6 @@ public class Animal : MonoBehaviour, IStorable
     public AnimalScriptable animalData;
 
     private HealthComponent healthComponent;
-
     public GameObject GetGameObject() => gameObject;
     public Transform GetTransform() => transform;
 
