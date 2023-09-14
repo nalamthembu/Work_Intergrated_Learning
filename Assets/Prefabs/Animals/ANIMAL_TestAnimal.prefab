@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 3583230742080689332}
   - component: {fileID: 9201810618261445267}
   - component: {fileID: 8460514551240447042}
+  - component: {fileID: 734252449}
   m_Layer: 0
   m_Name: ANIMAL_TestAnimal
   m_TagString: Untagged
@@ -174,6 +175,9 @@ MonoBehaviour:
   animalData: {fileID: 11400000, guid: c206e265907848445af123cbbebdceff, type: 2}
   speedSmoothTime: 0.45
   wanderTime: 2.63
+  fieldOfView: {fileID: 0}
+  torporLevel: 0
+  timesShot: 0
   SpeedSmoothVelocity: 0
   PlayerInRange: 0
   gotShot: 0
@@ -211,7 +215,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &8460514551240447042
 BoxCollider:
@@ -226,3 +230,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.50408936, z: 0}
+--- !u!114 &734252449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3583230742080689333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e6c21ad761b8c47801de19dc42ff9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ViewRadius: 30
+  m_ViewAngle: 140
+  m_TargetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 1

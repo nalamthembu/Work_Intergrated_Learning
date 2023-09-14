@@ -62,7 +62,9 @@ public class VehicleTransmission : MonoBehaviour
         {
             for (int j = 0; j < vehicle.PoweredAxis[i].wheels.Length; j++)
             {
-                vehicle.PoweredAxis[i].wheels[j].SetMotorTorque(engine.EnginePower / vehicle.PoweredAxis[i].wheels.Length);
+                vehicle.PoweredAxis[i].wheels[j].SetMotorTorque(input.InReverse ?
+                    -(engine.EnginePower / vehicle.PoweredAxis[i].wheels.Length) :
+                    engine.EnginePower / vehicle.PoweredAxis[i].wheels.Length);
             }
         }
 

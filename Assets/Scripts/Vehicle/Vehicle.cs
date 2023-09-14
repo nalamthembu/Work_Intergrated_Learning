@@ -35,7 +35,7 @@ public class Vehicle : MonoBehaviour
     readonly private List<Wheel> allWheels = new();
     public List<Axis> PoweredAxis { get { return poweredAxis; } }
     public List<Wheel> AllWheels { get { return allWheels; } }
-
+    public float SpeedKMH { get; private set; }
 
     private void Awake()
     {
@@ -66,7 +66,9 @@ public class Vehicle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidBody.AddForce(Vector3.down * downForce * 100);
+        rigidBody.AddForce(100 * downForce * Vector3.down);
+
+        SpeedKMH = rigidBody.velocity.magnitude * 3.6F;
     }
 
     public bool IsGrounded()
