@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
 
     protected int itemCount;
 
-    protected void AddItem(string name, IStorable item)
+    public void AddItem(string name, IStorable item)
     {
         if (itemCount <= 0)
         {
@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    protected void SpawnStoredItem(string name, Vector3 position)
+    public void SpawnStoredItem(string name, Vector3 position)
     {
         if (storedItems[name].HasValue)
         {

@@ -47,6 +47,8 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator IShowSubtitlesForADuration(string text, float duration)
     {
+        txtSubtitles.text = string.Empty;
+
         while (cg_subtitleGroup.alpha != 1)
         {
             cg_subtitleGroup.alpha += Time.deltaTime * 1.5F;
@@ -83,6 +85,8 @@ public class HUDManager : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        txtNotification.text = string.Empty;
 
         txtNotification.text = text;
 

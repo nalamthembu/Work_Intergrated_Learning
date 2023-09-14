@@ -475,7 +475,7 @@ namespace CharacterSituationStateMachine
                 {
                     Vehicle vehicle = cols[i].GetComponent<Vehicle>();
 
-                    if (vehicle is null)
+                    if (vehicle == null)
                         continue;
 
                     Debug.Log("Found a vehicle");
@@ -536,6 +536,7 @@ namespace CharacterSituationStateMachine
                  );
 
             input.PlayerInputEnabled = true;
+            machine.Character.CurrentVehicle = vehicle;
             machine.Character.DisableForVehicle();
             machine.Character.transform.parent = vehicle.transform;
         }

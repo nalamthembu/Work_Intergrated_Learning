@@ -31,6 +31,8 @@ public class Character : MonoBehaviour
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
     [HideInInspector] public float SpeedSmoothVelocity;
 
+    public Vehicle CurrentVehicle { get; set; }
+
     private HealthComponent healthComponent;
 
     #region SHOOTING

@@ -13,7 +13,8 @@ using System.Collections.Generic;
 [
     RequireComponent
     (
-        typeof(Rigidbody)
+        typeof(Rigidbody),
+        typeof(VehicleInventory)
     )
 ]
 
@@ -36,10 +37,12 @@ public class Vehicle : MonoBehaviour
     public List<Axis> PoweredAxis { get { return poweredAxis; } }
     public List<Wheel> AllWheels { get { return allWheels; } }
     public float SpeedKMH { get; private set; }
-
+    public VehicleInventory Inventory { get; private set; }
     private void Awake()
     {
         input = GetComponent<VehicleInput>();
+
+        Inventory = GetComponent<VehicleInventory>();
 
         rigidBody = GetComponent<Rigidbody>();
 

@@ -130,6 +130,11 @@ public class Animal : MonoBehaviour, IStorable
         }
     }
 
+    public void DisableAnimal()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void CreatePawPrints()
     {
         GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);

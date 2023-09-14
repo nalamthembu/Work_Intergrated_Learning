@@ -12,8 +12,6 @@
 public class PlayerVehicleInput : MonoBehaviour
 {
     private VehicleInput vehicleInput;
-
-    private Vehicle vehicle;
     public bool PlayerInputEnabled { get; set; }
 
     public CameraSettings cameraSettings;
@@ -21,7 +19,6 @@ public class PlayerVehicleInput : MonoBehaviour
     private void Awake()
     {
         vehicleInput = GetComponent<VehicleInput>();
-        vehicle = GetComponent<Vehicle>();
     }
 
     private void Update()

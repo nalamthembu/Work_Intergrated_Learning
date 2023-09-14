@@ -57,11 +57,54 @@ public class PlayerCharacter : Character
             HandleWeapon();
     }
 
+    private void PickUpKOdAnimal()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1F);
+
+        foreach (Collider c in colliders)
+        {
+            if (c.TryGetComponent(out Animal animal))
+            {
+                if (animal.isKnockedOut)
+                {
+                    if (CurrentVehicle == null)
+                    {
+                        HUDManager.instance.ShowNotification("Enter the truck!");
+                        return;
+                    }
+
+                    if (Vector3.Distance(animal.transform.position, CurrentVehicle.transform.position) < 4F)
+                    {
+                        //Put animal in vehicle inventory
+                        HUDManager.instance.ShowNotification("+1 Animal added to the vehicle inventory");
+                        animal.DisableAnimal();
+                        CurrentVehicle.Inventory.AddItem(animal.name, animal);
+                        print("placing animal in, inventory");
+                    }
+                    else
+                    {
+                        HUDManager.instance.ShowNotification("You are too far from the vehicle");
+                        print("animal is too far from the vehicle");
+                    }
+
+                    print("found an incapacitated animal");
+
+                    return;
+                }    
+            }
+        }
+    }
+
     private void ReadPlayerInput()
     {
         SetArmed(PlayerInput.IsArmed);
         SetShooting(Input.GetMouseButton(0));
         SetAiming(debugAiming ? debugAiming : PlayerInput.IsAiming);
+        
+        if (PlayerInput.PickUpAnimal)
+        {
+            PickUpKOdAnimal();
+        }
     }
 
     private void HandleWeapon()
