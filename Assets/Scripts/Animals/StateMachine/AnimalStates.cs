@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class AnimalStates { }
 
@@ -188,6 +189,7 @@ namespace AnimalBehaviourStates
     public class AnimalIdleState : BaseState
     {
         float idleTimer;
+        float knockedOutTimer = 0;
         AnimalBehaviouralStateMachine machine;
 
         public override void CheckStateChange(StateMachine stateMachine)
@@ -202,10 +204,18 @@ namespace AnimalBehaviourStates
 
         public override void EnterState(StateMachine stateMachine)
         {
-            Debug.Log("Entered Idle State");
-            idleTimer = 5f;
             machine = (AnimalBehaviouralStateMachine)stateMachine;
-            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
+
+            if (machine.animal.isKnockedOut == true)
+            {
+                Debug.Log("The animal is currently knocked out");
+            }
+            else
+            {
+                Debug.Log("Entered Idle State");
+                idleTimer = 5f;
+                machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
+            }
         }
 
         public override void ExitState(StateMachine stateMachine)
@@ -215,6 +225,16 @@ namespace AnimalBehaviourStates
 
         public override void UpdateState(StateMachine stateMachine)
         {
+            if (machine.animal.isKnockedOut == true)
+            {
+                if (knockedOutTimer >= 20)
+                {
+                    machine.animal.isKnockedOut = false;
+                    knockedOutTimer = 0;
+                }
+                knockedOutTimer += Time.deltaTime;
+                return;
+            }
             idleTimer -= Time.deltaTime;
             CheckStateChange(stateMachine);
         }
@@ -277,6 +297,43 @@ namespace AnimalBehaviourStates
         }
     }
 
+    public class AnimalToporState : BaseState
+    {
+        private float runningAwayTimer = 5f;
+        float timer = 0;
+        AnimalBehaviouralStateMachine machine;
+
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            return;
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            Debug.Log("IS getting Knocked out");
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            return;
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+            machine = (AnimalBehaviouralStateMachine)stateMachine;
+            //oppa gangnum style
+            if (timer <= runningAwayTimer)
+            {
+                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
+            }
+            else if (timer >= runningAwayTimer)
+            {
+                machine.animal.isKnockedOut = true;
+                machine.DoSwitchState(machine.animalIdleState);
+            }
+            timer += Time.deltaTime;
+        }
+    }
     #endregion
 
 }

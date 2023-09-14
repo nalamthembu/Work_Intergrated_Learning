@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Springbok
   health: 10
   walkSpeed: 3
-  runSpeed: 20
+  runSpeed: 5
   animalType: 1
   pawprint: {fileID: 5544328976035707871, guid: a6cf9692f63ca0b4c8dc50584729107e, type: 3}
   torporLevel: 1

@@ -47,6 +47,8 @@ public class Animal : MonoBehaviour, IStorable
 
     public bool firedAt = false;
 
+    public bool isKnockedOut = false;
+
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
@@ -69,6 +71,8 @@ public class Animal : MonoBehaviour, IStorable
 
             PlayerInRange = fieldOfView.VisibleTargets[i].CompareTag("Player");
         }
+
+        
     }
 
     public void Teleport(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);

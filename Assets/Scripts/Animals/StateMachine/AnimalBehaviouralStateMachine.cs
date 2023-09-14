@@ -11,6 +11,7 @@ public class AnimalBehaviouralStateMachine : StateMachine
     public AnimalWanderingState animalWanderingState = new();
     public AnimalIdleState animalIdleState = new(); //Grazing and such.
     public AnimalRunAwayState animalRunAwayState = new();
+    public AnimalToporState animalToporState = new();
 
     //TO-DO : ADD MORE STATES.
 
@@ -65,11 +66,16 @@ public class AnimalBehaviouralStateMachine : StateMachine
 
     public void CheckForDanger()
     {
+        if (animal.gotShot == true)
+        {
+            DoSwitchState(animalToporState);
+            return;
+        }
         if (animal.PlayerInRange == true)
         {
             DoSwitchState(animalRunAwayState);
         }
-        if (animal.firedAt == true)
+        if (animal.firedAt == true && animal.gotShot!= true)
         {
             DoSwitchState(animalRunAwayState);
         }
