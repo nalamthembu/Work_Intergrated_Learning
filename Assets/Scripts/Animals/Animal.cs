@@ -66,13 +66,13 @@ public class Animal : MonoBehaviour, IStorable
     private void Update()
     {
 
-        for (int i = 0; i < fieldOfView.VisibleTargets.Count; i++)
+        /*for (int i = 0; i < fieldOfView.VisibleTargets.Count; i++)
         {
             if (fieldOfView.VisibleTargets[i] is null)
                 continue;
 
             PlayerInRange = fieldOfView.VisibleTargets[i].CompareTag("Player");
-        }
+        }*/
 
         // code for carnivors when they have a herbivour in its fov
         
@@ -97,13 +97,13 @@ public class Animal : MonoBehaviour, IStorable
     {
         #region OLD_CODE (DETECTION_CODE)
         //PLAYER IS DETECTED BY THE FIELD OF VIEW COMPONENT.
-        /*
+        
         if(other.CompareTag("Player"))
         {
             Debug.Log("Im In Danger");
             PlayerInRange = true;
         }
-        */
+        
         #endregion
 
         if (other.CompareTag("Dart"))
