@@ -230,13 +230,19 @@ namespace AnimalBehaviourStates
                 if (knockedOutTimer >= 20)
                 {
                     machine.animal.isKnockedOut = false;
+                    machine.animal.gotShot = false;
+                    machine.animal.firedAt = false;
                     knockedOutTimer = 0;
+                    return;
                 }
                 knockedOutTimer += Time.deltaTime;
-                return;
             }
-            idleTimer -= Time.deltaTime;
-            CheckStateChange(stateMachine);
+            else
+            {
+                idleTimer -= Time.deltaTime;
+                CheckStateChange(stateMachine);
+            }
+            
         }
     }
 
@@ -283,7 +289,7 @@ namespace AnimalBehaviourStates
                 machine.DoSwitchState(machine.animalIdleState);
             }
             // for when the player tries to shoot the animal and misses
-            if (timer >= runningAwayTimer && machine.animal.firedAt == true)
+            else if (timer >= runningAwayTimer && machine.animal.firedAt == true)
             {
                 Debug.Log("Im away from the danger");
                 machine.animal.firedAt = false;
@@ -332,6 +338,29 @@ namespace AnimalBehaviourStates
                 machine.DoSwitchState(machine.animalIdleState);
             }
             timer += Time.deltaTime;
+        }
+    }
+
+    public class AnimalMatingState : BaseState
+    {
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+            throw new System.NotImplementedException();
         }
     }
     #endregion

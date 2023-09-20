@@ -81,7 +81,7 @@ public class AnimalBehaviouralStateMachine : StateMachine
         }
     }
 
-    public void CheckForHeard()
+    public void CheckForPrey()
     {
 
     }
