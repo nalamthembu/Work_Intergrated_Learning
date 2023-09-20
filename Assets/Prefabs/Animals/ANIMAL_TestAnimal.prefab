@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 734252449}
   m_Layer: 0
   m_Name: ANIMAL_TestAnimal
-  m_TagString: Untagged
+  m_TagString: Springbok
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,10 +96,14 @@ MonoBehaviour:
   torporLevel: 0
   timesShot: 0
   SpeedSmoothVelocity: 0
+  requiredMatingEnergy: 0
+  energyGain: 0
   PlayerInRange: 0
   gotShot: 0
   firedAt: 0
   isKnockedOut: 0
+  isLookingForMate: 0
+  isMating: 0
 --- !u!195 &3583230742080689332
 NavMeshAgent:
   m_ObjectHideFlags: 0

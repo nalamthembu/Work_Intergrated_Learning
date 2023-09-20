@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.AI;
 
 [
@@ -39,10 +40,6 @@ public class Animal : MonoBehaviour, IStorable
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
     public float WanderTime { get { return wanderTime = Random.Range(1f,5f); } }
 
-    public float requiredMatingEnergy = 0;
-
-    public float energyGain = 0;
-
     public PlayerCharacter Player { get; private set; }
 
     public bool PlayerInRange = false;
@@ -53,17 +50,12 @@ public class Animal : MonoBehaviour, IStorable
 
     public bool isKnockedOut = false;
 
-    public bool isLookingForMate = false;
-
-    public bool isMating = false;
-
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
         healthComponent.SetHealth(animalData.health);
         fieldOfView = GetComponent<FieldOfView>();
         torporLevel = animalData.torporLevel;
-        requiredMatingEnergy = animalData.matingEnergy;
     }
 
     private void Start()
@@ -73,13 +65,6 @@ public class Animal : MonoBehaviour, IStorable
 
     private void Update()
     {
-        // all animals gain energy every few seconds; 
-        energyGain += Time.deltaTime;
-
-        if(energyGain >= requiredMatingEnergy)
-        {
-            isLookingForMate = true;
-        }
 
         for (int i = 0; i < fieldOfView.VisibleTargets.Count; i++)
         {
@@ -92,8 +77,6 @@ public class Animal : MonoBehaviour, IStorable
         // code for carnivors when they have a herbivour in its fov
         
     }
-
-
 
     public void Teleport(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);
 

@@ -137,7 +137,6 @@ namespace AnimalBehaviourStates
 
         public override void CheckStateChange(StateMachine stateMachine)
         {
-            
             machine.CheckForDanger();
             
             if (wanderTimer <= 0)
@@ -168,6 +167,8 @@ namespace AnimalBehaviourStates
 
         public override void UpdateState(StateMachine stateMachine)
         {
+            CheckStateChange(stateMachine);
+
             wanderTimer -= Time.deltaTime;
 
             distanceFromTargetLocation = machine.LocomotionStateMachine.GetDistanceFromTargetPosition();
@@ -181,8 +182,6 @@ namespace AnimalBehaviourStates
                     machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
                 }
             }
-
-            CheckStateChange(stateMachine);
         }
     }
 
@@ -195,7 +194,6 @@ namespace AnimalBehaviourStates
         public override void CheckStateChange(StateMachine stateMachine)
         {
             machine.CheckForDanger();
-            
             if (idleTimer <= 0)
             {
                 machine.DoSwitchState(machine.animalWanderingState);
@@ -289,7 +287,7 @@ namespace AnimalBehaviourStates
                 machine.DoSwitchState(machine.animalIdleState);
             }
             // for when the player tries to shoot the animal and misses
-            else if (timer >= runningAwayTimer && machine.animal.firedAt == true)
+            if (timer >= runningAwayTimer && machine.animal.firedAt == true)
             {
                 Debug.Log("Im away from the danger");
                 machine.animal.firedAt = false;
@@ -341,28 +339,6 @@ namespace AnimalBehaviourStates
         }
     }
 
-    public class AnimalMatingState : BaseState
-    {
-        public override void CheckStateChange(StateMachine stateMachine)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void EnterState(StateMachine stateMachine)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ExitState(StateMachine stateMachine)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void UpdateState(StateMachine stateMachine)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
     #endregion
 
 }
