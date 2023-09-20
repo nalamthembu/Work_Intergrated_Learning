@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48aa19c527ee86a4785051ac14d1175d, type: 3}
   m_Name: Wild_Dog
   m_EditorClassIdentifier: 
-  name: Animal Name
-  health: 10
-  walkSpeed: 10
-  runSpeed: 20
+  name: wild dog
+  health: 8
+  walkSpeed: 5
+  runSpeed: 12
   animalType: 0
-  pawprint: {fileID: 0}
+  pawprint: {fileID: 5544328976035707871, guid: a6cf9692f63ca0b4c8dc50584729107e, type: 3}
   torporLevel: 1
   detectionRange: 15
