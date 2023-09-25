@@ -1622,14 +1622,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3085862190325468771, guid: 3c2fb3074af738a4aaadd46bd246ce29, type: 3}
-      propertyPath: torporLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3478459320458433253, guid: 3c2fb3074af738a4aaadd46bd246ce29, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3583230742080689333, guid: 3c2fb3074af738a4aaadd46bd246ce29, type: 3}
       propertyPath: m_Name
       value: Animal_Redux
