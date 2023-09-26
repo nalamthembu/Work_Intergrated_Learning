@@ -418,7 +418,13 @@ namespace CharacterSituationStateMachine
             HandleAnimations();
             HandleRotation();
             HandlePosition();
+            HandleUI();
             CheckStateChange(stateMachine);
+        }
+
+        private void HandleUI()
+        {
+            HUDManager.instance.MakeVisible(HUDManager.instance.HUD_Weapon.cGroup, playerInput.IsAiming);
         }
 
         private void HandleRotation()

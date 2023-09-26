@@ -7,8 +7,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] Vector2 pitchMinMax = new(-40, 85);
     [SerializeField] Vector2 cameraOffset = new(.5F, 0);
     [SerializeField] float distanceFromTarget = 2F;
+    [SerializeField] Vector2 FOV;
 
     public static CameraController instance;
+    public CharacterSituationalStateMachine playerStateMachine;
 
     float pitch;
     float yaw;
@@ -31,7 +33,6 @@ public class CameraController : MonoBehaviour
     public float MouseSensitivity { get { return mouseSensitivity; } }
 
     PlayerInput input;
-    CharacterSituationalStateMachine playerSitMachine;
     new Camera camera;
 
     private void Awake()
@@ -47,7 +48,6 @@ public class CameraController : MonoBehaviour
         }
 
         input = FindObjectOfType<PlayerInput>();
-        playerSitMachine = FindObjectOfType<PlayerCharacter>().GetComponent<CharacterSituationalStateMachine>();
         camera = GetComponentInChildren<Camera>();
 
         if (!camera)
@@ -56,17 +56,33 @@ public class CameraController : MonoBehaviour
         PreviousDistance = distanceFromTarget;
         PreviousFOV = camera.fieldOfView;
         targetFOV = PreviousFOV;
+
+        playerStateMachine = FindObjectOfType<PlayerCharacter>().transform.GetComponent<CharacterSituationalStateMachine>();
     }
 
     private void Update() => HandleInput();
 
     private void LateUpdate()
-    { 
+    {
         Vector3 targetRotation = new(pitch, yaw);
         transform.eulerAngles = targetRotation;
         camera.transform.localPosition = Vector3.Lerp(camera.transform.localPosition, cameraOffset, Time.deltaTime);
         transform.position = target.position - transform.forward * distanceFromTarget;
-        camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFOV, Time.deltaTime * 2F);
+
+        //AIMING
+        bool isArmed_IsAiming = input.IsAiming && playerStateMachine.CurrentState is CharacterSituationStateMachine.CharacterArmedState;
+
+        float FOV_INSTANCE = isArmed_IsAiming ? FOV.x : FOV.y;
+
+        if (isArmed_IsAiming)
+            targetFOV = FOV_INSTANCE;
+        else
+        {
+            targetFOV = PreviousFOV;
+        }
+
+        //CAMERA_FOV
+        camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFOV, Time.deltaTime * 3.5F);
     }
 
     private void HandleInput()

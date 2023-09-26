@@ -1,20 +1,18 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
 //Handles all HUD UI like health, objectives etc.
 public class HUDManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text txtSubtitles;
-    [SerializeField] private TMP_Text txtNotification;
+    [SerializeField] private HUD_Subtitles HUD_Subtitles;
+    [SerializeField] private HUD_Notifications HUD_Notifications;
+    [SerializeField] private HUD_Weapon HUDWeapon;
     [SerializeField] private float instructionTimer = 4F;
 
     public static HUDManager instance;
 
-    //canvas group naming convention "cg_nameOfGroup"
-    private CanvasGroup cg_subtitleGroup;
-    private CanvasGroup cg_NotificationGroup;
+    public HUD_Weapon HUD_Weapon { get { return HUDWeapon; } }
 
     private void Awake()
     {
@@ -28,9 +26,44 @@ public class HUDManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
 
-        cg_subtitleGroup = txtSubtitles.transform.parent.GetComponent<CanvasGroup>();
-        cg_NotificationGroup = txtNotification.transform.parent.GetComponent<CanvasGroup>();
+    public void MakeVisible(CanvasGroup canvasGroup, bool value)
+    {
+        StartCoroutine(IMakeVisible(canvasGroup, value));
+    }
+
+    public IEnumerator IMakeVisible(CanvasGroup canvasGroup, bool value)
+    {
+        if (value)
+        {
+            while (canvasGroup.alpha != 1)
+            {
+                canvasGroup.alpha += Time.deltaTime * 1.5F;
+
+                if (canvasGroup.alpha >= 0.95F)
+                {
+                    canvasGroup.alpha = Mathf.Ceil(canvasGroup.alpha);
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        if (!value)
+        {
+            while (canvasGroup.alpha != 0)
+            {
+                canvasGroup.alpha -= Time.deltaTime * 1.5F;
+
+                if (canvasGroup.alpha <= 0.01F)
+                {
+                    canvasGroup.alpha = Mathf.Ceil(canvasGroup.alpha);
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+        }
     }
 
     public void ShowSubtitles(string text, float durationInSeconds)
@@ -47,28 +80,29 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator IShowSubtitlesForADuration(string text, float duration)
     {
-        txtSubtitles.text = string.Empty;
+        HUD_Subtitles.subtitle.text = string.Empty;
 
-        while (cg_subtitleGroup.alpha != 1)
+        while (HUD_Subtitles.cGroup.alpha != 1)
         {
-            cg_subtitleGroup.alpha += Time.deltaTime * 1.5F;
 
-            if (System.MathF.Round(cg_subtitleGroup.alpha, 2) >= 0.999F)
-                cg_subtitleGroup.alpha = 1;
+            HUD_Subtitles.cGroup.alpha += Time.deltaTime * 1.5F;
+
+            if (HUD_Notifications.cGroup.alpha >= 0.95F)
+                HUD_Notifications.cGroup.alpha = Mathf.Ceil(HUD_Notifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
 
-        txtSubtitles.text = text;
+        HUD_Subtitles.subtitle.text = text;
 
         yield return new WaitForSeconds(duration);
 
-        while (cg_subtitleGroup.alpha != 0)
+        while (HUD_Subtitles.cGroup.alpha != 0)
         {
-            cg_subtitleGroup.alpha -= Time.deltaTime * 1.5F;
+            HUD_Subtitles.cGroup.alpha -= Time.deltaTime * 1.5F;
 
-            if (System.MathF.Round(cg_subtitleGroup.alpha, 2) <= 0.001F)
-                cg_subtitleGroup.alpha = 0;
+            if (HUD_Notifications.cGroup.alpha <= 0.01F)
+                HUD_Notifications.cGroup.alpha = Mathf.Floor(HUD_Notifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
@@ -76,28 +110,28 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator IShowNotification(string text)
     {
-        while (cg_NotificationGroup.alpha != 1)
+        while (HUD_Notifications.cGroup.alpha != 1)
         {
-            cg_NotificationGroup.alpha += Time.deltaTime * 1.5F;
+            HUD_Notifications.cGroup.alpha += Time.deltaTime * 1.5F;
 
-            if (System.MathF.Round(cg_NotificationGroup.alpha, 2) >= 0.999F)
-                cg_NotificationGroup.alpha = 1;
+            if (HUD_Notifications.cGroup.alpha >= 0.95F)
+                HUD_Notifications.cGroup.alpha = Mathf.Ceil(HUD_Notifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
 
-        txtNotification.text = string.Empty;
+        HUD_Notifications.notification.text = string.Empty;
 
-        txtNotification.text = text;
+        HUD_Notifications.notification.text = text;
 
         yield return new WaitForSeconds(instructionTimer);
 
-        while (cg_NotificationGroup.alpha != 0)
+        while (HUD_Notifications.cGroup.alpha != 0)
         {
-            cg_NotificationGroup.alpha -= Time.deltaTime * 1.5F;
+            HUD_Notifications.cGroup.alpha -= Mathf.Floor(Time.deltaTime * 1.5F);
 
-            if (System.MathF.Round(cg_NotificationGroup.alpha, 2) <= 0.001F)
-                cg_NotificationGroup.alpha = 0;
+            if (HUD_Notifications.cGroup.alpha <= 0.01F)
+                HUD_Notifications.cGroup.alpha = Mathf.Floor(HUD_Notifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
@@ -107,4 +141,28 @@ public class HUDManager : MonoBehaviour
     {
         print("ui notification sound is meant to be played");
     }
+}
+
+[System.Serializable]
+public struct HUD_Notifications
+{
+    public TMP_Text notification;
+    public CanvasGroup cGroup;
+}
+
+[System.Serializable]
+public struct HUD_Subtitles
+{
+    public TMP_Text subtitle;
+    public CanvasGroup cGroup;
+}
+
+
+//MIGHT_ADD_BULLET_SPREAD
+[System.Serializable]
+public struct HUD_Weapon
+{
+    public TMP_Text ammo;
+    public GameObject crosshair_Hit;
+    public CanvasGroup cGroup;
 }

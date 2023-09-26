@@ -79,7 +79,7 @@ public class Weapon : Item
     {
         Bullet bullet = Instantiate(weaponData.bulletPrefab, bulletSpawn.position, Quaternion.identity).GetComponent<Bullet>();
 
-        if (Physics.Raycast(bulletSpawn.position, mainCamera.transform.forward * 100, out RaycastHit hit, weaponData.range))
+        if (Physics.Raycast(bulletSpawn.position, mainCamera.transform.forward * 100, out RaycastHit hit, weaponData.range * 2))
             bullet.transform.LookAt(hit.point);
         else
             bullet.transform.forward = bulletSpawn.forward;

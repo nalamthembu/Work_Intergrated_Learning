@@ -54,6 +54,7 @@ public class Item : MonoBehaviour, IStorable
                 weapon.gameObject.SetActive(false);
             }
 
+            if (collider is not null)
             collider.enabled = false;
         }
     }
