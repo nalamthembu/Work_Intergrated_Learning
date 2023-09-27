@@ -13,14 +13,21 @@ public class AnimalLocomotionStateMachine : StateMachine
 
     public Animal Animal { get; private set; }
 
-    public NavMeshAgent navMeshAgent { get; private set; }
+    public NavMeshAgent NavMeshAgent { get; private set; }
 
-    public BaseState CurrentState { get { return currentState; } }
+
+    public bool HasReachedDestination
+    {
+        get
+        {
+            return NavMeshAgent.remainingDistance <= 1.0F;
+        }
+    }
 
     private void Awake()
     {
         Animal = GetComponent<Animal>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        NavMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Start()
@@ -45,16 +52,15 @@ public class AnimalLocomotionStateMachine : StateMachine
                 Animal.SpeedSmoothTime
             );
 
-        navMeshAgent.speed = Animal.CurrentSpeed;
+        NavMeshAgent.speed = Animal.CurrentSpeed;
     }
 
-    public float GetDistanceFromTargetPosition() => navMeshAgent.remainingDistance;
+    public float GetDistanceFromTargetPosition() => NavMeshAgent.remainingDistance;
 
     private void Update()
     {
         currentState.UpdateState(this);
-        //Debug.Log(currentState);
     } 
 
-    public void GoToPosition(Vector3 position) => navMeshAgent.SetDestination(position);
+    public void GoToPosition(Vector3 position) => NavMeshAgent.SetDestination(position);
 }

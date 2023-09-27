@@ -32,8 +32,6 @@ public class Animal : MonoBehaviour, IStorable
 
     [SerializeField] private FieldOfView fieldOfView;
 
-    public int torporLevel = 0;
-    public int timesShot = 0;
     public float TargetSpeed { get; set; }
     public float CurrentSpeed { get; set; }
     [HideInInspector] public float SpeedSmoothVelocity;
@@ -42,40 +40,23 @@ public class Animal : MonoBehaviour, IStorable
 
     public PlayerCharacter Player { get; private set; }
 
-    public bool PlayerInRange = false;
+    public bool PlayerInRange { get; private set; }
+    public bool IsKnockedOut { get; private set; }
+    public bool IsInDanger { get; set; }
+    public bool IsDazed { get; set; }
 
-    public bool gotShot = false;
-
-    public bool firedAt = false;
-
-    public bool isKnockedOut = false;
+    private int shotCount;
 
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
         healthComponent.SetHealth(animalData.health);
         fieldOfView = GetComponent<FieldOfView>();
-        torporLevel = animalData.torporLevel;
     }
 
     private void Start()
     {
         Player = FindObjectOfType<PlayerCharacter>();
-    }
-
-    private void Update()
-    {
-
-        /*for (int i = 0; i < fieldOfView.VisibleTargets.Count; i++)
-        {
-            if (fieldOfView.VisibleTargets[i] is null)
-                continue;
-
-            PlayerInRange = fieldOfView.VisibleTargets[i].CompareTag("Player");
-        }*/
-
-        // code for carnivors when they have a herbivour in its fov
-        
     }
 
     public void Teleport(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);
@@ -92,47 +73,6 @@ public class Animal : MonoBehaviour, IStorable
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        #region OLD_CODE (DETECTION_CODE)
-        //PLAYER IS DETECTED BY THE FIELD OF VIEW COMPONENT.
-        
-        if(other.CompareTag("Player"))
-        {
-            Debug.Log("Im In Danger");
-            PlayerInRange = true;
-        }
-        
-        #endregion
-
-        if (other.CompareTag("Dart"))
-        {
-            Debug.Log("Someone tried to shoot me");
-            firedAt = true;
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player is out of range");
-            PlayerInRange = false;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.collider.CompareTag("Dart"))
-        {
-            Debug.Log("Got shot");
-            gotShot = true;
-            timesShot += 1;
-        }
-    }
-
     public void DisableAnimal()
     {
         gameObject.SetActive(false);
@@ -143,4 +83,50 @@ public class Animal : MonoBehaviour, IStorable
         GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);
         pawprint.GetComponent<Pawprint>().SetAnimal(this);
     }
+
+    #region PHYSICS FUNCTIONS (OnTrigger, OnCollision)
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //IF ANIMAL IS HIT BY DART, INCR. SHOT COUNT.
+        if (collision.collider.CompareTag("Dart"))
+        {
+            shotCount++;
+
+            //IF SHOT COUNT > SHOTS_BEFORE_DAZED, ANIMAL SHOULD BE DAZED.
+            if (shotCount >= animalData.shotsBeforeDazed)
+            {
+                IsDazed = true;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerInRange = false;
+        }
+
+        //ONLY CONSIDER A THREAD IF YOU'RE NOT DAZED
+        if (!(shotCount >= animalData.shotsBeforeDazed))
+        {
+            //IF THE BULLET ENTERS AND LEAVES THE TRIGGER, THEN THE PLAYER MISSED
+            if (other.CompareTag("Dart"))
+            {
+                //print("Dart has missed the animal");
+                IsInDanger = true;
+            }
+        }
+    }
+
+    #endregion
 }

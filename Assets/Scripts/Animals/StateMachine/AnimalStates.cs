@@ -147,16 +147,15 @@ namespace AnimalBehaviourStates
 
         public override void EnterState(StateMachine stateMachine)
         {
-            Debug.Log("Animal is Wandering");
             
             machine = (AnimalBehaviouralStateMachine)stateMachine;
 
-            animal = machine.animal;
+            animal = machine.Animal;
             
             wanderTimer = animal.WanderTime;
 
+            machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.Animal.transform.position, 25F));
 
-            machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
         }
 
@@ -175,7 +174,7 @@ namespace AnimalBehaviourStates
 
             if (distanceFromTargetLocation < .5F)
             {
-                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.animal.transform.position, 25F));
+                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.Animal.transform.position, 25F));
 
                 if (machine.LocomotionStateMachine.CurrentState is not AnimalLocomotionStates.AnimalWalkState)
                 {
@@ -188,12 +187,12 @@ namespace AnimalBehaviourStates
     public class AnimalIdleState : BaseState
     {
         float idleTimer;
-        float knockedOutTimer = 0;
         AnimalBehaviouralStateMachine machine;
 
         public override void CheckStateChange(StateMachine stateMachine)
         {
             machine.CheckForDanger();
+
             if (idleTimer <= 0)
             {
                 machine.DoSwitchState(machine.animalWanderingState);
@@ -203,18 +202,10 @@ namespace AnimalBehaviourStates
         public override void EnterState(StateMachine stateMachine)
         {
             machine = (AnimalBehaviouralStateMachine)stateMachine;
-
-            if (machine.animal.isKnockedOut == true)
-            {
-                Debug.Log("The animal is currently knocked out");
-            }
-            else
-            {
-                Debug.Log("Entered Idle State");
-                idleTimer = 5f;
-                machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
-            }
+            idleTimer = 5f;
+            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
         }
+        
 
         public override void ExitState(StateMachine stateMachine)
         {
@@ -223,32 +214,18 @@ namespace AnimalBehaviourStates
 
         public override void UpdateState(StateMachine stateMachine)
         {
-            if (machine.animal.isKnockedOut == true)
-            {
-                if (knockedOutTimer >= 20)
-                {
-                    machine.animal.isKnockedOut = false;
-                    machine.animal.gotShot = false;
-                    machine.animal.firedAt = false;
-                    knockedOutTimer = 0;
-                    return;
-                }
-                knockedOutTimer += Time.deltaTime;
-            }
-            else
-            {
-                idleTimer -= Time.deltaTime;
-                CheckStateChange(stateMachine);
-            }
-            
+            idleTimer -= Time.deltaTime;
+            CheckStateChange(stateMachine);
         }
     }
 
-    public class AnimalRunAwayState : BaseState
+    public class AnimalFleeState : BaseState
     {
-        private float runningAwayTimer = 10f;
-        float timer = 0;
         AnimalBehaviouralStateMachine machine;
+
+        float fleeTimer;
+
+        const int MAX_FLEE_DURATION = 10;
 
         public override void CheckStateChange(StateMachine stateMachine)
         {
@@ -257,54 +234,50 @@ namespace AnimalBehaviourStates
 
         public override void EnterState(StateMachine stateMachine)
         {
-            timer = 0;
-            machine = (AnimalBehaviouralStateMachine)stateMachine;
-            Debug.Log("Animal is Running Away");
-            machine.animal.CreatePawPrints();
+            Debug.Log("Flee");
+
+            if (machine is null)
+                machine = (AnimalBehaviouralStateMachine)stateMachine;
+
+            //RUN IF YOU'RE IN DANGER & GO TO A "SAFE" LOCATION
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalRunState);
-            machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
+            machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.Animal.transform.position, 100.0f));
         }
 
         public override void ExitState(StateMachine stateMachine)
         {
-            Debug.Log("Animal is away from danger");
+            //YOU ARE NO LONGER IN DANGER IF YOU MOVE PAST THIS STATE.
+
+            machine.Animal.IsInDanger = false;
+
+            return;
         }
 
         public override void UpdateState(StateMachine stateMachine)
         {
-            timer += Time.deltaTime;
+            fleeTimer += Time.deltaTime;
 
-            // for when the player is chasing the animal
-            if (timer <= runningAwayTimer && machine.animal.PlayerInRange == true)
+            if (fleeTimer >= MAX_FLEE_DURATION)
             {
-                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
-                timer = 0;
+                fleeTimer = 0;
+
+                //GO BACK TO WANDERING
+                machine.DoSwitchState(machine.animalWanderingState);
             }
-            else if (timer >= runningAwayTimer && machine.animal.PlayerInRange == false)
+            else
             {
-                Debug.Log("Ive ran away");
-                machine.LocomotionStateMachine.navMeshAgent.speed = machine.animal.animalData.walkSpeed;
-                machine.DoSwitchState(machine.animalIdleState);
-            }
-            // for when the player tries to shoot the animal and misses
-            if (timer >= runningAwayTimer && machine.animal.firedAt == true)
-            {
-                Debug.Log("Im away from the danger");
-                machine.animal.firedAt = false;
-                machine.LocomotionStateMachine.navMeshAgent.speed = machine.animal.animalData.walkSpeed;
-                machine.DoSwitchState(machine.animalIdleState);
-            }
-            else if (timer <= runningAwayTimer && machine.animal.firedAt == true)
-            {
-                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
+                //IF WE'RE CLOSE ENOUGH TO THE SAFE LOCATION AND WE'RE STILL IN DANGER.
+                if (machine.LocomotionStateMachine.HasReachedDestination)
+                {
+                    //GO TO A "SAFE" LOCATION
+                    machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.Animal.transform.position, 100.0f));
+                }
             }
         }
     }
 
-    public class AnimalToporState : BaseState
+    public class AnimalKnockedOutState : BaseState
     {
-        private float runningAwayTimer = 5f;
-        float timer = 0;
         AnimalBehaviouralStateMachine machine;
 
         public override void CheckStateChange(StateMachine stateMachine)
@@ -314,7 +287,15 @@ namespace AnimalBehaviourStates
 
         public override void EnterState(StateMachine stateMachine)
         {
-            Debug.Log("IS getting Knocked out");
+            if (machine is null)
+                machine = (AnimalBehaviouralStateMachine)stateMachine;
+
+            Debug.Log("Knocked Out");
+
+            //DON'T MOVE
+            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalIdleState);
+
+            machine.Animal.transform.eulerAngles += Vector3.forward * 180;
         }
 
         public override void ExitState(StateMachine stateMachine)
@@ -324,18 +305,59 @@ namespace AnimalBehaviourStates
 
         public override void UpdateState(StateMachine stateMachine)
         {
-            machine = (AnimalBehaviouralStateMachine)stateMachine;
-            //oppa gangnum style
-            if (timer <= runningAwayTimer)
+            return;
+        }
+    }
+
+    public class AnimalDazedState : BaseState
+    {
+        float dazedTimer;
+
+        const int MAX_DAZED_DURATION = 10;
+
+        AnimalBehaviouralStateMachine machine;
+
+        public override void CheckStateChange(StateMachine stateMachine)
+        {
+            return;
+        }
+
+        public override void EnterState(StateMachine stateMachine)
+        {
+            if (machine is null)
+                machine = (AnimalBehaviouralStateMachine)stateMachine;
+
+            Debug.Log("Dazed");
+
+            //MAKE THE ANIMAL MOVE SLOWER WHEN ITS DAZED
+            //TO-DO : DAZED WALKING STATE ('DRUNKEN' ANIMAL WALK ANIMATIONS)
+            machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalWalkState);
+        }
+
+        public override void ExitState(StateMachine stateMachine)
+        {
+            return;
+        }
+
+        public override void UpdateState(StateMachine stateMachine)
+        {
+            //IF WE'RE CLOSE ENOUGH TO THE SAFE LOCATION AND WE'RE STILL IN DANGER.
+            if (machine.LocomotionStateMachine.HasReachedDestination)
             {
-                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomSafePosition(machine.animal.transform.position, 30f));
+                //GO TO A "SAFE" LOCATION
+                machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.Animal.transform.position, 100.0f));
             }
-            else if (timer >= runningAwayTimer)
+
+            dazedTimer += Time.deltaTime;
+
+            if (dazedTimer >= MAX_DAZED_DURATION)
             {
-                machine.animal.isKnockedOut = true;
-                machine.DoSwitchState(machine.animalIdleState);
+                //IF THE TIMER RUNS OUT THE ANIMAL SHOULD FINALLY PASS OUT.
+
+                machine.DoSwitchState(machine.animalKnockedOutState);
+
+                dazedTimer = 0;
             }
-            timer += Time.deltaTime;
         }
     }
 

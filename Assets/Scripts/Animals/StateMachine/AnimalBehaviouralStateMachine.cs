@@ -4,31 +4,35 @@ using UnityEngine.AI;
 
 public class AnimalBehaviouralStateMachine : StateMachine
 {
-    public Animal animal { get; private set; }
+    public Animal Animal { get; private set; }
 
     public AnimalLocomotionStateMachine LocomotionStateMachine { get; private set; }
 
     public AnimalWanderingState animalWanderingState = new();
     public AnimalIdleState animalIdleState = new(); //Grazing and such.
-    public AnimalRunAwayState animalRunAwayState = new();
-    public AnimalToporState animalToporState = new();
-
+    public AnimalFleeState animalFleeState = new();
+    public AnimalDazedState animalDazedState = new();
+    public AnimalKnockedOutState animalKnockedOutState = new();
     //TO-DO : ADD MORE STATES.
 
     private void Awake()
     {
-        animal = GetComponent<Animal>();
+        Animal = GetComponent<Animal>();
         LocomotionStateMachine = GetComponent<AnimalLocomotionStateMachine>();
     }
 
     private void Start()
     {
-        currentState = animalIdleState;
+        currentState = animalWanderingState;
         currentState.EnterState(this);
     }
 
     public override void DoSwitchState(BaseState state)
     {
+        //BUG FOUND & FIXED : EXIT STATE WAS NOT BEING CALLED DURING SWITCH.
+        if (currentState is not null)
+            currentState.ExitState(this);
+
         currentState = state;
         state.EnterState(this);
     }
@@ -36,7 +40,6 @@ public class AnimalBehaviouralStateMachine : StateMachine
     private void Update() 
     {
         currentState.UpdateState(this);
-        //Debug.Log(currentState);
     } 
 
     // random position in a circle
@@ -51,38 +54,26 @@ public class AnimalBehaviouralStateMachine : StateMachine
         return navHit.position;
     }
 
-    // random safe position to run away to
-    public Vector3 GetRandomSafePosition(Vector3 origin, float dist)
-    {
-
-        Vector3 randVector = animal.transform.position - animal.Player.transform.position;
-
-        randVector *= 20;
-
-        NavMesh.SamplePosition(randVector, out NavMeshHit navHit, dist, -1);
-
-        return navHit.position;
-    }
-
     public void CheckForDanger()
     {
-        if (animal.gotShot == true)
+        //IF PLAYER IS IN RANGE, YOU GET SHOT AT OR HIT, YOU ARE IN DANGER.
+        if (Animal.PlayerInRange)
         {
-            DoSwitchState(animalToporState);
-            return;
+            Animal.IsInDanger = true;
         }
-        if (animal.PlayerInRange == true)
-        {
-            DoSwitchState(animalRunAwayState);
-        }
-        if (animal.firedAt == true && animal.gotShot!= true)
-        {
-            DoSwitchState(animalRunAwayState);
-        }
+
+        //IF YOU'RE IN DANGER, SWITCH OVER TO DANGER STATE.
+        if (Animal.IsInDanger && currentState != animalFleeState)
+            DoSwitchState(animalFleeState);
+
+
+        //IF YOU SHOULD BE DAZED AND YOU'RE NOT, BE DAZED.
+        if (Animal.IsDazed && currentState != animalDazedState)
+            DoSwitchState(animalDazedState);
     }
 
     public void CheckForPrey()
     {
-
+        //TO-DO : IMPLEMENT PREDATOR BEHAVIOUR
     }
 }

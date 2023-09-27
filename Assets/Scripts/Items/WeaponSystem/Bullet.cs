@@ -18,6 +18,7 @@ public class Bullet : Item
     public void Initialise(float bulletSpeed)
     {
         this.bulletSpeed = bulletSpeed;
+
         rigidBody.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
 
         Destroy(gameObject, 10);

@@ -65,7 +65,7 @@ public class PlayerCharacter : Character
         {
             if (c.TryGetComponent(out Animal animal))
             {
-                if (animal.isKnockedOut)
+                if (animal.IsKnockedOut)
                 {
                     if (CurrentVehicle == null)
                     {

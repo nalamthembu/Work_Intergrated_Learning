@@ -84,6 +84,6 @@ public class CharacterSituationalStateMachine : StateMachine
 
         Gizmos.color = stateColor;
 
-        Gizmos.DrawWireCube(transform.position + transform.up * 2.5F, Vector3.one * 0.15F);
+        Gizmos.DrawWireCube(transform.position + transform.up * 2.15F, Vector3.one * 0.15F);
     }
 }

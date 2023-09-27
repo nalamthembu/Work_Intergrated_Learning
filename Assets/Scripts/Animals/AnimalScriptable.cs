@@ -13,7 +13,7 @@ public class AnimalScriptable : ScriptableObject
     public GameObject pawprint;
 
     [Header("Capturing stats")]
-    public int torporLevel = 1;
+    public int shotsBeforeDazed = 1;
     public float detectionRange = 15f;
 
 
