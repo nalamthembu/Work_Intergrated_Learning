@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MissionScriptable
   m_EditorClassIdentifier: 
   missions:
-  - name: Test Mission
+  - name: Making Bucks
     objectives:
     - name: Test Objective
       instructionToPlayer: Drive over to "this specific spot".
