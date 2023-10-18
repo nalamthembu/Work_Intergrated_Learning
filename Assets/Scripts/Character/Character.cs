@@ -15,6 +15,10 @@ public class Character : MonoBehaviour
     [SerializeField][Range(1, 10)] protected float jumpHeight = 2;
     [SerializeField][Range(0, 01)] protected float speedSmoothTime;
 
+    private float health;
+
+    public float Health { get { return health; } set { health = value; } }
+
     [SerializeField] Renderer meshRenderer;
 
     protected bool isGrounded;
