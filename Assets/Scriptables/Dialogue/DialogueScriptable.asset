@@ -12,4 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3bb8548bff1604094a78d139f1a249, type: 3}
   m_Name: DialogueScriptable
   m_EditorClassIdentifier: 
-  crewMember: []
+  crewMember:
+  - memberName: Leopard
+    genDialoog:
+    - dialogueName: Name
+      dialogueDescription: My nem Leo
+    currentDialoog: []
+    missionDialoog: []
+  - memberName: Rhino
+    genDialoog: []
+    currentDialoog: []
+    missionDialoog: []
+  - memberName: Buffalo
+    genDialoog: []
+    currentDialoog: []
+    missionDialoog: []
+  - memberName: Elephant
+    genDialoog: []
+    currentDialoog: []
+    missionDialoog: []

@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     public bool IsShooting { get; private set; } //Might not work as well as I want it to.
     public bool IsAiming { get; private set; }
     public bool PickUpAnimal { get; private set; }
+    public bool Interact { get; private set; }
 
     PlayerCharacter playerCharacter;
 
