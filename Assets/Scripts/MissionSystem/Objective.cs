@@ -12,6 +12,13 @@ public struct Objective
 
 public enum ObjectiveType
 {
+    Explore,
+    SearchAndRescue,
+    DriveToLocation,
+    SaveAnimal,
+    ReturnToHQ,
+    Neutralise,
+    Breed
     //All the different types of object, example : search and rescue, drive to location, find an animal.
     //TO-DO : ADD DIFFERENT OBJECTIVES.
 }
