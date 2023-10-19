@@ -6,5 +6,5 @@ public interface IInteractable
 {
     public abstract void TriggerInteractable();
 
-    public abstract void OnTriggerEnter(Collider other);
+    public abstract void OnTriggerStay(Collider other);
 }

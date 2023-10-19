@@ -19,6 +19,7 @@ public class PlayerCharacter : Character
 {
     [SerializeField][Range(-50, 0)] float gravity;
     [SerializeField][Range(00, 01)] protected float turnSmoothTime;
+    private BoxCollider interactableCollider;
     public float VelocityY { get; set; }
     public Vector3 Velocity { get; set; }
     public float Gravity { get { return gravity; } }
@@ -42,6 +43,12 @@ public class PlayerCharacter : Character
         MainCamera = Camera.main.transform;
         CameraController = MainCamera.GetComponentInParent<CameraController>();
         PlayerInput = GetComponent<PlayerInput>();
+
+        //INTERACTABLE COLLIDERS
+        interactableCollider = gameObject.AddComponent<BoxCollider>();
+        interactableCollider.size += Vector3.up * 1.8F;
+        interactableCollider.isTrigger = false;
+        interactableCollider.center = Vector3.up * 1.8f / 2;
     }
 
     private void FixedUpdate()

@@ -24,8 +24,8 @@ public class PlayerInput : MonoBehaviour
         InputMagnitude = InputDir.normalized.magnitude;
         IsRunning = Input.GetKey(KeyCode.LeftShift);
 
-        //Interact key.
-        Interact = Input.GetKeyDown(KeyCode.E);
+        //Interact key
+        Interact = Input.GetButtonDown("Interact");
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
             IsCrouching = !IsCrouching;
