@@ -100,7 +100,7 @@ public class PlayerCharacter : Character
         SetArmed(PlayerInput.IsArmed);
         SetShooting(Input.GetMouseButton(0));
         SetAiming(debugAiming ? debugAiming : PlayerInput.IsAiming);
-        
+
         if (PlayerInput.PickUpAnimal)
         {
             PickUpKOdAnimal();

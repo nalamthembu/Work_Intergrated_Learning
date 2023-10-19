@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
     public bool IsShooting { get; private set; } //Might not work as well as I want it to.
     public bool IsAiming { get; private set; }
     public bool PickUpAnimal { get; private set; }
-    public bool Interact { get; private set; }
+    public bool Interact { get; private set; } //Binded to E in Update()
 
     PlayerCharacter playerCharacter;
 
@@ -23,6 +23,9 @@ public class PlayerInput : MonoBehaviour
         InputDir = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         InputMagnitude = InputDir.normalized.magnitude;
         IsRunning = Input.GetKey(KeyCode.LeftShift);
+
+        //Interact key.
+        Interact = Input.GetKeyDown(KeyCode.E);
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
             IsCrouching = !IsCrouching;

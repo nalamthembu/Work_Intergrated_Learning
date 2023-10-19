@@ -13,4 +13,16 @@ MonoBehaviour:
   m_Name: Sound_Library
   m_EditorClassIdentifier: 
   sounds: []
-  groups: []
+  groups:
+  - name: Sound Effects Mixer
+    mixer: {fileID: 2312747320394626905, guid: 7fd8a870d8a454e4daf59037a0c19883, type: 2}
+    type: 0
+  - name: Ambience Mixer
+    mixer: {fileID: -3858791065730335443, guid: 7fd8a870d8a454e4daf59037a0c19883, type: 2}
+    type: 3
+  - name: Speech Mixer
+    mixer: {fileID: -4411007394148856019, guid: 7fd8a870d8a454e4daf59037a0c19883, type: 2}
+    type: 2
+  - name: Frontend Mixer
+    mixer: {fileID: 4438782322292111765, guid: 7fd8a870d8a454e4daf59037a0c19883, type: 2}
+    type: 4

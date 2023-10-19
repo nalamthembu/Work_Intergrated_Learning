@@ -112,7 +112,7 @@ public enum EVENT_TYPE
     PLAY_SOUND,
     SPAWN_ENEMIES,
     CHANGE_AMBIENCE,
-    TRIGGER_DIALOGUE
+    TRIGGER_DIALOGUE,
 }
 
 [System.Serializable]
@@ -157,11 +157,4 @@ public struct EnemyWave
 public struct ChangeAmbienceEvent
 {
     public string AmbienceToChangeTo;
-}
-
-
-[System.Serializable]
-public struct TriggerDialogueEvent
-{
-
 }
