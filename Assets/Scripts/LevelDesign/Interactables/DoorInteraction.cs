@@ -13,12 +13,16 @@ public class DoorInteraction : Interactable, IInteractable
 
     public override void OnTriggerStay(Collider other)
     {
+        //GETS THE PLAYER
         if (other.CompareTag(PLAYER_TAG))
         {
+            //TRYS TO GET THE PLAYER INPUT SCRIPT
             PlayerInput playerInput = other.GetComponent<PlayerInput>();
 
+            //CHECKS FOR INPUT
             if (playerInput.Interact)
             {
+                //CALLS THE TRIGGER_INTERACTABLE_METHOD
                 TriggerInteractable();
             }
         }
@@ -26,8 +30,6 @@ public class DoorInteraction : Interactable, IInteractable
 
     public override void TriggerInteractable()
     {
-        print("This would trigger a door interactable");
-
         switch(doorState)
         {
             //This assumes the door is already open.
