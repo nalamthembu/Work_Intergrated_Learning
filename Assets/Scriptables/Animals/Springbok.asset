@@ -17,6 +17,7 @@ MonoBehaviour:
   walkSpeed: 3
   runSpeed: 10
   animalType: 1
+  prefab: {fileID: 4252042789836837478, guid: e1b53ba0c228d36489b5e5b821b682d7, type: 3}
   pawprint: {fileID: 5544328976035707871, guid: a6cf9692f63ca0b4c8dc50584729107e, type: 3}
-  torporLevel: 1
+  shotsBeforeDazed: 1
   detectionRange: 20

@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float distanceFromTarget = 2F;
     [SerializeField] Vector2 FOV;
 
-    public static CameraController instance;
+    public static CameraController Instance;
     public CharacterSituationalStateMachine playerStateMachine;
 
     float pitch;
@@ -37,9 +37,9 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance is null)
+        if (Instance is null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {

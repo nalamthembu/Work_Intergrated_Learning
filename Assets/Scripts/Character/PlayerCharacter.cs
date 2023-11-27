@@ -19,6 +19,7 @@ public class PlayerCharacter : Character
 {
     [SerializeField][Range(-50, 0)] float gravity;
     [SerializeField][Range(00, 01)] protected float turnSmoothTime;
+
     private BoxCollider interactableCollider;
     public float VelocityY { get; set; }
     public Vector3 Velocity { get; set; }
@@ -32,12 +33,22 @@ public class PlayerCharacter : Character
     [HideInInspector] public float TurnSmoothTime { get { return turnSmoothTime; } }
     public PlayerInput PlayerInput { get; private set; }
 
+    public static PlayerCharacter Instance;
+
     #region DEBUG
     public bool debugAiming = false;
     #endregion
 
     public override void Awake()
     {
+        if (Instance is not null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         base.Awake();
         controller = GetComponent<CharacterController>();
         MainCamera = Camera.main.transform;

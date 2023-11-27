@@ -10,6 +10,7 @@ public class AnimalScriptable : ScriptableObject
     public float walkSpeed = 10f;
     public float runSpeed = 20f;
     public AnimalType animalType;
+    public GameObject prefab;
     public GameObject pawprint;
 
     [Header("Capturing stats")]
@@ -21,6 +22,7 @@ public class AnimalScriptable : ScriptableObject
 
 public enum AnimalType
 {
-    CARNIVORE,
-    HERBIVORE
+    Carnivore,
+    Herbivore,
+    Omnivore
 }

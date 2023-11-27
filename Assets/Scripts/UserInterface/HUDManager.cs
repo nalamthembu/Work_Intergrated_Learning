@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
@@ -8,6 +9,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private HUD_Subtitles HUD_Subtitles;
     [SerializeField] private HUD_Notifications HUD_Notifications;
     [SerializeField] private HUD_Weapon HUDWeapon;
+    [SerializeField] private HUDStats HUDStats;
     [SerializeField] private float instructionTimer = 4F;
 
     public static HUDManager instance;
@@ -26,6 +28,16 @@ public class HUDManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    private void Start()
+    {
+        HUDStats.Start();
+    }
+
+    private void Update()
+    {
+        HUDStats.Update();
     }
 
     public void MakeVisible(CanvasGroup canvasGroup, bool value)
@@ -165,4 +177,25 @@ public struct HUD_Weapon
     public TMP_Text ammo;
     public GameObject crosshair_Hit;
     public CanvasGroup cGroup;
+}
+
+[System.Serializable]
+public struct HUDStats
+{
+    public TMP_Text timeOfDay;
+    public TMP_Text daysPassed;
+    public Slider health;
+    public CanvasGroup cGroup;
+
+    public void Start()
+    {
+        health.maxValue = 100;
+    }
+
+    public void Update()
+    {
+        timeOfDay.text = WorldManager.Instance.GetTimeOfDay();
+        daysPassed.text = WorldManager.Instance.DaysPassed.ToString();
+        health.value = PlayerCharacter.Instance.Health;
+    }
 }

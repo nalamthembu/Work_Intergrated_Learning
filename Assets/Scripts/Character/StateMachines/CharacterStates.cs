@@ -479,9 +479,7 @@ namespace CharacterSituationStateMachine
 
                 for (int i = 0; i < cols.Length; i++)
                 {
-                    Vehicle vehicle = cols[i].GetComponent<Vehicle>();
-
-                    if (vehicle == null)
+                    if (!cols[i].TryGetComponent<Vehicle>(out var vehicle))
                         continue;
 
                     Debug.Log("Found a vehicle");
@@ -534,7 +532,7 @@ namespace CharacterSituationStateMachine
             machine = (CharacterSituationalStateMachine)stateMachine;
             input = vehicle.GetComponent<PlayerVehicleInput>();
             
-            CameraController.instance.SetTarget
+            CameraController.Instance.SetTarget
                 (
                     input.cameraSettings.target,
                     input.cameraSettings.distance,
@@ -556,7 +554,7 @@ namespace CharacterSituationStateMachine
             machine.Character.transform.parent = null;
             machine.Character.CurrentSpeed = 0;
             //TO-DO : LOOK AT PLAYER INSTEAD.
-            CameraController.instance.SetTarget(machine.Character.transform.Find("Camera_Focus"), 2F, 60);
+            CameraController.Instance.SetTarget(machine.Character.transform.Find("Camera_Focus"), 2F, 60);
         }
 
         public override void UpdateState(StateMachine stateMachine)
