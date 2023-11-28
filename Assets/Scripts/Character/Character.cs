@@ -94,14 +94,22 @@ public class Character : MonoBehaviour
     {
         meshRenderer.enabled = false;
         if (this is PlayerCharacter player)
+        {
             player.Controller.enabled = false;
+
+            if (player.TryGetComponent<BoxCollider>(out var col))
+                col.enabled = false;
+        }
     }
 
     public void EnableOutsideVehicle()
     {
         meshRenderer.enabled = true;
         if (this is PlayerCharacter player)
+        {
             GetComponent<CharacterController>().enabled = true;
+            if (player.TryGetComponent<BoxCollider>(out var col))
+                col.enabled = false;
+        }
     }
-
 }

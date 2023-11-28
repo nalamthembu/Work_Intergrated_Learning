@@ -148,6 +148,8 @@ public struct Area
     public AnimalPopulation[] animalPopulation;
     private List<Animal> allAnimals;
 
+    public int totalAnimalCount;
+
     private int carnivoreCount;
 
     public void Start()
@@ -155,7 +157,11 @@ public struct Area
         allAnimals = new();
     }
 
-    public void AddAnimal(Animal animal) => allAnimals.Add(animal);
+    public void AddAnimal(Animal animal)
+    {
+        allAnimals.Add(animal);
+        totalAnimalCount = allAnimals.Count;
+    }
 
     private void CountCarnivores()
     {
@@ -242,6 +248,8 @@ public struct AnimalPopulationCopulation
     [Range(1, 100)] public float maxDistance;
     [Range(1, 100)] public float animalSpawnRadius;
 
+    private int animalPopulationCount;
+
     //Validate data (Make sure min distance isn't more than max distance.
     public void OnValidate()
     {
@@ -294,6 +302,9 @@ public struct AnimalPopulationCopulation
                 //optimisation
                 int maxAnimals = 50 / area.animalPopulation.Length;
 
+                if (animalPopulationCount >= maxAnimals)
+                    return;
+
                 for (int j = 0; j < maxAnimals; j++)
                 {
                     //Get A Random Position within the area away from the camera
@@ -316,6 +327,8 @@ public struct AnimalPopulationCopulation
                         Animal animal = animalGO.GetComponent<Animal>();
 
                         area.AddAnimal(animal);
+
+                        animalPopulationCount++;
                     }
                 }
             }
