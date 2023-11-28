@@ -30,3 +30,20 @@ MonoBehaviour:
     - name: Return Home
       instructionToPlayer: Go back to HQ
       type: 4
+  - name: Welcome the the Bushveld
+    objectives:
+    - name: Let's Drive
+      instructionToPlayer: Get in the car
+      type: 0
+    - name: Find them
+      instructionToPlayer: Drive toward the bucks
+      type: 2
+    - name: Track to Basics
+      instructionToPlayer: Track the Buck
+      type: 1
+    - name: Sedation
+      instructionToPlayer: Sedate the buck
+      type: 3
+    - name: Return Home
+      instructionToPlayer: Go back to HQ
+      type: 4
