@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class WorldManager : MonoBehaviour
 {
@@ -37,6 +39,28 @@ public class WorldManager : MonoBehaviour
 
         InitialiseAnimals();
         InitialiseAnimalParentTransform();
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < areas.Length; i++)
+            areas[i].Start();
+    }
+
+    public bool RandomPointOnNavMesh(Vector3 center, float range, out Vector3 result)
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+        result = Vector3.zero;
+        return false;
     }
 
     private void InitialiseAnimalParentTransform() => AnimalParentTransform = new GameObject("AnimalParent").transform;
@@ -104,7 +128,7 @@ public class WorldManager : MonoBehaviour
                 4 => Color.gray,
                 5 => Color.magenta,
                 6 => Color.cyan,
-                _ => Color.clear,
+                _ => Color.white,
             };
 
             Gizmos.DrawWireSphere(a.areaCentre, a.radius);
@@ -122,8 +146,65 @@ public struct Area
     public Vector3 areaCentre; //World Space Coords of the centre of the area.
     [Range(10, 1000)] public float radius; //We're opting for a radius rather than set bounds.
     public AnimalPopulation[] animalPopulation;
+    private List<Animal> allAnimals;
 
-    //Validate data
+    private int carnivoreCount;
+
+    public void Start()
+    {
+        allAnimals = new();
+    }
+
+    public void AddAnimal(Animal animal) => allAnimals.Add(animal);
+
+    private void CountCarnivores()
+    {
+        for (int i = 0; i<animalPopulation.Length; i++)
+        {
+            switch (animalPopulation[i].animalType)
+            {
+                case AnimalType.Carnivore:
+                    carnivoreCount = animalPopulation[i].count;
+                    break;
+            }
+        }
+    }
+
+    //Population Control
+    public void KillAnimals()
+    {
+        CountCarnivores();
+
+        for (int i = 0; i < animalPopulation.Length; i++)
+        {
+            switch (animalPopulation[i].animalType)
+            {
+                case AnimalType.Herbivore:
+
+                    //Assume all the carnivores kill a single herbivore.
+                    animalPopulation[i].count -= carnivoreCount;
+
+                    //Kill animals that are too old
+                    for (int j = 0; j < allAnimals.Count; j++)
+                    {
+                        //TO-DO : (KEON) KILL THE OLD ANIMALS.
+                        //if animal is too old
+                        break;
+
+                        allAnimals.Remove(allAnimals[j]);
+
+                        animalPopulation[i].count--;
+                    }
+
+                    //Make sure we don't go into negative animals (that's not supposed to be possible)
+                    if (animalPopulation[i].count < 0)
+                        animalPopulation[i].count = 0;
+                    break;
+            }
+        }
+    }
+
+    //Validate data (The area radius should never be less than or equal to 0)
     public void OnValidate()
     {
         if (radius < 0)
@@ -136,7 +217,7 @@ public struct Area
             radius = 1;
         }
     }
-
+    //YOuve been Porzinga'd
     //Let me know if the player is in the area.
     public bool IsPlayerInArea()
     {
@@ -174,10 +255,9 @@ public struct AnimalPopulationCopulation
     // will check the population of animals in the area,
     // will check how many animals of each species there are
     // if there are 2 or more animals, they will reproduce and create 1 more of that species for each pair of animal there is
-
     public void Multiply()
     {
-        for(int k = 0;k< WorldManager.Instance.Areas.Length; k++)
+        for (int k = 0; k < WorldManager.Instance.Areas.Length; k++)
         {
             for (int i = 0; i < WorldManager.Instance.Areas[k].animalPopulation.Length; i++)
             {
@@ -187,48 +267,34 @@ public struct AnimalPopulationCopulation
                         += WorldManager.Instance.Areas[k].animalPopulation[i].count / 2;
 
                     SpawnAnimals();
+
+                    WorldManager.Instance.Areas[k].KillAnimals();
                 }
             }
         }
-        
     }
 
-    public void KillAnimals()
-    {
-        int carnivourCount = 0;
-
-        for (int k = 0; k < WorldManager.Instance.Areas.Length; k++)
-        {
-            for (int i = 0; i < WorldManager.Instance.Areas[k].animalPopulation.Length; i++)
-            {
-                if (WorldManager.Instance.Areas[k].animalPopulation[i].animalType == AnimalType.Carnivore)
-                {
-
-                }
-
-
-            }
-        }
-    }
     //Spawn Animals based on animal population count in world manager.
     public void SpawnAnimals()
     {
-        foreach (Area area in WorldManager.Instance.Areas)
+        for(int i = 0; i < WorldManager.Instance.Areas.Length; i++)
         {
-            foreach (AnimalPopulation animal in area.animalPopulation)
+            Area area = WorldManager.Instance.Areas[i];
+
+            foreach (AnimalPopulation animalPopulation in area.animalPopulation)
             {
                 //Don't spawn animals if the player is not in the area (coz we won't seem em')
                 if (!area.IsPlayerInArea())
                     break;
 
                 //If theres no animals or if there is no prefab assigned to the scriptable, skip the iteration.
-                if (animal.count <= 0 || animal.animalData.prefab == null)
+                if (animalPopulation.count <= 0 || animalPopulation.animalData.prefab == null)
                     continue;
 
                 //optimisation
                 int maxAnimals = 50 / area.animalPopulation.Length;
 
-                for (int i = 0; i < maxAnimals; i++)
+                for (int j = 0; j < maxAnimals; j++)
                 {
                     //Get A Random Position within the area away from the camera
                     Vector3 playerPosition = PlayerCharacter.Instance.transform.position + area.areaCentre;
@@ -236,12 +302,21 @@ public struct AnimalPopulationCopulation
 
                     //Get player position, then point behind the camera, get a random distance in that area.
                     Vector3 randomPositionAwayFromPlayer = playerPosition + -(cameraForward * Random.Range(minDistance, maxDistance));
-                    //the final position is that position behind the camera and the animals are spread by the animalSpawnRadius.
-                    Vector3 finalPosition = randomPositionAwayFromPlayer + (Vector3)(Random.insideUnitCircle * animalSpawnRadius);
-                    finalPosition.y *= 0;
+                    Vector3 finalPosition;
 
-                    //Instantiate Animal at that position.
-                    Object.Instantiate(animal.animalData.prefab, finalPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
+                    //Check with the navMesh if that's even possible.
+                    if (WorldManager.Instance.RandomPointOnNavMesh(randomPositionAwayFromPlayer, animalSpawnRadius, out Vector3 result))
+                    {
+                        //the final position is that position behind the camera and the animals are spread by the animalSpawnRadius.
+                        finalPosition = result;
+
+                        //Instantiate Animal at that position.
+                        GameObject animalGO = Object.Instantiate(animalPopulation.animalData.prefab, finalPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
+
+                        Animal animal = animalGO.GetComponent<Animal>();
+
+                        area.AddAnimal(animal);
+                    }
                 }
             }
         }
