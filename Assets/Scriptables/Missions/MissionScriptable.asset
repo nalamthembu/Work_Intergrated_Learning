@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: MissionScriptable
   m_EditorClassIdentifier: 
   missions:
-  - name: Making Bucks
+  - name: Tutorial
     objectives:
-    - name: Test Objective
-      instructionToPlayer: Drive over to "this specific spot".
+    - name: Let's Drive
+      instructionToPlayer: Get in the car
       type: 0
-    - name: Test Objective 2
-      instructionToPlayer: Capture this animal
-      type: 0
+    - name: Find them
+      instructionToPlayer: Drive toward the bucks
+      type: 2
