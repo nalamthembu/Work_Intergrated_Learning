@@ -72,6 +72,8 @@ public class Vehicle : MonoBehaviour
         rigidBody.AddForce(100 * downForce * Vector3.down);
 
         SpeedKMH = rigidBody.velocity.magnitude * 3.6F;
+
+        rigidBody.drag = (input.throttle <= 0) ? 0.1F : 0.05F;
     }
 
     public bool IsGrounded()
