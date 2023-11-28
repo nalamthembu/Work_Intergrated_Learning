@@ -177,18 +177,39 @@ public struct AnimalPopulationCopulation
 
     public void Multiply()
     {
-        for (int i = 0; i < WorldManager.Instance.Areas[0].animalPopulation.Length; i++)
+        for(int k = 0;k< WorldManager.Instance.Areas.Length; k++)
         {
-            if (WorldManager.Instance.Areas[0].animalPopulation[i].count >= 2)
+            for (int i = 0; i < WorldManager.Instance.Areas[k].animalPopulation.Length; i++)
             {
-                WorldManager.Instance.Areas[0].animalPopulation[i].count
-                    += WorldManager.Instance.Areas[0].animalPopulation[i].count / 2;
+                if (WorldManager.Instance.Areas[k].animalPopulation[i].count >= 2)
+                {
+                    WorldManager.Instance.Areas[k].animalPopulation[i].count
+                        += WorldManager.Instance.Areas[k].animalPopulation[i].count / 2;
 
-                SpawnAnimals();
+                    SpawnAnimals();
+                }
+            }
+        }
+        
+    }
+
+    public void KillAnimals()
+    {
+        int carnivourCount = 0;
+
+        for (int k = 0; k < WorldManager.Instance.Areas.Length; k++)
+        {
+            for (int i = 0; i < WorldManager.Instance.Areas[k].animalPopulation.Length; i++)
+            {
+                if (WorldManager.Instance.Areas[k].animalPopulation[i].animalType == AnimalType.Carnivore)
+                {
+
+                }
+
+
             }
         }
     }
-
     //Spawn Animals based on animal population count in world manager.
     public void SpawnAnimals()
     {
@@ -201,7 +222,7 @@ public struct AnimalPopulationCopulation
                     break;
 
                 //If theres no animals or if there is no prefab assigned to the scriptable, skip the iteration.
-                if (animal.count <= 0 || animal.scriptable.prefab == null)
+                if (animal.count <= 0 || animal.animalData.prefab == null)
                     continue;
 
                 //optimisation
@@ -220,7 +241,7 @@ public struct AnimalPopulationCopulation
                     finalPosition.y *= 0;
 
                     //Instantiate Animal at that position.
-                    Object.Instantiate(animal.scriptable.prefab, finalPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
+                    Object.Instantiate(animal.animalData.prefab, finalPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
                 }
             }
         }
@@ -232,20 +253,20 @@ public struct AnimalPopulationCopulation
 public struct AnimalPopulation
 {
     public string name;
-    public AnimalScriptable scriptable;
+    public AnimalScriptable animalData;
     public AnimalType animalType;
     public int count;
 
     public void Awake()
     {
-        if (scriptable is null)
+        if (animalData is null)
         {
             Debug.Log("There is no scriptable object assigned to this animal!");
             return;
         }
 
-        name = scriptable.name;
-        animalType = scriptable.animalType;
+        name = animalData.name;
+        animalType = animalData.animalType;
     }
 }
 
