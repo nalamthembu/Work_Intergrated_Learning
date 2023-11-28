@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Waves
   m_Shader: {fileID: 4800000, guid: 4f94d2d520e6b4b71bc4b2dfb03f3426, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -17,6 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -49,15 +52,15 @@ Material:
     - _HeightScale: 1
     - _HeightScaleModulated: 1
     - _Metallic: 0.913
-    - _RefractionStrength: 0.206
+    - _RefractionStrength: 0.182
     - _Speed: 0.35
     - _Tiling: 1
     - _UJump: 0
     - _VJump: 0
-    - _WaterFogDensity: 0.059
+    - _WaterFogDensity: 0.06
     m_Colors:
     - _Color: {r: 0.9339623, g: 0.80788666, b: 0.71809363, a: 0.3529412}
-    - _WaterFogColor: {r: 0.16037735, g: 0.0746612, b: 0.014373439, a: 1}
+    - _WaterFogColor: {r: 0, g: 0, b: 0, a: 1}
     - _WaveA: {r: 1, g: -0.96, b: 0.0015, a: 30}
     - _WaveB: {r: 1, g: -0.36, b: 0.0015, a: 30}
     - _WaveC: {r: 1, g: 0, b: 0.0015, a: 30}
