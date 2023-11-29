@@ -13,11 +13,25 @@ MonoBehaviour:
   m_Name: MissionScriptable
   m_EditorClassIdentifier: 
   missions:
-  - name: Making Bucks
+  - name: Tutorial
     objectives:
-    - name: Test Objective
-      instructionToPlayer: Drive over to "this specific spot".
+    - name: Let's Drive
+      instructionToPlayer: Get in the car
       type: 0
-    - name: Test Objective 2
-      instructionToPlayer: Capture this animal
+    - name: Find them
+      instructionToPlayer: Drive toward the bucks
+      type: 2
+    - name: Track to Basics
+      instructionToPlayer: Track the Buck
+      type: 1
+    - name: Sedation
+      instructionToPlayer: Sedate the buck
+      type: 3
+    - name: Return Home
+      instructionToPlayer: Go back to HQ
+      type: 4
+  - name: Welcome the the Bushveld
+    objectives:
+    - name: Rehabilitate the Land
+      instructionToPlayer: Balane the Ecosystem
       type: 0
