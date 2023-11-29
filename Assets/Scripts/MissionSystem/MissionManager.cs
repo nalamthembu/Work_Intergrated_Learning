@@ -19,6 +19,8 @@ public class MissionManager : MonoBehaviour
     //Specific to One Objective
     bool hasNotifiedPlayerToEnterVehicle;
     bool hasNotifiedPlayerToTrackAnimal;
+    bool hasNotifiedPlayerToNeutraliseAnimal;
+    Animal animalToNeutralise;
 
     private void Awake()
     {
@@ -95,9 +97,11 @@ public class MissionManager : MonoBehaviour
 
                 foreach (Collider col in colliders)
                 {
-                    if (col.TryGetComponent<Animal>(out var _))
+                    if (col.TryGetComponent<Animal>(out var animal))
                     {
                         NextObjective();
+                        animalToNeutralise = animal;
+                        hasNotifiedPlayerToTrackAnimal = false;
                         break;
                     }
                 }
@@ -107,7 +111,17 @@ public class MissionManager : MonoBehaviour
 
             case ObjectiveType.NeutraliseAnimal:
 
+                if (animalToNeutralise is not null)
+                {
+                    //TAG THE ANIMAL SO THE PLAYER CAN SEE WHICH ONE THEY NEED.
 
+                    if (animalToNeutralise.IsKnockedOut)
+                    {
+                        NextObjective();
+
+                        break;
+                    }
+                }
 
                 break;
         }
