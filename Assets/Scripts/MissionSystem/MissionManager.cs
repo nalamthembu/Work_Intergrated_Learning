@@ -91,7 +91,23 @@ public class MissionManager : MonoBehaviour
                     hasNotifiedPlayerToTrackAnimal = true;
                 }
 
-                //Physics.OverlapSphere(PlayerCharacter.Instance.transform.position)
+                Collider[] colliders = Physics.OverlapSphere(PlayerCharacter.Instance.transform.position, 15.0F);
+
+                foreach (Collider col in colliders)
+                {
+                    if (col.TryGetComponent<Animal>(out var _))
+                    {
+                        NextObjective();
+                        break;
+                    }
+                }
+
+                break;
+
+
+            case ObjectiveType.NeutraliseAnimal:
+
+
 
                 break;
         }

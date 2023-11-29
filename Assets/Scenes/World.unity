@@ -1673,11 +1673,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7206169527986244571, guid: 72b3dca1554c1cc48b264b9456ac4b53, type: 3}
       propertyPath: m_Mass
-<<<<<<< Updated upstream
-      value: 1750
-=======
       value: 2500
->>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 7206169527986244581, guid: 72b3dca1554c1cc48b264b9456ac4b53, type: 3}
       propertyPath: m_Name
