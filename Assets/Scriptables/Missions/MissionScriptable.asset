@@ -19,31 +19,37 @@ MonoBehaviour:
       instructionToPlayer: Get into the safari cruiser
       type: 0
       TargetPosition: {x: 0, y: 0, z: 0}
-      minimumDistanceFromTarget: 0
+      minDistFromTarget: 0
+      AnimalToFind: 
     - name: Find them
       instructionToPlayer: Drive toward the bucks
-      type: 3
+      type: 9
       TargetPosition: {x: 122.45528, y: 54, z: -109.08092}
-      minimumDistanceFromTarget: 10
+      minDistFromTarget: 0
+      AnimalToFind: 
     - name: Track to Basics
       instructionToPlayer: Track the Buck
       type: 1
       TargetPosition: {x: 0, y: 0, z: 0}
-      minimumDistanceFromTarget: 0
+      minDistFromTarget: 0
+      AnimalToFind: 
     - name: Sedation
       instructionToPlayer: Sedate the buck
       type: 7
       TargetPosition: {x: 0, y: 0, z: 0}
-      minimumDistanceFromTarget: 0
+      minDistFromTarget: 0
+      AnimalToFind: 
     - name: Return Home
       instructionToPlayer: Go back to HQ
       type: 5
       TargetPosition: {x: 0, y: 0, z: 0}
-      minimumDistanceFromTarget: 0
+      minDistFromTarget: 0
+      AnimalToFind: 
   - name: Welcome the the Bushveld
     objectives:
     - name: Rehabilitate the Land
       instructionToPlayer: Balance the Ecosystem
       type: 1
       TargetPosition: {x: 0, y: 0, z: 0}
-      minimumDistanceFromTarget: 0
+      minDistFromTarget: 0
+      AnimalToFind: 

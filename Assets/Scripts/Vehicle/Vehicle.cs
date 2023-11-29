@@ -74,6 +74,24 @@ public class Vehicle : MonoBehaviour
         SpeedKMH = rigidBody.velocity.magnitude * 3.6F;
 
         rigidBody.drag = (input.throttle <= 0) ? 0.1F : 0.05F;
+
+        ControlWheelStiffness();
+    }
+
+    private void ControlWheelStiffness()
+    {
+        for(int i = 0; i < allWheels.Count; i++)
+        {
+            switch(allWheels[i].WheelPos)
+            {
+                case WheelPosition.BACK:
+                case WheelPosition.MID:
+
+
+
+                    break;
+            }
+        }
     }
 
     public bool IsGrounded()

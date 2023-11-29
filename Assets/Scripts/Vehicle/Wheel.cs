@@ -10,6 +10,9 @@ public class Wheel : MonoBehaviour
     [SerializeField] WheelPosition wheelPosition;
     [SerializeField] WheelOutfacingDirection wheelSide;
 
+    public WheelPosition WheelPos { get { return wheelPosition; } }
+    public WheelOutfacingDirection outDir { get { return wheelSide; } }
+
     //"r = Realtime, or Item that is spawned in during gameplay
     private WheelSlip slip;
     private GameObject rWheel;
@@ -56,6 +59,18 @@ public class Wheel : MonoBehaviour
         rWheel.transform.parent.SetPositionAndRotation(pos, rot);
         slip.forward = hit.forwardSlip;
         slip.sideways = hit.sidewaysSlip;
+    }
+
+    public void SetWheelStiffness(float sideWays, float fwdSlip)
+    {
+        WheelFrictionCurve fwd = collider.forwardFriction;
+        WheelFrictionCurve sde = collider.sidewaysFriction;
+
+        fwd.stiffness = fwdSlip;
+        sde.stiffness = sideWays;
+
+        collider.sidewaysFriction = sde;
+        collider.forwardFriction = fwd;
     }
 
     private void ResizeWheelCollider()

@@ -12,7 +12,8 @@ public struct Objective
 
     [Header("These will only work if they are relevant")]
     public Vector3 TargetPosition;
-    [Range(1, 100)] public float minimumDistanceFromTarget;
+    [Range(1, 100)] public float minDistFromTarget;
+    public string AnimalToFind;
 }
 
 public enum ObjectiveType
@@ -25,7 +26,8 @@ public enum ObjectiveType
     ReturnToHQ,
     Neutralise,
     NeutraliseAnimal,
-    Breed
+    Breed,
+    TrackAnimal,
     //All the different types of object, example : search and rescue, drive to location, find an animal.
     //TO-DO : ADD DIFFERENT OBJECTIVES.
 }

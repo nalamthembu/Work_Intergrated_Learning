@@ -18,6 +18,7 @@ public class MissionManager : MonoBehaviour
 
     //Specific to One Objective
     bool hasNotifiedPlayerToEnterVehicle;
+    bool hasNotifiedPlayerToTrackAnimal;
 
     private void Awake()
     {
@@ -67,13 +68,27 @@ public class MissionManager : MonoBehaviour
 
                 float distFromLocation = Vector3.Distance(PlayerCharacter.Instance.transform.position, rObjective.TargetPosition);
 
-                if (distFromLocation <= rObjective.minimumDistanceFromTarget)
+                if (distFromLocation <= rObjective.minDistFromTarget)
                 {
                     //You're close enough to the target location.
 
                     ObjectiveHighlighter.SetActive(false);
 
                     NextObjective();
+                }
+
+                break;
+
+            case ObjectiveType.TrackAnimal:
+
+                if (!hasNotifiedPlayerToTrackAnimal)
+                {
+                    HUDManager.instance.ShowSubtitles("To track the " + rObjective.AnimalToFind + " use your mini map.", 5.0F);
+
+                    //Spawn the animals so we have a chance at finding em'.
+                    Vector3 pos = PlayerCharacter.Instance.transform.position + PlayerCharacter.Instance.transform.forward * Random.Range(25, 50);
+                    WorldManager.Instance.AnimalPopulationCopulation.SpawnAnimalsInSpecificArea(pos);
+                    hasNotifiedPlayerToEnterVehicle = true;
                 }
 
                 break;

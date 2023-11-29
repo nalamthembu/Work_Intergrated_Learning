@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.41227594, g: 0.48922887, b: 0.603285, a: 1}
+  m_IndirectSpecularColor: {r: 0.41233262, g: 0.48925197, b: 0.6033201, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1838,11 +1838,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3130258270936826168, guid: fba4b23694185d740890ac1b031a0508, type: 3}
       propertyPath: animalPopulation.maxDistance
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3130258270936826168, guid: fba4b23694185d740890ac1b031a0508, type: 3}
       propertyPath: animalPopulation.minDistance
-      value: 15
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3130258270936826168, guid: fba4b23694185d740890ac1b031a0508, type: 3}
       propertyPath: areas.Array.data[0].areaCentre.x

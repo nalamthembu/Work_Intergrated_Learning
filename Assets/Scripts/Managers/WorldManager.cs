@@ -49,19 +49,21 @@ public class WorldManager : MonoBehaviour
         animalPopulation.SpawnAnimals();
     }
 
-    public bool RandomPointOnNavMesh(Vector3 center, float range, float dist, out Vector3 result)
+    public bool GetPointOnNavMesh(Vector3 center, out Vector3 result)
     {
         for (int i = 0; i < 50; i++)
         {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+            Vector3 randomPoint = center + (Vector3)Random.insideUnitCircle * Random.Range(50, 200);
 
-            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, dist, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1, NavMesh.AllAreas))
             {
                 result = hit.position;
                 return true;
             }
         }
+
         result = Vector3.zero;
+
         return false;
     }
 
@@ -284,6 +286,49 @@ public struct AnimalPopulationCopulation
         }
     }
 
+    public void SpawnAnimalsInSpecificArea(Vector3 position)
+    {
+        for (int i = 0; i < WorldManager.Instance.Areas.Length; i++)
+        {
+            Area area = WorldManager.Instance.Areas[i];
+
+            foreach (AnimalPopulation animalPopulation in area.animalPopulation)
+            {
+                //If theres no animals or if there is no prefab assigned to the scriptable, skip the iteration.
+                if (animalPopulation.count <= 0 || animalPopulation.animalData.prefab == null)
+                    continue;
+
+                //optimisation
+                int maxAnimals = 50 / area.animalPopulation.Length;
+
+                if (animalPopulationCount >= maxAnimals)
+                    return;
+
+                for (int j = 0; j < maxAnimals; j++)
+                {
+                    //Get A Specified Position within the area away from the camera
+                    Vector3 specifiedPosition = position;
+
+                    //Check with the navMesh if that's even possible.
+                    if (WorldManager.Instance.GetPointOnNavMesh(specifiedPosition, out Vector3 result))
+                    {
+                        //the final position is that position behind the camera and the animals are spread by the animalSpawnRadius.
+                        specifiedPosition = result;
+
+                        //Instantiate Animal at that position.
+                        GameObject animalGO = Object.Instantiate(animalPopulation.animalData.prefab, specifiedPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
+
+                        Animal animal = animalGO.GetComponent<Animal>();
+
+                        area.AddAnimal(animal);
+
+                        animalPopulationCount++;
+                    }
+                }
+            }
+        }
+    }
+
     //Spawn Animals based on animal population count in world manager.
     public void SpawnAnimals()
     {
@@ -310,17 +355,15 @@ public struct AnimalPopulationCopulation
                 for (int j = 0; j < maxAnimals; j++)
                 {
                     //Get A Random Position within the area away from the camera
-                    Vector3 playerPosition = PlayerCharacter.Instance.transform.position + area.areaCentre;
+                    Vector3 playerPosition = PlayerCharacter.Instance.transform.position;
                     Vector3 cameraForward = CameraController.Instance.transform.forward;
 
                     //Get player position, then point behind the camera, get a random distance in that area.
-                    Vector3 randomPositionAwayFromPlayer = playerPosition + -(cameraForward);
+                    Vector3 randomPositionAwayFromPlayer = playerPosition + -(cameraForward * Random.Range(minDistance, maxDistance));
                     Vector3 finalPosition;
 
-                    float dist = Random.Range(minDistance, maxDistance);
-
                     //Check with the navMesh if that's even possible.
-                    if (WorldManager.Instance.RandomPointOnNavMesh(randomPositionAwayFromPlayer, animalSpawnRadius, dist, out Vector3 result))
+                    if (WorldManager.Instance.GetPointOnNavMesh(randomPositionAwayFromPlayer, out Vector3 result))
                     {
                         //the final position is that position behind the camera and the animals are spread by the animalSpawnRadius.
                         finalPosition = result;
