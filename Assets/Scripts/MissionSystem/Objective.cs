@@ -14,6 +14,7 @@ public struct Objective
     public Vector3 TargetPosition;
     [Range(1, 100)] public float minDistFromTarget;
     public string AnimalToFind;
+    public GameObject objectToSpawnForPlayer;
 }
 
 public enum ObjectiveType

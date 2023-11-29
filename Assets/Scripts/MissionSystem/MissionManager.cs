@@ -21,6 +21,8 @@ public class MissionManager : MonoBehaviour
     bool hasNotifiedPlayerToTrackAnimal;
     bool hasNotifiedPlayerToNeutraliseAnimal;
     Animal animalToNeutralise;
+    [SerializeField] bool isInTutorial;
+    bool animalGotAwayInTutorialMode;
 
     private void Awake()
     {
@@ -113,7 +115,27 @@ public class MissionManager : MonoBehaviour
 
                 if (animalToNeutralise is not null)
                 {
+                    //Give the player a gun.
+                    Instantiate(rObjective.objectToSpawnForPlayer, PlayerCharacter.Instance.transform.position, Quaternion.identity);
+
                     //TAG THE ANIMAL SO THE PLAYER CAN SEE WHICH ONE THEY NEED.
+
+                    if (isInTutorial)
+                    {
+                        //Make them really fast.
+                        animalToNeutralise.TargetSpeed = 100;
+
+                        float distanceFromAnimal = Vector3.Distance(animalToNeutralise.transform.position, PlayerCharacter.Instance.transform.position);
+
+                        if (distanceFromAnimal > 50.0F && !animalGotAwayInTutorialMode)
+                        {
+                            //Aww man, the animal got away.
+
+                            animalGotAwayInTutorialMode = true;
+
+                            HUDManager.instance.ShowSubtitles("Aw man, the " + animalToNeutralise.animalData.name + " got away! Don't worry though, this was just a test run, lets do it again for real this time.", 15.0F);
+                        }
+                    }
 
                     if (animalToNeutralise.IsKnockedOut)
                     {
