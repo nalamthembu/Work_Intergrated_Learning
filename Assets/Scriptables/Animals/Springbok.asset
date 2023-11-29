@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Springbok
   health: 10
+  lifeTime: 2
+  GestationPeriod: 1
   walkSpeed: 3
   runSpeed: 10
   animalType: 1

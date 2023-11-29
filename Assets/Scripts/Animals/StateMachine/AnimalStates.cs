@@ -242,6 +242,7 @@ namespace AnimalBehaviourStates
             //RUN IF YOU'RE IN DANGER & GO TO A "SAFE" LOCATION
             machine.LocomotionStateMachine.DoSwitchState(machine.LocomotionStateMachine.animalRunState);
             machine.LocomotionStateMachine.GoToPosition(machine.GetRandomNavSphere(machine.Animal.transform.position, 100.0f));
+            machine.Animal.CreatePawPrints();
         }
 
         public override void ExitState(StateMachine stateMachine)
