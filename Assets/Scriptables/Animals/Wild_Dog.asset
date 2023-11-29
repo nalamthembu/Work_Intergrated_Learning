@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: wild dog
   health: 8
-  lifeTime: 3
+  lifeTime: 2
   GestationPeriod: 1
   walkSpeed: 5
   runSpeed: 12

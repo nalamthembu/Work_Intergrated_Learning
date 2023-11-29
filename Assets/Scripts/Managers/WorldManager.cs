@@ -106,7 +106,13 @@ public class WorldManager : MonoBehaviour
         if (timeOfDay >= TWENTY_FOUR_MINUTES)
         {
             daysPassed++;
+            
 
+            for (int i =0;i< areas.Length; i++)
+            {
+                areas[i].KillAnimals();
+                areas[i].AddDays();
+            }
             timeOfDay = 0;
 
             animalPopulation.Multiply();
@@ -180,6 +186,13 @@ public struct Area
         }
     }
 
+    public void AddDays()
+    {
+        for (int j = 0; j < allAnimals.Count; j++)
+        {
+            allAnimals[j].daysPassed += 1;
+        }
+    }
     //Population Control
     public void KillAnimals()
     {
@@ -194,17 +207,6 @@ public struct Area
                     //Assume all the carnivores kill a single herbivore.
                     animalPopulation[i].count -= carnivoreCount;
 
-                    //Kill animals that are too old
-                    for (int j = 0; j < allAnimals.Count; j++)
-                    {
-                        //TO-DO : (KEON) KILL THE OLD ANIMALS.
-                        //if animal is too old
-                        break;
-
-                        allAnimals.Remove(allAnimals[j]);
-
-                        animalPopulation[i].count--;
-                    }
 
                     //Make sure we don't go into negative animals (that's not supposed to be possible)
                     if (animalPopulation[i].count < 0)
@@ -212,8 +214,28 @@ public struct Area
                     break;
             }
         }
-    }
 
+        //Kill animals that are too old
+        for(int i=0;i<animalPopulation.Length; i++)
+        {
+            for (int j = 0; j < allAnimals.Count; j++)
+            {
+                //TO-DO : (KEON) KILL THE OLD ANIMALS.
+                //if animal is too old
+
+                if (allAnimals[j].daysPassed >= allAnimals[j].animalData.lifeTime)
+                {
+                    Debug.Log("Animal Has Passed Away");
+
+                    Object.Destroy(allAnimals[j].gameObject);
+                    allAnimals.Remove(allAnimals[j]);
+                    animalPopulation[i].count--;
+                }
+                break;
+
+            }
+        }
+    }
     //Validate data (The area radius should never be less than or equal to 0)
     public void OnValidate()
     {
@@ -275,12 +297,13 @@ public struct AnimalPopulationCopulation
             {
                 if (WorldManager.Instance.Areas[k].animalPopulation[i].count >= 2)
                 {
+                    
                     WorldManager.Instance.Areas[k].animalPopulation[i].count
                         += WorldManager.Instance.Areas[k].animalPopulation[i].count / 2;
 
                     SpawnAnimals();
 
-                    WorldManager.Instance.Areas[k].KillAnimals();
+                    
                 }
             }
         }

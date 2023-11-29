@@ -47,6 +47,8 @@ public class Animal : MonoBehaviour, IStorable
 
     private int shotCount;
 
+    public int daysPassed = 0;
+
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
@@ -80,7 +82,7 @@ public class Animal : MonoBehaviour, IStorable
 
     public void CreatePawPrints()
     {
-        GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z), Quaternion.identity);
+        GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y , transform.position.z), Quaternion.identity);
         pawprint.GetComponent<Pawprint>().SetAnimal(this);
     }
 
