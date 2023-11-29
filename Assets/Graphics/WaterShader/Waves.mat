@@ -46,22 +46,22 @@ Material:
     m_Ints: []
     m_Floats:
     - _FlowOffset: 0
-    - _FlowStrength: 0.025
+    - _FlowStrength: 0.03
     - _FoamStrength: 2.94
-    - _Glossiness: 0.942
+    - _Glossiness: 1
     - _HeightScale: 1
     - _HeightScaleModulated: 1
-    - _Metallic: 0.913
-    - _RefractionStrength: 0.182
-    - _Speed: 0.35
-    - _Tiling: 1
+    - _Metallic: 1
+    - _RefractionStrength: 0.143
+    - _Speed: 0.25
+    - _Tiling: 2
     - _UJump: 0
     - _VJump: 0
-    - _WaterFogDensity: 0.06
+    - _WaterFogDensity: 0.16
     m_Colors:
-    - _Color: {r: 0.9339623, g: 0.80788666, b: 0.71809363, a: 0.3529412}
-    - _WaterFogColor: {r: 0, g: 0, b: 0, a: 1}
-    - _WaveA: {r: 1, g: -0.96, b: 0.0015, a: 30}
-    - _WaveB: {r: 1, g: -0.36, b: 0.0015, a: 30}
-    - _WaveC: {r: 1, g: 0, b: 0.0015, a: 30}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.79607844}
+    - _WaterFogColor: {r: 0.037646845, g: 0.07636129, b: 0.16981131, a: 1}
+    - _WaveA: {r: 10, g: 0.5, b: 0.05, a: 1}
+    - _WaveB: {r: 5, g: 0.2, b: 0.05, a: 1}
+    - _WaveC: {r: 15, g: 0.25, b: 0.05, a: 1}
   m_BuildTextureStacks: []
