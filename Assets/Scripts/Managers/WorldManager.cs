@@ -45,15 +45,17 @@ public class WorldManager : MonoBehaviour
     {
         for (int i = 0; i < areas.Length; i++)
             areas[i].Start();
+
+        animalPopulation.SpawnAnimals();
     }
 
-    public bool RandomPointOnNavMesh(Vector3 center, float range, out Vector3 result)
+    public bool RandomPointOnNavMesh(Vector3 center, float range, float dist, out Vector3 result)
     {
         for (int i = 0; i < 50; i++)
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * range;
 
-            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, dist, NavMesh.AllAreas))
             {
                 result = hit.position;
                 return true;
@@ -312,11 +314,13 @@ public struct AnimalPopulationCopulation
                     Vector3 cameraForward = CameraController.Instance.transform.forward;
 
                     //Get player position, then point behind the camera, get a random distance in that area.
-                    Vector3 randomPositionAwayFromPlayer = playerPosition + -(cameraForward * Random.Range(minDistance, maxDistance));
+                    Vector3 randomPositionAwayFromPlayer = playerPosition + -(cameraForward);
                     Vector3 finalPosition;
 
+                    float dist = Random.Range(minDistance, maxDistance);
+
                     //Check with the navMesh if that's even possible.
-                    if (WorldManager.Instance.RandomPointOnNavMesh(randomPositionAwayFromPlayer, animalSpawnRadius, out Vector3 result))
+                    if (WorldManager.Instance.RandomPointOnNavMesh(randomPositionAwayFromPlayer, animalSpawnRadius, dist, out Vector3 result))
                     {
                         //the final position is that position behind the camera and the animals are spread by the animalSpawnRadius.
                         finalPosition = result;

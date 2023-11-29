@@ -16,22 +16,34 @@ MonoBehaviour:
   - name: Tutorial
     objectives:
     - name: Let's Drive
-      instructionToPlayer: Get in the car
+      instructionToPlayer: Get into the safari cruiser
       type: 0
+      TargetPosition: {x: 0, y: 0, z: 0}
+      minimumDistanceFromTarget: 0
     - name: Find them
       instructionToPlayer: Drive toward the bucks
-      type: 2
+      type: 3
+      TargetPosition: {x: 122.45528, y: 54, z: -109.08092}
+      minimumDistanceFromTarget: 10
     - name: Track to Basics
       instructionToPlayer: Track the Buck
       type: 1
+      TargetPosition: {x: 0, y: 0, z: 0}
+      minimumDistanceFromTarget: 0
     - name: Sedation
       instructionToPlayer: Sedate the buck
-      type: 3
+      type: 7
+      TargetPosition: {x: 0, y: 0, z: 0}
+      minimumDistanceFromTarget: 0
     - name: Return Home
       instructionToPlayer: Go back to HQ
-      type: 4
+      type: 5
+      TargetPosition: {x: 0, y: 0, z: 0}
+      minimumDistanceFromTarget: 0
   - name: Welcome the the Bushveld
     objectives:
     - name: Rehabilitate the Land
-      instructionToPlayer: Balane the Ecosystem
-      type: 0
+      instructionToPlayer: Balance the Ecosystem
+      type: 1
+      TargetPosition: {x: 0, y: 0, z: 0}
+      minimumDistanceFromTarget: 0
