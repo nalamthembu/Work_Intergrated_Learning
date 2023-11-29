@@ -120,6 +120,8 @@ public class MissionManager : MonoBehaviour
 
                     //TAG THE ANIMAL SO THE PLAYER CAN SEE WHICH ONE THEY NEED.
 
+                    animalToNeutralise.targeted.SetActive(true);
+
                     if (isInTutorial)
                     {
                         //Make them really fast.
