@@ -128,9 +128,11 @@ public class MissionManager : MonoBehaviour
 
                     animalToNeutralise.targeted.SetActive(true);
 
+                    /*
                     HUDManager.instance.ShowSubtitles("Aw man, the " + animalToNeutralise.animalData.name + " got away! Don't worry though, this was just a test run, lets do it again for real this time.", 15.0F);
 
                     HUDManager.instance.SHOW_DEMO_END_SCREEN();
+                    */
 
                     if (isInTutorial)
                     {
