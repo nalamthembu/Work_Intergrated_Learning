@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
 
     public float Health { get { return health; } set { health = value; } }
 
-    [SerializeField] Renderer meshRenderer;
+    [SerializeField] Renderer[] meshRenderers;
 
     protected bool isGrounded;
 
@@ -92,7 +92,11 @@ public class Character : MonoBehaviour
 
     public void DisableForVehicle()
     {
-        meshRenderer.enabled = false;
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].enabled = false;
+        }
+
         if (this is PlayerCharacter player)
         {
             player.Controller.enabled = false;
@@ -104,7 +108,11 @@ public class Character : MonoBehaviour
 
     public void EnableOutsideVehicle()
     {
-        meshRenderer.enabled = true;
+        for(int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].enabled = true;
+        }
+
         if (this is PlayerCharacter player)
         {
             GetComponent<CharacterController>().enabled = true;
