@@ -7,6 +7,8 @@ public class AnimalScriptable : ScriptableObject
     [Header("Stats")]
     new public string name = "Animal Name";
     public int health = 10;
+    public int lifeTime = 1;
+    public int GestationPeriod = 1;
     public float walkSpeed = 10f;
     public float runSpeed = 20f;
     public AnimalType animalType;

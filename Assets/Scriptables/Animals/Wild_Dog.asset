@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: wild dog
   health: 8
+  lifeTime: 3
+  GestationPeriod: 1
   walkSpeed: 5
   runSpeed: 12
   animalType: 0
+  prefab: {fileID: 4580364902278584775, guid: babad614e7ad2de43b1eea9e129defa4, type: 3}
   pawprint: {fileID: 5544328976035707871, guid: a6cf9692f63ca0b4c8dc50584729107e, type: 3}
-  torporLevel: 1
+  shotsBeforeDazed: 1
   detectionRange: 15
