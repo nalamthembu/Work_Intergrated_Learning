@@ -23,6 +23,7 @@ public class MissionManager : MonoBehaviour
     Animal animalToNeutralise;
     [SerializeField] bool isInTutorial;
     bool animalGotAwayInTutorialMode;
+    bool spawnedObjectForPlayer;
 
     private void Awake()
     {
@@ -116,26 +117,39 @@ public class MissionManager : MonoBehaviour
                 if (animalToNeutralise is not null)
                 {
                     //Give the player a gun.
-                    Instantiate(rObjective.objectToSpawnForPlayer, PlayerCharacter.Instance.transform.position, Quaternion.identity);
+
+                    if (!spawnedObjectForPlayer)
+                    {
+                        Instantiate(rObjective.objectToSpawnForPlayer, PlayerCharacter.Instance.transform.position, Quaternion.identity);
+                        spawnedObjectForPlayer = true;
+                    }
 
                     //TAG THE ANIMAL SO THE PLAYER CAN SEE WHICH ONE THEY NEED.
 
                     animalToNeutralise.targeted.SetActive(true);
 
+                    HUDManager.instance.ShowSubtitles("Aw man, the " + animalToNeutralise.animalData.name + " got away! Don't worry though, this was just a test run, lets do it again for real this time.", 15.0F);
+
+                    HUDManager.instance.SHOW_DEMO_END_SCREEN();
+
                     if (isInTutorial)
                     {
+                        //Aww man, the animal got away.
+
+                        print("YES  IT SHOULD'VE WORKED!");
+
+                        animalGotAwayInTutorialMode = true;
+
+                        
+
                         //Make them really fast.
                         animalToNeutralise.TargetSpeed = 100;
 
                         float distanceFromAnimal = Vector3.Distance(animalToNeutralise.transform.position, PlayerCharacter.Instance.transform.position);
 
-                        if (distanceFromAnimal > 50.0F && !animalGotAwayInTutorialMode)
+                        if (distanceFromAnimal > 1.0F && !animalGotAwayInTutorialMode)
                         {
-                            //Aww man, the animal got away.
-
-                            animalGotAwayInTutorialMode = true;
-
-                            HUDManager.instance.ShowSubtitles("Aw man, the " + animalToNeutralise.animalData.name + " got away! Don't worry though, this was just a test run, lets do it again for real this time.", 15.0F);
+                            
                         }
                     }
 

@@ -12,6 +12,13 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private HUDStats HUDStats;
     [SerializeField] private float instructionTimer = 4F;
 
+    [SerializeField] private GameObject DEMO_END_SCREEN_GROUP;
+
+    public void SHOW_DEMO_END_SCREEN()
+    {
+        DEMO_END_SCREEN_GROUP.SetActive(true);
+    }
+
     public static HUDManager instance;
 
     public HUD_Weapon HUD_Weapon { get { return HUDWeapon; } }
