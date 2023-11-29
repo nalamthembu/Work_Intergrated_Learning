@@ -69,7 +69,7 @@ public class Vehicle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidBody.AddForce(100 * downForce * Vector3.down);
+        rigidBody.AddForce(1000 * downForce * Vector3.down);
 
         SpeedKMH = rigidBody.velocity.magnitude * 3.6F;
 
@@ -80,14 +80,30 @@ public class Vehicle : MonoBehaviour
 
     private void ControlWheelStiffness()
     {
-        for(int i = 0; i < allWheels.Count; i++)
+        for (int i = 0; i < allWheels.Count; i++)
         {
-            switch(allWheels[i].WheelPos)
+            switch (allWheels[i].WheelPos)
             {
                 case WheelPosition.BACK:
                 case WheelPosition.MID:
 
+                    float t = SpeedKMH / 60;
 
+                    float fF = Mathf.Lerp(0.5F, 2.0F, t);
+                    float sF = Mathf.Lerp(0.1f, 2.0F, t);
+
+                    allWheels[i].SetWheelStiffness(sF, fF);
+
+                    break;
+
+                case WheelPosition.FRONT:
+
+                    float tF = SpeedKMH / 80;
+
+                    float fF_Fw = Mathf.Lerp(.5F, 3.0F, tF);
+                    float sF_Fw = Mathf.Lerp(1f, 3.0f, tF);
+
+                    allWheels[i].SetWheelStiffness(sF_Fw, fF_Fw);
 
                     break;
             }

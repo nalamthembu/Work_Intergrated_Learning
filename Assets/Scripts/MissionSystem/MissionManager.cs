@@ -86,10 +86,12 @@ public class MissionManager : MonoBehaviour
                     HUDManager.instance.ShowSubtitles("To track the " + rObjective.AnimalToFind + " use your mini map.", 5.0F);
 
                     //Spawn the animals so we have a chance at finding em'.
-                    Vector3 pos = PlayerCharacter.Instance.transform.position + PlayerCharacter.Instance.transform.forward * Random.Range(25, 50);
+                    Vector3 pos = CameraController.Instance.transform.position + CameraController.Instance.transform.forward * Random.Range(25, 50);
                     WorldManager.Instance.AnimalPopulationCopulation.SpawnAnimalsInSpecificArea(pos);
-                    hasNotifiedPlayerToEnterVehicle = true;
+                    hasNotifiedPlayerToTrackAnimal = true;
                 }
+
+                //Physics.OverlapSphere(PlayerCharacter.Instance.transform.position)
 
                 break;
         }

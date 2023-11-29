@@ -322,7 +322,7 @@ public struct AnimalPopulationCopulation
                     continue;
 
                 //optimisation
-                int maxAnimals = 50 / area.animalPopulation.Length;
+                int maxAnimals = 15 / area.animalPopulation.Length;
 
                 if (animalPopulationCount >= maxAnimals)
                     return;
@@ -332,21 +332,14 @@ public struct AnimalPopulationCopulation
                     //Get A Specified Position within the area away from the camera
                     Vector3 specifiedPosition = position;
 
-                    //Check with the navMesh if that's even possible.
-                    if (WorldManager.Instance.GetPointOnNavMesh(specifiedPosition, out Vector3 result))
-                    {
-                        //the final position is that position behind the camera and the animals are spread by the animalSpawnRadius.
-                        specifiedPosition = result;
+                    //Instantiate Animal at that position.
+                    GameObject animalGO = Object.Instantiate(animalPopulation.animalData.prefab, specifiedPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
 
-                        //Instantiate Animal at that position.
-                        GameObject animalGO = Object.Instantiate(animalPopulation.animalData.prefab, specifiedPosition, Quaternion.identity, WorldManager.Instance.AnimalParentTransform);
+                    Animal animal = animalGO.GetComponent<Animal>();
 
-                        Animal animal = animalGO.GetComponent<Animal>();
+                    area.AddAnimal(animal);
 
-                        area.AddAnimal(animal);
-
-                        animalPopulationCount++;
-                    }
+                    animalPopulationCount++;
                 }
             }
         }

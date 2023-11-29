@@ -23,16 +23,16 @@ MonoBehaviour:
       AnimalToFind: 
     - name: Find them
       instructionToPlayer: Drive toward the bucks
-      type: 9
-      TargetPosition: {x: 122.45528, y: 54, z: -109.08092}
-      minDistFromTarget: 0
+      type: 3
+      TargetPosition: {x: 184.5, y: 54, z: 25}
+      minDistFromTarget: 25
       AnimalToFind: 
     - name: Track to Basics
       instructionToPlayer: Track the Buck
-      type: 1
+      type: 9
       TargetPosition: {x: 0, y: 0, z: 0}
       minDistFromTarget: 0
-      AnimalToFind: 
+      AnimalToFind: Springbok
     - name: Sedation
       instructionToPlayer: Sedate the buck
       type: 7
