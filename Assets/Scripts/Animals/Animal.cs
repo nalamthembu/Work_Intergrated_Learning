@@ -47,6 +47,8 @@ public class Animal : MonoBehaviour, IStorable
 
     private int shotCount;
 
+    public GameObject targeted;
+
     public int daysPassed = 0;
 
     private void Awake()
@@ -59,6 +61,7 @@ public class Animal : MonoBehaviour, IStorable
     private void Start()
     {
         Player = FindObjectOfType<PlayerCharacter>();
+        targeted.SetActive(false);
     }
 
     public void Teleport(Vector3 position, Quaternion rotation) => transform.SetPositionAndRotation(position, rotation);
@@ -84,6 +87,7 @@ public class Animal : MonoBehaviour, IStorable
     {
         GameObject pawprint = Instantiate(animalData.pawprint, new Vector3(transform.position.x, transform.position.y , transform.position.z), Quaternion.identity);
         pawprint.GetComponent<Pawprint>().SetAnimal(this);
+        
     }
 
     #region PHYSICS FUNCTIONS (OnTrigger, OnCollision)
