@@ -33,6 +33,8 @@ public class Character : MonoBehaviour
     public float CurrentSpeed { get; set; }
     public bool IsGrounded { get { return isGrounded; } }
     public float SpeedSmoothTime { get { return speedSmoothTime; } }
+    public bool IsInVehicle { get; private set; }
+
     [HideInInspector] public float SpeedSmoothVelocity;
 
     public Vehicle CurrentVehicle { get; set; }
@@ -104,6 +106,8 @@ public class Character : MonoBehaviour
             if (player.TryGetComponent<BoxCollider>(out var col))
                 col.enabled = false;
         }
+
+        IsInVehicle = true;
     }
 
     public void EnableOutsideVehicle()
@@ -119,5 +123,7 @@ public class Character : MonoBehaviour
             if (player.TryGetComponent<BoxCollider>(out var col))
                 col.enabled = false;
         }
+
+        IsInVehicle = false;
     }
 }

@@ -23,7 +23,9 @@ public class MissionManager : MonoBehaviour
     Animal animalToNeutralise;
     [SerializeField] bool isInTutorial;
     bool animalGotAwayInTutorialMode;
-    bool spawnedObjectForPlayer;
+    bool hasSpawnedObjectForPlayer;
+
+    GameObject pickupVehicle;
 
     private void Awake()
     {
@@ -69,6 +71,8 @@ public class MissionManager : MonoBehaviour
 
                 ObjectiveHighlighter.transform.position = rObjective.TargetPosition;
 
+                HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(ObjectiveHighlighter.transform.position, true);
+
                 ObjectiveHighlighter.SetActive(true);
 
                 float distFromLocation = Vector3.Distance(PlayerCharacter.Instance.transform.position, rObjective.TargetPosition);
@@ -78,6 +82,8 @@ public class MissionManager : MonoBehaviour
                     //You're close enough to the target location.
 
                     ObjectiveHighlighter.SetActive(false);
+
+                    HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(ObjectiveHighlighter.transform.position, false);
 
                     NextObjective();
                 }
@@ -96,16 +102,20 @@ public class MissionManager : MonoBehaviour
                     hasNotifiedPlayerToTrackAnimal = true;
                 }
 
-                Collider[] colliders = Physics.OverlapSphere(PlayerCharacter.Instance.transform.position, 15.0F);
 
-                foreach (Collider col in colliders)
+                if (animalToNeutralise is null)
                 {
-                    if (col.TryGetComponent<Animal>(out var animal))
+                    Collider[] colliders = Physics.OverlapSphere(PlayerCharacter.Instance.transform.position, 15.0F);
+
+                    foreach (Collider col in colliders)
                     {
-                        NextObjective();
-                        animalToNeutralise = animal;
-                        hasNotifiedPlayerToTrackAnimal = false;
-                        break;
+                        if (col.TryGetComponent<Animal>(out var animal))
+                        {
+                            NextObjective();
+                            animalToNeutralise = animal;
+                            hasNotifiedPlayerToTrackAnimal = false;
+                            break;
+                        }
                     }
                 }
 
@@ -116,48 +126,85 @@ public class MissionManager : MonoBehaviour
 
                 if (animalToNeutralise is not null)
                 {
-                    //Give the player a gun.
-
-                    if (!spawnedObjectForPlayer)
-                    {
-                        Instantiate(rObjective.objectToSpawnForPlayer, PlayerCharacter.Instance.transform.position, Quaternion.identity);
-                        spawnedObjectForPlayer = true;
-                    }
-
                     //TAG THE ANIMAL SO THE PLAYER CAN SEE WHICH ONE THEY NEED.
 
                     animalToNeutralise.targeted.SetActive(true);
 
-                    HUDManager.instance.ShowSubtitles("Aw man, the " + animalToNeutralise.animalData.name + " got away! Don't worry though, this was just a test run, lets do it again for real this time.", 15.0F);
-
-                    HUDManager.instance.SHOW_DEMO_END_SCREEN();
+                    HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(animalToNeutralise.transform.position + Vector3.up * 10, true);
 
                     if (isInTutorial)
                     {
-                        //Aww man, the animal got away.
-
-                        print("YES  IT SHOULD'VE WORKED!");
-
-                        animalGotAwayInTutorialMode = true;
-
-                        
-
-                        //Make them really fast.
-                        animalToNeutralise.TargetSpeed = 100;
+                        //Make them really fast. 
+                        //animalToNeutralise.TargetSpeed = 100; //(ACTUALLY DON'T)
 
                         float distanceFromAnimal = Vector3.Distance(animalToNeutralise.transform.position, PlayerCharacter.Instance.transform.position);
 
-                        if (distanceFromAnimal > 1.0F && !animalGotAwayInTutorialMode)
+                        if (distanceFromAnimal > 50.0F && !animalGotAwayInTutorialMode)
                         {
-                            
+                            //Aww man, the animal got away.
+
+                            HUDManager.instance.ShowSubtitles("Aw man, the " + animalToNeutralise.animalData.name + " got away! Don't worry though, this was just a test run, lets do it again for real this time.", 15.0F);
+
+                            HUDManager.instance.SHOW_DEMO_END_SCREEN();
+
+                            HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(animalToNeutralise.transform.position, false);
+
+                            animalGotAwayInTutorialMode = true;
                         }
                     }
 
                     if (animalToNeutralise.IsKnockedOut)
                     {
+                        //Spawn Pickup Vehicle
+
+                        if (!hasSpawnedObjectForPlayer && pickupVehicle is null)
+                        {
+                            Vector3 pos_toSpawnVehicle = PlayerCharacter.Instance.transform.position - PlayerCharacter.Instance.transform.forward * 4 + (Vector3)Random.insideUnitCircle;
+
+                            pickupVehicle = Instantiate(rObjective.objectToSpawnForPlayer, pos_toSpawnVehicle, Quaternion.identity);
+
+                            HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(pos_toSpawnVehicle, true);
+                        }
+
                         NextObjective();
 
+                        HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(animalToNeutralise.transform.position, false);
+
                         break;
+                    }
+                }
+
+                break;
+
+            case ObjectiveType.ReturnToHQ:
+
+                //Spawn Pickup Vehicle
+
+                if (!hasSpawnedObjectForPlayer && pickupVehicle is null)
+                {
+                    Vector3 pos_toSpawnVehicle = PlayerCharacter.Instance.transform.position - PlayerCharacter.Instance.transform.forward * 4 + (Vector3)Random.insideUnitCircle;
+
+                    Instantiate(rObjective.objectToSpawnForPlayer, pos_toSpawnVehicle, Quaternion.identity);
+
+                    HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(pos_toSpawnVehicle, true);
+                }
+                else
+                {
+                    if (PlayerCharacter.Instance.IsInVehicle)
+                    {
+                        HUDManager.instance.SetObjectivePrefabVisibilityAndLocation(Vector3.zero, false);
+
+                        if (Vector3.Distance(PlayerCharacter.Instance.transform.position, rObjective.TargetPosition) <= rObjective.minDistFromTarget)
+                        {
+                            if (isInTutorial)
+                            {
+                                HUDManager.instance.SHOW_DEMO_END_SCREEN();
+
+                                Time.timeScale = 0;
+                            }
+
+                            Destroy(pickupVehicle);
+                        }
                     }
                 }
 

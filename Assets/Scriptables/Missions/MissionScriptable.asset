@@ -30,14 +30,14 @@ MonoBehaviour:
       AnimalToFind: 
       objectToSpawnForPlayer: {fileID: 0}
     - name: Track to Basics
-      instructionToPlayer: Track the Buck
+      instructionToPlayer: Track the Animal
       type: 9
       TargetPosition: {x: 0, y: 0, z: 0}
       minDistFromTarget: 0
       AnimalToFind: Springbok
       objectToSpawnForPlayer: {fileID: 0}
     - name: Sedation
-      instructionToPlayer: Sedate the buck
+      instructionToPlayer: Sedate the Animal
       type: 7
       TargetPosition: {x: 0, y: 0, z: 0}
       minDistFromTarget: 0
@@ -46,10 +46,10 @@ MonoBehaviour:
     - name: Return Home
       instructionToPlayer: Go back to HQ
       type: 5
-      TargetPosition: {x: 0, y: 0, z: 0}
-      minDistFromTarget: 0
+      TargetPosition: {x: 114.88, y: 54.15, z: -191.03}
+      minDistFromTarget: 10
       AnimalToFind: 
-      objectToSpawnForPlayer: {fileID: 0}
+      objectToSpawnForPlayer: {fileID: 307292562664823811, guid: e7452ec93bf661241bfba67426627cbf, type: 3}
   - name: Welcome the the Bushveld
     objectives:
     - name: Rehabilitate the Land

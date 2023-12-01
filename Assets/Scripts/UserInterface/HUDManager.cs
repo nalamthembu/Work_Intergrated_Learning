@@ -7,12 +7,18 @@ using TMPro;
 public class HUDManager : MonoBehaviour
 {
     [SerializeField] private HUD_Subtitles HUD_Subtitles;
-    [SerializeField] private HUD_Notifications HUD_Notifications;
+    [SerializeField] private HUD_Notifications HUDNotifications;
     [SerializeField] private HUD_Weapon HUDWeapon;
     [SerializeField] private HUDStats HUDStats;
+    [SerializeField] private HUD_MiniMap HUDMiniMap;
     [SerializeField] private float instructionTimer = 4F;
 
     [SerializeField] private GameObject DEMO_END_SCREEN_GROUP;
+
+    public void SetObjectivePrefabVisibilityAndLocation(Vector3 location, bool isVisible)
+    {
+        HUDMiniMap.PlaceObjectiveSprite(location, isVisible);
+    }
 
     public void SHOW_DEMO_END_SCREEN()
     {
@@ -40,11 +46,13 @@ public class HUDManager : MonoBehaviour
     private void Start()
     {
         HUDStats.Start();
+        HUDMiniMap.Start();
     }
 
     private void Update()
     {
         HUDStats.Update();
+        HUDMiniMap.Update();
     }
 
     public void MakeVisible(CanvasGroup canvasGroup, bool value)
@@ -106,8 +114,8 @@ public class HUDManager : MonoBehaviour
 
             HUD_Subtitles.cGroup.alpha += Time.deltaTime * 1.5F;
 
-            if (HUD_Notifications.cGroup.alpha >= 0.95F)
-                HUD_Notifications.cGroup.alpha = Mathf.Ceil(HUD_Notifications.cGroup.alpha);
+            if (HUDNotifications.cGroup.alpha >= 0.95F)
+                HUDNotifications.cGroup.alpha = Mathf.Ceil(HUDNotifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
@@ -120,8 +128,8 @@ public class HUDManager : MonoBehaviour
         {
             HUD_Subtitles.cGroup.alpha -= Time.deltaTime * 1.5F;
 
-            if (HUD_Notifications.cGroup.alpha <= 0.01F)
-                HUD_Notifications.cGroup.alpha = Mathf.Floor(HUD_Notifications.cGroup.alpha);
+            if (HUDNotifications.cGroup.alpha <= 0.01F)
+                HUDNotifications.cGroup.alpha = Mathf.Floor(HUDNotifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
@@ -129,28 +137,28 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator IShowNotification(string text)
     {
-        while (HUD_Notifications.cGroup.alpha != 1)
+        while (HUDNotifications.cGroup.alpha != 1)
         {
-            HUD_Notifications.cGroup.alpha += Time.deltaTime * 1.5F;
+            HUDNotifications.cGroup.alpha += Time.deltaTime * 1.5F;
 
-            if (HUD_Notifications.cGroup.alpha >= 0.95F)
-                HUD_Notifications.cGroup.alpha = Mathf.Ceil(HUD_Notifications.cGroup.alpha);
+            if (HUDNotifications.cGroup.alpha >= 0.95F)
+                HUDNotifications.cGroup.alpha = Mathf.Ceil(HUDNotifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
 
-        HUD_Notifications.notification.text = string.Empty;
+        HUDNotifications.notification.text = string.Empty;
 
-        HUD_Notifications.notification.text = text;
+        HUDNotifications.notification.text = text;
 
         yield return new WaitForSeconds(instructionTimer);
 
-        while (HUD_Notifications.cGroup.alpha != 0)
+        while (HUDNotifications.cGroup.alpha != 0)
         {
-            HUD_Notifications.cGroup.alpha -= Mathf.Floor(Time.deltaTime * 1.5F);
+            HUDNotifications.cGroup.alpha -= Mathf.Floor(Time.deltaTime * 1.5F);
 
-            if (HUD_Notifications.cGroup.alpha <= 0.01F)
-                HUD_Notifications.cGroup.alpha = Mathf.Floor(HUD_Notifications.cGroup.alpha);
+            if (HUDNotifications.cGroup.alpha <= 0.01F)
+                HUDNotifications.cGroup.alpha = Mathf.Floor(HUDNotifications.cGroup.alpha);
 
             yield return new WaitForEndOfFrame();
         }
@@ -174,6 +182,72 @@ public struct HUD_Subtitles
 {
     public TMP_Text subtitle;
     public CanvasGroup cGroup;
+}
+
+[System.Serializable]
+public struct HUD_MiniMap
+{
+    [SerializeField] Camera miniMapCamera;
+
+    [SerializeField] GameObject playerSpritePrefab, objectiveSpritePrefab;
+
+    private Transform playerSpriteInstance, objectiveSpriteInstance;
+
+    private PlayerCharacter playerCharacter;
+
+    [SerializeField][Range(1, 500)] private float size;
+    [SerializeField][Range(1, 500)] private float height;
+
+    public void Start()
+    {
+        playerCharacter = PlayerCharacter.Instance;
+        miniMapCamera.transform.eulerAngles = Vector3.right * 90;
+        playerSpriteInstance = Object.Instantiate(playerSpritePrefab, playerCharacter.transform.position, Quaternion.Euler(Vector3.right * 90)).transform;
+        objectiveSpriteInstance = Object.Instantiate(objectiveSpritePrefab).transform;
+        objectiveSpriteInstance.gameObject.SetActive(false);
+    }
+
+    public void Update()
+    {
+        UpdateCamera();
+        UpdateUI();
+    }
+
+    public void PlaceObjectiveSprite(Vector3 position, bool isVisible)
+    {
+        objectiveSpriteInstance.position = position;
+        objectiveSpriteInstance.gameObject.SetActive(isVisible);
+    }
+    
+    private void UpdateCamera()
+    {
+        if (playerCharacter.IsInVehicle && playerCharacter.CurrentVehicle != null)
+        {
+            miniMapCamera.transform.eulerAngles = Vector3.right * 90 + Vector3.forward * playerCharacter.CurrentVehicle.transform.eulerAngles.y;
+            miniMapCamera.transform.position = playerCharacter.CurrentVehicle.transform.position + Vector3.up * height;
+            miniMapCamera.orthographicSize = Mathf.Lerp(miniMapCamera.orthographicSize, size, Time.deltaTime);
+        }
+        else
+        {
+            miniMapCamera.transform.eulerAngles = Vector3.right * 90 + Vector3.forward * playerCharacter.transform.eulerAngles.y;
+            miniMapCamera.transform.position = playerCharacter.transform.position + Vector3.up * height;
+            miniMapCamera.orthographicSize = Mathf.Lerp(miniMapCamera.orthographicSize, size, Time.deltaTime);
+        }
+    }
+
+    private void UpdateUI()
+    {
+        if (playerCharacter.IsInVehicle && playerCharacter.CurrentVehicle != null)
+        {
+            playerSpriteInstance.transform.position = playerCharacter.CurrentVehicle.transform.position + Vector3.up * (height - 50.0F);
+            playerSpriteInstance.eulerAngles = miniMapCamera.transform.eulerAngles;
+        }
+        else
+        {
+            playerSpriteInstance.transform.position = playerCharacter.transform.position + Vector3.up * (height - 50.0F); 
+            playerSpriteInstance.eulerAngles = Vector3.right * 90 + Vector3.forward * playerCharacter.transform.eulerAngles.y;
+        }
+    }
 }
 
 
